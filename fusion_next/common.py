@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parent.parent
 os.chdir(ROOT)
 sys.path.insert(0,str(ROOT))
 import room_mesh as rm
-OUT=ROOT/'four-room/fusion-next';OUT.mkdir(exist_ok=True)
+OUT=Path(os.environ.get('GS_OUTPUT_DIR',str(ROOT/'four-room/fusion-next'))).resolve();OUT.mkdir(parents=True,exist_ok=True)
 BASE=ROOT/'four-room/surface-fusion-v3'
 ba=np.load(ROOT/'four-room/photo-bundle/bundle.npz');C=ba['C'];Q=ba['Q'];stations=rm.stations
 ds=json.loads((ROOT/'four-room/photo-bundle/depth-report.json').read_text())

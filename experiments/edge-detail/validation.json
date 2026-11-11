@@ -1,0 +1,38 @@
+{
+  "baseline: 2026-11-11-fusion-next": [
+    {
+      "midpoint": 1,
+      "low_alpha_fraction": 0.0
+    },
+    {
+      "midpoint": 2,
+      "low_alpha_fraction": 4.8828125e-06
+    },
+    {
+      "midpoint": 3,
+      "low_alpha_fraction": 0.00099365234375
+    },
+    {
+      "midpoint": 4,
+      "low_alpha_fraction": 0.0
+    }
+  ],
+  "new: fusion-detail": [
+    {
+      "midpoint": 1,
+      "low_alpha_fraction": 0.0
+    },
+    {
+      "midpoint": 2,
+      "low_alpha_fraction": 4.8828125e-06
+    },
+    {
+      "midpoint": 3,
+      "low_alpha_fraction": 0.001142578125
+    },
+    {
+      "midpoint": 4,
+      "low_alpha_fraction": 0.0
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "method": "image-gradient adaptive density / edge-normal covariance contraction / low-frequency seam blending",
+  "groups": [
+    {
+      "source": 0,
+      "prior_index": null,
+      "faces": 94900,
+      "refined_faces": 25646,
+      "original_samples": 887361,
+      "samples": 1177971
+    },
+    {
+      "source": 1,
+      "prior_index": null,
+      "faces": 55343,
+      "refined_faces": 18209,
+      "original_samples": 643218,
+      "samples": 994970
+    },
+    {
+      "source": 2,
+      "prior_index": null,
+      "faces": 60007,
+      "refined_faces": 15148,
+      "original_samples": 730583,
+      "samples": 1002457
+    },
+    {
+      "source": 3,
+      "prior_index": null,
+      "faces": 62130,
+      "refined_faces": 18720,
+      "original_samples": 592541,
+      "samples": 776943
+    },
+    {
+      "source": 4,
+      "prior_index": 0,
+      "faces": 5941,
+      "refined_faces": 2767,
+      "original_samples": 61357,
+      "samples": 104567
+    },
+    {
+      "source": 4,
+      "prior_index": 1,
+      "faces": 4311,
+      "refined_faces": 2452,
+      "original_samples": 47683,
+      "samples": 83360
+    },
+    {
+      "source": 4,
+      "prior_index": 2,
+      "faces": 4546,
+      "refined_faces": 2200,
+      "original_samples": 48385,
+      "samples": 81888
+    },
+    {
+      "source": 4,
+      "prior_index": 3,
+      "faces": 2853,
+      "refined_faces": 1557,
+      "original_samples": 29141,
+      "samples": 51742
+    },
+    {
+      "source": 4,
+      "prior_index": 4,
+      "faces": 2541,
+      "refined_faces": 828,
+      "original_samples": 22869,
+      "samples": 28665
+    },
+    {
+      "source": 4,
+      "prior_index": 5,
+      "faces": 2560,
+      "refined_faces": 432,
+      "original_samples": 20886,
+      "samples": 23902
+    },
+    {
+      "source": 4,
+      "prior_index": 6,
+      "faces": 3873,
+      "refined_faces": 3390,
+      "original_samples": 52510,
+      "samples": 93646
+    },
+    {
+      "source": 4,
+      "prior_index": 8,
+      "faces": 29537,
+      "refined_faces": 7884,
+      "original_samples": 29600,
+      "samples": 53278
+    }
+  ],
+  "contracted_splats": 944695,
+  "splats": 4473380,
+  "maximum_density_budget_factor": 1.8,
+  "minimum_edge_axis_scale": 0.7,
+  "semantic_rules": false,
+  "synthetic_texture": false
+}

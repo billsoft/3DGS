@@ -61,7 +61,22 @@ $env:GS_INPUT_DIR = 'D:\your-room-input'
 
 原照片、模型、纹理和渲染截图均不提交。公开代码中的标定格式和页面针对当前房间；复现相同视觉结果需要同一份私有数据。用户认可的是这一实验结果，不代表所有区域已修复。
 
-## 第三方组件
+## 通用保边细节试验
+
+`fusion_next/run_detail.py` 使用已接受基线的几何和区域归属，按原图梯度及投影像素跨度分配采样，在边缘法向收缩高斯足迹，并只融合接缝低频颜色。没有灯具或窗帘专用贴图、分割区域或合成形状。
+
+先将已接受输出目录完整另存到 `four-room/baselines/2026-11-11-fusion-next/`。这份私有缓存需包含 `geometry.npz`、`ownership.npz`、`prior.npz`、`correspondences.npz`、`seam-offset.npy`、各阶段 JSON 报告以及基线 `fused.ply` / `fused.splat`。然后在上述 Python 环境与 `GS_INPUT_DIR` 设置下运行：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe fusion_next/run_detail.py --validate --serve-root .
+```
+
+结果写入独立的 `four-room/fusion-detail/`，预览地址为 `http://127.0.0.1:7870/fusion-detail-room.html`；已接受的基线入口保持不变。可用 `--smooth` 显式试验保边法向平滑，但默认关闭：消融试验没有发现值得默认改变基线几何的收益。平滑无法修复缺失表面和错误拓扑，边缘优化也无法保证消除所有灰色污染。
+
+验证包含固定近景、四个中点、7 个原图来源视向；后者只在共同高覆盖率像素上计算 SSIM 和 MAE，不将其解释为所有漫游视点的画质。每来源采样预算上限为 1.8 倍；高斯数量增加会提高浏览器内存与加载成本。
+
+## 第三方组件与许可
 
 - `three.js`：Three.js r160 / 0.160.0，MIT。
 - `gaussian.js`：GaussianSplats3D 0.4.7，MIT；文件与官方 npm 发布包一致。

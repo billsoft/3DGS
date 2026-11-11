@@ -1,0 +1,13 @@
+{
+  "accepted": true,
+  "locked_vertices": 78125,
+  "frozen_unstable_vertices": 434,
+  "moved_vertices": 86486,
+  "max_candidate_displacement": 0.008000000000000252,
+  "held_median_before": 0.024973129405194847,
+  "held_median_after": 0.024860812346528247,
+  "held_p90_before": 0.10060002812560556,
+  "held_p90_after": 0.10066807642176054,
+  "invalid_faces": 0,
+  "note": "Normal denoising only. Does not fix topology, invent surfaces, or repair unobserved backsides."
+}

@@ -1,0 +1,90 @@
+{
+  "views": [
+    {
+      "view": "lamp 1",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0
+    },
+    {
+      "view": "lamp 2",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0
+    },
+    {
+      "view": "behind TV",
+      "baseline_holes": 0.22718994140625,
+      "detail_holes": 0.23037353515625
+    },
+    {
+      "view": "source 2 face 0",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0,
+      "common_coverage": 1.0,
+      "baseline_mae": 0.03472975562600528,
+      "baseline_ssim": 0.8770261420441753,
+      "detail_mae": 0.03461155610926011,
+      "detail_ssim": 0.879089470442388
+    },
+    {
+      "view": "source 2 face 1",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0,
+      "common_coverage": 1.0,
+      "baseline_mae": 0.010678340874466242,
+      "baseline_ssim": 0.9599247420768325,
+      "detail_mae": 0.010791628033507104,
+      "detail_ssim": 0.9592591328159746
+    },
+    {
+      "view": "source 2 face 2",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0,
+      "common_coverage": 0.9997412109375,
+      "baseline_mae": 0.05934882070503983,
+      "baseline_ssim": 0.6959503756796753,
+      "detail_mae": 0.05974272559670841,
+      "detail_ssim": 0.6937131026541671
+    },
+    {
+      "view": "source 2 face 3",
+      "baseline_holes": 2.44140625e-06,
+      "detail_holes": 2.44140625e-06,
+      "common_coverage": 0.99813232421875,
+      "baseline_mae": 0.02286824993058747,
+      "baseline_ssim": 0.889778518084581,
+      "detail_mae": 0.02238156935747932,
+      "detail_ssim": 0.8926998813701239
+    },
+    {
+      "view": "source 2 face 4",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0,
+      "common_coverage": 1.0,
+      "baseline_mae": 0.016297187057195926,
+      "baseline_ssim": 0.9198612590216095,
+      "detail_mae": 0.01624888251809513,
+      "detail_ssim": 0.9213963095778454
+    },
+    {
+      "view": "source 2 face 5",
+      "baseline_holes": 0.00063232421875,
+      "detail_holes": 0.00072021484375,
+      "common_coverage": 0.99078857421875,
+      "baseline_mae": 0.04240858040603937,
+      "baseline_ssim": 0.7775288951024689,
+      "detail_mae": 0.04066549188950482,
+      "detail_ssim": 0.7923047278273463
+    },
+    {
+      "view": "source 4 face 4",
+      "baseline_holes": 0.0,
+      "detail_holes": 0.0,
+      "common_coverage": 1.0,
+      "baseline_mae": 0.014464569091796876,
+      "baseline_ssim": 0.939448420049028,
+      "detail_mae": 0.01444550402024213,
+      "detail_ssim": 0.9396156644578124
+    }
+  ],
+  "note": "Source-view photo metrics use common high-alpha coverage. They do not measure unseen novel-view correctness; brightness/geometry mismatch remains."
+}
