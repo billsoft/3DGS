@@ -1,0 +1,51 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会议室 · 原始机位保真预览</title><style>
+body{margin:0;background:#000;color:white;font:14px system-ui}#base,#native{position:absolute;inset:0}#base{pointer-events:none}#native{z-index:1;background:#000}#tools{position:absolute;z-index:5;top:12px;left:12px;padding:14px;background:#18212ef0;border-radius:10px;max-width:min(380px,85vw)}h1{font-size:17px;margin:0}p{margin:8px 0}button{margin:3px;padding:5px 8px}a{color:#9cdeff}
+</style><div id="base"></div><div id="native"></div><div id="tools"><h1>原始机位保真 · 视点相关预览</h1>
+<p>拍摄点显示完整原始高斯；中间区域使用已接受融合模型。此效果不是一个统一 PLY。</p>
+<p><button id="auto">机位保真</button><button id="baseline">只看融合基线</button></p><div id="positions"></div>
+<p>W/S 前后 · A/D 左右平移 · Q/E 升降</p><p id="status">正在加载原始高斯…</p>
+<p>过渡带可能有短暂双影；原有中间视点几何缺陷仍在。</p>
+<p><a href="/fusion-native-report.html">原始机位对照与试验报告</a> · <a href="/fusion-coverage-guarded-room.html">已接受单模型版本</a></p></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script><script type="module">
+import * as THREE from 'three';
+import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';
+import {installRoomNavigation} from './room-navigation.js';
+import {anchorPolicy} from './native-anchor-policy.js';
+const status=document.querySelector('#status'),layer=document.querySelector('#native');
+try {
+ const meta=await(await fetch('/four-room/fusion-native-fidelity/fusion.json')).json();
+ const centers=meta.centers.map(p=>new THREE.Vector3(...p));
+ const options={selfDrivenMode:false,cameraUp:meta.up,initialCameraPosition:meta.centers[0],initialCameraLookAt:[4,0,-.6],sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant};
+ const native=new Viewer({...options,rootElement:layer});
+ await native.addSplatScenes(meta.stations.map((station,i)=>({path:'/four-room/fusion-native-fidelity/native-'+station+'.splat',visible:i===0,splatAlphaRemovalThreshold:1})),true);
+ native.renderer.setClearColor(0x000000,1);
+ let baseReady=false,mode='auto',movement=0,lastSource=0,lastWeight=-1;
+ const base=new Viewer({...options,rootElement:document.querySelector('#base'),camera:native.camera,useBuiltInControls:false});
+ const render=()=>{native.forceRenderNextFrame();if(baseReady)base.forceRenderNextFrame();};
+ const moveTo=point=>{const token=++movement,from=native.camera.position.clone(),start=performance.now();
+   const tick=()=>{if(token!==movement)return;const t=Math.min(1,(performance.now()-start)/1800),e=t*t*(3-2*t);const next=from.clone().lerp(point,e),delta=next.clone().sub(native.camera.position);native.camera.position.copy(next);native.controls.target.add(delta);native.controls.update();render();if(t<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);};
+ const panel=document.querySelector('#positions');
+ centers.forEach((p,i)=>{const b=document.createElement('button');b.textContent=meta.stations[i]+'号机位';b.onclick=()=>moveTo(p);panel.append(b);});
+ centers.forEach((p,i)=>{const b=document.createElement('button');b.textContent=meta.stations[i]+'–'+meta.stations[(i+1)%4]+' 中点';b.onclick=()=>moveTo(p.clone().lerp(centers[(i+1)%4],.5));panel.append(b);});
+ document.querySelector('#auto').onclick=()=>{mode='auto';render();};document.querySelector('#baseline').onclick=()=>{mode='baseline';render();};
+ native.controls.addEventListener('start',()=>movement++);
+ installRoomNavigation({camera:native.camera,controls:native.controls,onMove:()=>movement++,render});
+ function update(){
+   native.controls.update();
+   const policy=anchorPolicy(native.camera.position.toArray(),meta.centers);
+   if(policy.source!==lastSource){for(let i=0;i<centers.length;i++)native.getSplatScene(i).visible=i===policy.source;lastSource=policy.source;render();}
+   const weight=baseReady?(mode==='baseline'?0:policy.weight):1;
+   if(weight!==lastWeight){layer.style.opacity=String(weight);lastWeight=weight;render();}
+   // Apply source visibility before drawing. Never render an old source from a
+   // newly selected camera, and avoid sorting/rendering an invisible renderer.
+   if(weight>0){native.update();if(native.shouldRender())native.render();native.renderNextFrame=false;}
+   if(baseReady&&weight<1){base.update();if(base.shouldRender())base.render();base.renderNextFrame=false;}
+   status.textContent=baseReady?(weight===1?'原始 '+meta.stations[policy.source]+' 号机位 · 完整高斯':weight===0?'已接受融合模型':'过渡中 · 原始机位占比 '+Math.round(weight*100)+'%'):'原始机位已加载；正在加载中间区域模型…';
+   window.nativeState={...policy,weight,mode,baseReady};requestAnimationFrame(update);
+ }
+ update();window.roomViewer=native;window.nativeBaseViewer=base;window.nativeMode=value=>{mode=value;};
+ await base.addSplatScenes([{path:'/four-room/baselines/2026-11-11-coverage-guard/fused.splat',splatAlphaRemovalThreshold:1}],false);
+ base.renderer.setClearColor(0x000000,1);baseReady=true;render();
+} catch(error){status.textContent='载入失败：'+error.message;console.error(error);}
+</script></html>

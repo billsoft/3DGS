@@ -1,0 +1,7 @@
+{
+  "native_points": 706975,
+  "added_points": 19611,
+  "two_view_supported_points": 1255,
+  "output_points": 726586,
+  "note": "Only baseline Gaussians whose projections fall in a native-merge hole and match an observed source depth are added. No unseen backface synthesis. Global geometry conflicts remain possible."
+}

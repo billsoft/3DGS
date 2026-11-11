@@ -1,0 +1,172 @@
+{
+  "views": [
+    {
+      "station": "2",
+      "face": 0,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.029340448566511565,
+      "source_mask_ssim": 0.8731028119349922
+    },
+    {
+      "station": "2",
+      "face": 1,
+      "new_hole_pixels": 7,
+      "source_mask_mae": 0.00616007038191253,
+      "source_mask_ssim": 0.961010162721516
+    },
+    {
+      "station": "2",
+      "face": 2,
+      "new_hole_pixels": 87,
+      "source_mask_mae": 0.056081726971794574,
+      "source_mask_ssim": 0.6863980695343969
+    },
+    {
+      "station": "2",
+      "face": 3,
+      "new_hole_pixels": 2431,
+      "source_mask_mae": 0.033074378967285156,
+      "source_mask_ssim": 0.8718685443747394
+    },
+    {
+      "station": "2",
+      "face": 4,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.011379270927578795,
+      "source_mask_ssim": 0.9453266648797247
+    },
+    {
+      "station": "2",
+      "face": 5,
+      "new_hole_pixels": 581,
+      "source_mask_mae": 0.012098462908875708,
+      "source_mask_ssim": 0.9227973664840261
+    },
+    {
+      "station": "3",
+      "face": 0,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.029427461063160614,
+      "source_mask_ssim": 0.8704555361801657
+    },
+    {
+      "station": "3",
+      "face": 1,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.0020343722081651873,
+      "source_mask_ssim": 0.9944260550095341
+    },
+    {
+      "station": "3",
+      "face": 2,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.016924371906355314,
+      "source_mask_ssim": 0.9166186079071915
+    },
+    {
+      "station": "3",
+      "face": 3,
+      "new_hole_pixels": 1022,
+      "source_mask_mae": 0.044696714363846125,
+      "source_mask_ssim": 0.798913526945478
+    },
+    {
+      "station": "3",
+      "face": 4,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.00832503075693168,
+      "source_mask_ssim": 0.9689264852541577
+    },
+    {
+      "station": "3",
+      "face": 5,
+      "new_hole_pixels": 202,
+      "source_mask_mae": 0.024385798211191214,
+      "source_mask_ssim": 0.889605524122361
+    },
+    {
+      "station": "4",
+      "face": 0,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.0033634683665107277,
+      "source_mask_ssim": 0.9924268815511214
+    },
+    {
+      "station": "4",
+      "face": 1,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.036142708273494945,
+      "source_mask_ssim": 0.7929728428649326
+    },
+    {
+      "station": "4",
+      "face": 2,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.022573336432961857,
+      "source_mask_ssim": 0.8878656122472792
+    },
+    {
+      "station": "4",
+      "face": 3,
+      "new_hole_pixels": 879,
+      "source_mask_mae": 0.04128877228381587,
+      "source_mask_ssim": 0.8346869122142371
+    },
+    {
+      "station": "4",
+      "face": 4,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.010096581776936848,
+      "source_mask_ssim": 0.9614944378380743
+    },
+    {
+      "station": "4",
+      "face": 5,
+      "new_hole_pixels": 168,
+      "source_mask_mae": 0.013066587261125154,
+      "source_mask_ssim": 0.9296672150097612
+    },
+    {
+      "station": "5",
+      "face": 0,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.0018213653096965715,
+      "source_mask_ssim": 0.9928820005362538
+    },
+    {
+      "station": "5",
+      "face": 1,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.03842156354118796,
+      "source_mask_ssim": 0.7793088764947109
+    },
+    {
+      "station": "5",
+      "face": 2,
+      "new_hole_pixels": 25,
+      "source_mask_mae": 0.035124561833400354,
+      "source_mask_ssim": 0.8378561754993602
+    },
+    {
+      "station": "5",
+      "face": 3,
+      "new_hole_pixels": 1570,
+      "source_mask_mae": 0.03320871614942364,
+      "source_mask_ssim": 0.8745520870583653
+    },
+    {
+      "station": "5",
+      "face": 4,
+      "new_hole_pixels": 0,
+      "source_mask_mae": 0.01878475488400927,
+      "source_mask_ssim": 0.9355824874011455
+    },
+    {
+      "station": "5",
+      "face": 5,
+      "new_hole_pixels": 33,
+      "source_mask_mae": 0.014068495058545879,
+      "source_mask_ssim": 0.9412992524281122
+    }
+  ]
+}

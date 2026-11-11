@@ -1,0 +1,32 @@
+{
+  "accepted": {
+    "views": 24,
+    "new_hole_pixels": 1726,
+    "mean_source_mae": 0.031849736014222786,
+    "mean_source_ssim": 0.845245324940977
+  },
+  "native_owner": {
+    "views": 24,
+    "new_hole_pixels": 15477,
+    "mean_source_mae": 0.023031412532516556,
+    "mean_source_ssim": 0.892824520252253
+  },
+  "previous_cropped_merge": {
+    "views": 24,
+    "new_hole_pixels": 79263,
+    "mean_source_mae": 0.03150190870746288,
+    "mean_source_ssim": 0.8527562167276654
+  },
+  "native_visible": {
+    "views": 24,
+    "new_hole_pixels": 22586,
+    "mean_source_mae": 0.02340718614899255,
+    "mean_source_ssim": 0.8905624337335948
+  },
+  "native_fill": {
+    "views": 24,
+    "new_hole_pixels": 7005,
+    "mean_source_mae": 0.022578709100196562,
+    "mean_source_ssim": 0.8941685056871514
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "views": [
+    {
+      "station": "2",
+      "face": 0,
+      "mean_rgb_difference_255": 2.260561268485617e-05,
+      "mean_alpha_difference": 2.3808550686510443e-09
+    },
+    {
+      "station": "2",
+      "face": 1,
+      "mean_rgb_difference_255": 1.1302806342428084e-05,
+      "mean_alpha_difference": 2.3881310262652278e-09
+    },
+    {
+      "station": "2",
+      "face": 2,
+      "mean_rgb_difference_255": 5.8774596254806966e-05,
+      "mean_alpha_difference": 5.2677933126688e-09
+    },
+    {
+      "station": "2",
+      "face": 3,
+      "mean_rgb_difference_255": 1.8084490875480697e-05,
+      "mean_alpha_difference": 4.122638230796838e-09
+    },
+    {
+      "station": "2",
+      "face": 4,
+      "mean_rgb_difference_255": 4.521122718870174e-06,
+      "mean_alpha_difference": 1.521119763481238e-08
+    },
+    {
+      "station": "2",
+      "face": 5,
+      "mean_rgb_difference_255": 1.582392906129826e-05,
+      "mean_alpha_difference": 6.410118658095598e-09
+    },
+    {
+      "station": "3",
+      "face": 0,
+      "mean_rgb_difference_255": 9.042245437740348e-06,
+      "mean_alpha_difference": 5.788226342673397e-09
+    },
+    {
+      "station": "3",
+      "face": 1,
+      "mean_rgb_difference_255": 5.6514032621635124e-05,
+      "mean_alpha_difference": 3.2753935119700373e-09
+    },
+    {
+      "station": "3",
+      "face": 2,
+      "mean_rgb_difference_255": 3.616898175096139e-05,
+      "mean_alpha_difference": 1.936172822070148e-08
+    },
+    {
+      "station": "3",
+      "face": 3,
+      "mean_rgb_difference_255": 1.582392906129826e-05,
+      "mean_alpha_difference": 3.8360465914877295e-09
+    },
+    {
+      "station": "3",
+      "face": 4,
+      "mean_rgb_difference_255": 1.3563368156610522e-05,
+      "mean_alpha_difference": 1.6184356965709412e-08
+    },
+    {
+      "station": "3",
+      "face": 5,
+      "mean_rgb_difference_255": 0.00010172525799134746,
+      "mean_alpha_difference": 1.0297096508793402e-08
+    },
+    {
+      "station": "4",
+      "face": 0,
+      "mean_rgb_difference_255": 2.4866174499038607e-05,
+      "mean_alpha_difference": 8.485788072221112e-09
+    },
+    {
+      "station": "4",
+      "face": 1,
+      "mean_rgb_difference_255": 2.4866174499038607e-05,
+      "mean_alpha_difference": 3.559964323329723e-09
+    },
+    {
+      "station": "4",
+      "face": 2,
+      "mean_rgb_difference_255": 4.521122536971234e-05,
+      "mean_alpha_difference": 2.0818131218902636e-08
+    },
+    {
+      "station": "4",
+      "face": 3,
+      "mean_rgb_difference_255": 1.1302806342428084e-05,
+      "mean_alpha_difference": 1.7268272367587656e-09
+    },
+    {
+      "station": "4",
+      "face": 4,
+      "mean_rgb_difference_255": 9.042245437740348e-06,
+      "mean_alpha_difference": 9.144867973986948e-09
+    },
+    {
+      "station": "4",
+      "face": 5,
+      "mean_rgb_difference_255": 2.260561268485617e-05,
+      "mean_alpha_difference": 8.208290935840523e-09
+    },
+    {
+      "station": "5",
+      "face": 0,
+      "mean_rgb_difference_255": 1.3563368156610522e-05,
+      "mean_alpha_difference": 1.4239453172137928e-08
+    },
+    {
+      "station": "5",
+      "face": 1,
+      "mean_rgb_difference_255": 2.0345052689663135e-05,
+      "mean_alpha_difference": 2.032417567576772e-09
+    },
+    {
+      "station": "5",
+      "face": 2,
+      "mean_rgb_difference_255": 9.042245073942468e-05,
+      "mean_alpha_difference": 4.0693826086624085e-09
+    },
+    {
+      "station": "5",
+      "face": 3,
+      "mean_rgb_difference_255": 1.582392906129826e-05,
+      "mean_alpha_difference": 4.2289483026536345e-09
+    },
+    {
+      "station": "5",
+      "face": 4,
+      "mean_rgb_difference_255": 5.6514032621635124e-05,
+      "mean_alpha_difference": 1.2795782211583173e-08
+    },
+    {
+      "station": "5",
+      "face": 5,
+      "mean_rgb_difference_255": 9.042245437740348e-06,
+      "mean_alpha_difference": 6.646789341147041e-09
+    }
+  ],
+  "passed": true,
+  "note": "Sim(3) transform invariance, not independent confirmation of inter-camera registration accuracy. Small numerical rasterization differences are allowed."
+}
