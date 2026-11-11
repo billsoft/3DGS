@@ -1,0 +1,30 @@
+{
+  "v3 baseline": [
+    {
+      "name": "lamp 1",
+      "low_alpha_fraction": 0.0
+    },
+    {
+      "name": "lamp 2",
+      "low_alpha_fraction": 0.0
+    },
+    {
+      "name": "behind TV",
+      "low_alpha_fraction": 0.03379150390625
+    }
+  ],
+  "generic fusion": [
+    {
+      "name": "lamp 1",
+      "low_alpha_fraction": 0.0
+    },
+    {
+      "name": "lamp 2",
+      "low_alpha_fraction": 0.0
+    },
+    {
+      "name": "behind TV",
+      "low_alpha_fraction": 0.22718994140625
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "accepted": true,
+  "constraints": 5855,
+  "median_before": 0.0277715847208484,
+  "median_after": 0.0004595842242796443,
+  "maximum_rgb_offset": 0.045,
+  "solver_status": [
+    0,
+    0,
+    0
+  ],
+  "note": "Bounded low-frequency surface RGB offsets; seam metric is fitting residual, not held-out visual quality. Mesh texture preview does not apply this PLY color correction."
+}

@@ -1,0 +1,4 @@
+* text=auto eol=lf
+gaussian.js -whitespace linguist-vendored
+three.js -whitespace linguist-vendored
+mesh-orbit-controls.js -whitespace linguist-vendored

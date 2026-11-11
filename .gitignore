@@ -1,0 +1,22 @@
+# Private scene data, generated models and local environments
+four-room/
+data/
+.venv/
+__pycache__/
+*.pyc
+*.nbc
+*.nbi
+*.ply
+*.splat
+*.spz
+*.npz
+*.npy
+*.bin
+*.jpg
+*.png
+*.zip
+*.log
+.env
+.env.*
+*.pem
+*.key

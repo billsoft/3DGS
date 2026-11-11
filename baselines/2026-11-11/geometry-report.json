@@ -1,0 +1,13 @@
+{
+  "train": 9350,
+  "held": 2346,
+  "held_median_before": 0.03438547544175239,
+  "held_median_after": 0.025490294086050157,
+  "held_p90_before": 0.09944288595884535,
+  "held_p90_after": 0.0865640325911336,
+  "frozen_unstable_vertices": 1108,
+  "flipped_faces": 0,
+  "accepted": true,
+  "max_candidate_shift": 0.065,
+  "note": "Held correspondences are estimated from photos, not ground-truth depth. Rejected geometry retains the baseline."
+}

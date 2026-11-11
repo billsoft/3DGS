@@ -1,0 +1,17 @@
+{
+  "splats": 3166125,
+  "faces": 328542,
+  "unsupported_faces_removed": 23784,
+  "prior_texture_retained_faces": 56162,
+  "eligible_seam_splats": 367198,
+  "blended_splats": 23208,
+  "blend_fraction": 0.0073300959374629875,
+  "maximum_secondary_weight": 0.4461588092851732,
+  "band_width_model_units": 0.055,
+  "notes": [
+    "Geometry ownership is fixed in world space",
+    "Gray diagnostic regions retain the valid initialization texture when new evidence is weak",
+    "Mesh preview uses hard texture seams; PLY includes narrow-band color feathering",
+    "Surface Gaussians are regenerated, not jointly trained original Gaussians"
+  ]
+}

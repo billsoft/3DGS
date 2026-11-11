@@ -1,0 +1,52 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会议室 · 清晰度与区域归属优化</title>
+<style>
+body{margin:0;background:#111;color:#fff;font:14px system-ui}
+#tools{position:absolute;z-index:100;top:12px;left:12px;background:#18212ef0;padding:14px;border-radius:10px;max-width:min(350px,85vw)}
+button{margin:3px;padding:5px 9px}a{color:#9cdeff;margin-right:10px}p{margin:8px 0}h1{font-size:16px;margin:0 0 8px}
+</style>
+<div id="tools"><h1>会议室 · 清晰度与区域归属优化</h1>
+<p><a href="?version=new">新融合</a><a href="?version=previous">上一版公共表面</a><a href="/surface-sharp-mesh.html">网格版</a></p><div id="positions"></div>
+<p>W/S 前后 · A/D 左右平移 · Q 上升 / E 下降</p><p id="status" role="status">加载中…</p>
+<p>部分细杆与椅背仍可能缺失；新版本不是四份透明点云叠加。</p><a href="/four-room/surface-fusion-v3/fused.ply" download>下载融合 PLY</a>
+<a href="/four-room/surface-fusion-v3/compare.jpg">同视点对照</a>
+<a href="/four-room/surface-fusion-v3/validation.json">验证数据</a></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script>
+<script type="module">
+import {installRoomNavigation} from "./room-navigation.js";
+import * as THREE from 'three';
+import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';
+const previous=new URLSearchParams(location.search).get('version')==='previous';
+const status=document.querySelector('#status');
+try{
+ const response=await fetch('/four-room/surface-fusion-v3/fusion.json');
+ if(!response.ok)throw new Error('找不到融合结果');
+ const meta=await response.json();
+ const centers=meta.centers.map(p=>new THREE.Vector3(...p));
+ const initial=centers[0].clone().lerp(centers[1],.5);
+ const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:initial.toArray(),initialCameraLookAt:[4,0,-.6],
+   sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,
+   ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
+ await viewer.addSplatScenes([{path:previous?'/four-room/surface-fusion-v2/fused.splat':'/four-room/surface-fusion-v3/fused.splat',splatAlphaRemovalThreshold:3}],true);
+ viewer.start();
+ const panel=document.querySelector('#positions');
+ let movement=0;
+ const makeButton=(label,point)=>{
+   const b=document.createElement('button');b.textContent=label;
+   b.onclick=()=>{const token=++movement,from=viewer.camera.position.clone(),start=performance.now();
+     const tick=()=>{if(token!==movement)return;const t=Math.min(1,(performance.now()-start)/1100),e=t*t*t*(10-15*t+6*t*t);
+       const next=from.clone().lerp(point,e),delta=next.clone().sub(viewer.camera.position);viewer.camera.position.copy(next);viewer.controls.target.add(delta);viewer.controls.update();viewer.forceRenderNextFrame();if(t<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);};
+   panel.appendChild(b);
+ };
+ for(let i=0;i<centers.length;i++) makeButton(meta.stations[i]+'号机位',centers[i]);
+ panel.appendChild(document.createElement('br'));
+ for(let i=0;i<centers.length;i++){
+   const j=(i+1)%centers.length;
+   makeButton(meta.stations[i]+'–'+meta.stations[j]+' 中点',centers[i].clone().lerp(centers[j],.5));
+ }
+ viewer.controls.addEventListener('start',()=>{movement++;});
+ status.textContent='已加载 · '+(previous?'上一版公共表面':'清晰度优化版')+' · 点击机位平滑移动';
+ installRoomNavigation({camera:viewer.camera,controls:viewer.controls,onMove:()=>{movement++;},render:()=>viewer.forceRenderNextFrame()});
+ window.roomViewer=viewer;
+}catch(e){status.textContent='载入失败：'+e.message;console.error(e)}
+</script></html>

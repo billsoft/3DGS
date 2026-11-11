@@ -1,0 +1,22 @@
+{
+  "fused.ply": {
+    "bytes": 177303363,
+    "sha256": "b41da31715f1117cd3d9480a7bc4b15f129c6eb31af7361e5680a90d9d717ac9"
+  },
+  "fused.splat": {
+    "bytes": 101316000,
+    "sha256": "899e880c4a2e09b037ea3afd29576043dde5c2c649c02f82b28cc14f1c1abbd6"
+  },
+  "owners.splat": {
+    "bytes": 101316000,
+    "sha256": "236f54ed1271bdd7a3a05e330b691f2c4e33f08d3612043d412bd8b848332ad7"
+  },
+  "mesh.bin": {
+    "bytes": 19712520,
+    "sha256": "f3ba8e0420f1c560c24972a09ce4bc89b9c701fe730e64d4c3ecfb2d63ab5c3d"
+  },
+  "mesh.json": {
+    "bytes": 2006,
+    "sha256": "e753e22ebdfe02f18507d69930d23573cff5ac0e4bd048d326841d39e0af7fd0"
+  }
+}
