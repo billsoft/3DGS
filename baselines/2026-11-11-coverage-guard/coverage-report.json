@@ -1,0 +1,14 @@
+{
+  "method": "immutable baseline coverage / per-point multi-view photometric rollback",
+  "points": 3166125,
+  "proposed_updated_points": 13680,
+  "updated_points": 2043,
+  "rolled_back_points": 11637,
+  "geometry_opacity_covariance_identical": true,
+  "deleted_points": 0,
+  "added_points": 0,
+  "minimum_credible_views": 2,
+  "maximum_per_view_mae_increase": 0.005,
+  "required_mean_mae_improvement": 0.0005,
+  "note": "Uses original input photos as optimization constraints, not held-out truth. Original holes and geometry errors remain. View-dependent reflection and imperfect source geometry can prevent any reliable source replacement."
+}

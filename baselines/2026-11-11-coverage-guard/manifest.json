@@ -1,0 +1,10 @@
+{
+  "accepted_date": "2026-11-11",
+  "code_commit": "a015f27a7c0561ae7d20c95abf4f033b84f97a9f",
+  "baseline": "2026-11-11-coverage-guard",
+  "sha256": {
+    "fused.splat": "cc850cd6279fb39d66e335e7285a866fdf82f88bede2d31decf007517a818286",
+    "fused.ply": "7a083722cac7080fd669a708fc3cff702fa2c950e4a9f14da14a1d71764acbd3"
+  },
+  "note": "User accepted this result. Preserves coverage of the previous fused baseline, not per-station fidelity of original source PLY files. Existing holes, crossed geometry and lamp defects remain."
+}
