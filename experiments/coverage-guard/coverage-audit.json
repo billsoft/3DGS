@@ -1,0 +1,81 @@
+{
+  "views": [
+    {
+      "view": "lamp 1",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 1
+    },
+    {
+      "view": "lamp 2",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 2
+    },
+    {
+      "view": "behind TV",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 0
+    },
+    {
+      "view": "source 2 face 0",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 17,
+      "evaluated_changed_pixels": 17,
+      "changed_pixel_mae_delta": -0.007920030504465103
+    },
+    {
+      "view": "source 2 face 1",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 0,
+      "evaluated_changed_pixels": 0,
+      "changed_pixel_mae_delta": null
+    },
+    {
+      "view": "source 2 face 2",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 21,
+      "evaluated_changed_pixels": 21,
+      "changed_pixel_mae_delta": -0.010084034875035286
+    },
+    {
+      "view": "source 2 face 3",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 6,
+      "evaluated_changed_pixels": 6,
+      "changed_pixel_mae_delta": 0.0015250543365254998
+    },
+    {
+      "view": "source 2 face 4",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 3,
+      "evaluated_changed_pixels": 3,
+      "changed_pixel_mae_delta": -0.0026143791619688272
+    },
+    {
+      "view": "source 2 face 5",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 0,
+      "evaluated_changed_pixels": 0,
+      "changed_pixel_mae_delta": null
+    },
+    {
+      "view": "source 4 face 4",
+      "maximum_alpha_difference": 0.0,
+      "new_hole_pixels": 0,
+      "changed_pixels": 2,
+      "evaluated_changed_pixels": 2,
+      "changed_pixel_mae_delta": -0.008496732451021671
+    }
+  ],
+  "coverage_pass": true,
+  "changed_region_regressions": [],
+  "note": "Positive changed-pixel MAE delta means worse photo agreement. Source photos are inputs, not held-out novel-view truth. Original holes remain."
+}

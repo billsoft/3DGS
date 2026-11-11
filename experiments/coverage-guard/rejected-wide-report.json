@@ -1,0 +1,14 @@
+{
+  "method": "immutable baseline coverage / quality-gated camera source proposals",
+  "baseline_sha256": "b41da31715f1117cd3d9480a7bc4b15f129c6eb31af7361e5680a90d9d717ac9",
+  "points": 3166125,
+  "proposed_faces": 95616,
+  "accepted_faces": 3937,
+  "updated_points": 13680,
+  "minimum_quality_ratio": 0.75,
+  "maximum_evidence_distance": 0.2,
+  "geometry_opacity_covariance_identical": true,
+  "deleted_points": 0,
+  "added_points": 0,
+  "note": "Coverage equality follows from identical ordered geometry and opacity, not an estimated kNN support score. Only colors change. Existing holes and geometric errors cannot be repaired by this pass."
+}
