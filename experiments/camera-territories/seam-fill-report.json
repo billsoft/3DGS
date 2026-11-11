@@ -1,0 +1,9 @@
+{
+  "native_points": 569766,
+  "candidate_points": 492154,
+  "added_points": 390341,
+  "output_points": 960107,
+  "band_model_units": 0.055,
+  "median_estimated_coverage_before": 0.1496814581018211,
+  "note": "Coverage estimate evaluates local 3D Gaussian support, not an exact screen-space raster. Supplemental points come only from supported common-surface seam bands, never unobserved backsides."
+}

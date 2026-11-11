@@ -24,6 +24,8 @@ def run():
         weak=((scores[ids]>scores[ids].max(1)[:,None]*.3).sum(1)<2)|(evidence_distance>.08)
         fallback[ids]=(np.linalg.norm(old-new,axis=1)>.25)&weak
     groups=[];meshrows=[];arrays=[];ids_all=[];blended=0;max_weight=0.;eligible_count=0
+    if os.environ.get('GS_TERRITORY')=='1':
+        np.savez_compressed(OUT/'effective-ownership.npz',owner=np.where(fallback,4,owner),fallback=fallback,prior_group=prior['group'])
     jobs=[(i,None) for i in range(4)]+[(4,k) for k in range(len(prior_images))]
     for source,prior_index in jobs:
         ids=np.flatnonzero((owner==source)&~fallback) if source<4 else np.flatnonzero(fallback&(prior['group']==prior_index))

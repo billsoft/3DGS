@@ -1,0 +1,47 @@
+{
+  "sources": [
+    {
+      "station": "2",
+      "input_points": 524717,
+      "kept_points": 150491,
+      "core_points": 142030,
+      "narrow_overlap_points": 8461,
+      "footprints_limited": 14594,
+      "removed_fraction": 0.7131958751098211
+    },
+    {
+      "station": "3",
+      "input_points": 510003,
+      "kept_points": 184532,
+      "core_points": 179069,
+      "narrow_overlap_points": 5463,
+      "footprints_limited": 10306,
+      "removed_fraction": 0.6381746774038584
+    },
+    {
+      "station": "4",
+      "input_points": 494193,
+      "kept_points": 137164,
+      "core_points": 129816,
+      "narrow_overlap_points": 7348,
+      "footprints_limited": 11284,
+      "removed_fraction": 0.7224485170773363
+    },
+    {
+      "station": "5",
+      "input_points": 536680,
+      "kept_points": 118710,
+      "core_points": 112046,
+      "narrow_overlap_points": 6664,
+      "footprints_limited": 10862,
+      "removed_fraction": 0.778806737720802
+    }
+  ],
+  "raw_core_fused_points": 562961,
+  "notes": [
+    "Each source file retains its own territory plus a narrow neighboring seam band",
+    "The raw-core fusion includes primary territory points only, avoiding double-layer overlap",
+    "Original Gaussian colors/opacity are preserved; only pose and seam footprint bounds change",
+    "Common-surface texture export is a separate comparison, not claimed to be raw PLY concatenation"
+  ]
+}

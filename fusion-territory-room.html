@@ -1,0 +1,63 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会议室 · 相机领地与来源裁切</title>
+<style>
+body{margin:0;background:#111;color:#fff;font:14px system-ui}
+#tools{position:absolute;z-index:100;top:12px;left:12px;background:#18212ef0;padding:14px;border-radius:10px;max-width:min(350px,85vw)}
+button{margin:3px;padding:5px 9px}a{color:#9cdeff;margin-right:10px}p{margin:8px 0}h1{font-size:16px;margin:0 0 8px}
+</style>
+<div id="tools"><h1>会议室 · 相机领地与来源裁切</h1>
+<p><a href="?version=new">新融合</a><a href="?version=previous">已接受基线</a><a href="/fusion-territory-mesh.html">网格版</a></p><p><a href="?view=owners">查看三维领地</a><a href="/fusion-territory-report.html">算法与验证</a></p><p>领地：红=2，绿=3，蓝=4，黄=5，灰=保留原有效贴图。</p><p><a href="?view=raw">原始 PLY 裁切直拼</a><a href="?view=anchored">原始高斯射线锚定</a><a href="?source=2">单独 2</a><a href="?source=3">单独 3</a><a href="?source=4">单独 4</a><a href="?source=5">单独 5</a></p><p><a href="?view=painted">锚定并附色</a><a href="?view=hybrid">窄缝补点版</a></p><div id="positions"></div>
+<p>W/S 前后 · A/D 左右平移 · Q 上升 / E 下降</p><p id="status" role="status">加载中…</p>
+<p>核心区固定，接缝窄带竞争。直拼原始 PLY 和公共表面重采样是两个独立对照。</p><a href="/four-room/fusion-territory/fused.ply" download>下载融合 PLY</a>
+<a href="/four-room/fusion-territory/compare.jpg">同视点对照</a><a href="/four-room/fusion-territory/photo-compare.jpg">原图三方对照</a><a href="/four-room/fusion-territory/details.jpg">近景对照</a>
+<a href="/four-room/fusion-territory/validation.json">验证数据</a></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script>
+<script type="module">
+import {installRoomNavigation} from "./room-navigation.js";
+import * as THREE from 'three';
+import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';
+const hybrid=new URLSearchParams(location.search).get('view')==='hybrid';
+const painted=new URLSearchParams(location.search).get('view')==='painted';
+const anchored=new URLSearchParams(location.search).get('view')==='anchored';
+const raw=new URLSearchParams(location.search).get('view')==='raw';
+const source=new URLSearchParams(location.search).get('source');const individual=/^[2-5]$/.test(source||'');
+const territory=new URLSearchParams(location.search).get('view')==='owners';
+const previous=new URLSearchParams(location.search).get('version')==='previous';
+const download=document.querySelector('a[download]');
+const model=hybrid?'hybrid-fused':painted?'anchored-photo-fused':anchored?'anchored-core-fused':raw?'raw-core-fused':individual?'cropped-'+source:'fused';
+download.href=previous?'/four-room/baselines/2026-11-11-fusion-next/fused.ply':'/four-room/fusion-territory/'+model+'.ply';
+const status=document.querySelector('#status');
+try{
+ const response=await fetch('/four-room/fusion-territory/fusion.json');
+ if(!response.ok)throw new Error('找不到融合结果');
+ const meta=await response.json();
+ const centers=meta.centers.map(p=>new THREE.Vector3(...p));
+ const initial=centers[0].clone().lerp(centers[1],.5);
+ const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:initial.toArray(),initialCameraLookAt:[4,0,-.6],
+   sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,
+   ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
+ await viewer.addSplatScenes([{path:hybrid?'/four-room/fusion-territory/hybrid-fused.splat':painted?'/four-room/fusion-territory/anchored-photo-fused.splat':anchored?'/four-room/fusion-territory/anchored-core-fused.splat':raw?'/four-room/fusion-territory/raw-core-fused.splat':individual?'/four-room/fusion-territory/cropped-'+source+'.splat':territory?'/four-room/fusion-territory/owners.splat':previous?'/four-room/baselines/2026-11-11-fusion-next/fused.splat':'/four-room/fusion-territory/fused.splat',splatAlphaRemovalThreshold:3}],true);
+ viewer.start();
+ const panel=document.querySelector('#positions');
+ let movement=0;
+ const makeButton=(label,point)=>{
+   const b=document.createElement('button');b.textContent=label;
+   b.onclick=()=>{const token=++movement,from=viewer.camera.position.clone(),start=performance.now();
+     const tick=()=>{if(token!==movement)return;const t=Math.min(1,(performance.now()-start)/1100),e=t*t*t*(10-15*t+6*t*t);
+       const next=from.clone().lerp(point,e),delta=next.clone().sub(viewer.camera.position);viewer.camera.position.copy(next);viewer.controls.target.add(delta);viewer.controls.update();viewer.forceRenderNextFrame();if(t<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);};
+   panel.appendChild(b);
+ };
+ for(let i=0;i<centers.length;i++) makeButton(meta.stations[i]+'号机位',centers[i]);
+ panel.appendChild(document.createElement('br'));
+ for(let i=0;i<centers.length;i++){
+   const j=(i+1)%centers.length;
+   makeButton(meta.stations[i]+'–'+meta.stations[j]+' 中点',centers[i].clone().lerp(centers[j],.5));
+ }
+ const inspection=await (await fetch('/four-room/fusion-territory/inspection-views.json')).json();
+ for(const v of inspection){const button=document.createElement('button');button.textContent='检查 '+v.name;button.onclick=()=>{movement++;viewer.camera.position.fromArray(v.position);viewer.controls.target.fromArray(v.target);viewer.controls.update();viewer.forceRenderNextFrame();};panel.appendChild(button);}
+ viewer.controls.addEventListener('start',()=>{movement++;});
+ status.textContent='已加载 · '+(hybrid?'裁切、锚定、附色与窄缝补点':painted?'锚定并原图附色':anchored?'原始高斯射线锚定':raw?'原始 PLY 裁切直拼':individual?'裁切来源 '+source:previous?'已接受基线':'公共表面领地版')+' · 点击机位平滑移动';
+ installRoomNavigation({camera:viewer.camera,controls:viewer.controls,onMove:()=>{movement++;},render:()=>viewer.forceRenderNextFrame()});
+ window.roomViewer=viewer;
+}catch(e){status.textContent='载入失败：'+e.message;console.error(e)}
+</script></html>

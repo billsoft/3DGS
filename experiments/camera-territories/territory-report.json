@@ -1,0 +1,62 @@
+{
+  "method": "quality-weighted camera Voronoi core + surface quality smoothing + multi-sample seam graph optimization",
+  "quality_prior_weight": 0.65,
+  "seam_edge_samples": 5,
+  "seam_search_band_model_units": 0.22,
+  "overlap_band_model_units": 0.055,
+  "core_changes": 0,
+  "changed_from_baseline": 67086,
+  "baseline_components": [
+    {
+      "source": 0,
+      "components_ge20": 36,
+      "faces": 100245,
+      "largest": 70067
+    },
+    {
+      "source": 1,
+      "components_ge20": 60,
+      "faces": 56797,
+      "largest": 38956
+    },
+    {
+      "source": 2,
+      "components_ge20": 57,
+      "faces": 61353,
+      "largest": 33891
+    },
+    {
+      "source": 3,
+      "components_ge20": 59,
+      "faces": 66798,
+      "largest": 24844
+    }
+  ],
+  "new_components": [
+    {
+      "source": 0,
+      "components_ge20": 46,
+      "faces": 101650,
+      "largest": 65880
+    },
+    {
+      "source": 1,
+      "components_ge20": 25,
+      "faces": 51044,
+      "largest": 36110
+    },
+    {
+      "source": 2,
+      "components_ge20": 47,
+      "faces": 54255,
+      "largest": 40577
+    },
+    {
+      "source": 3,
+      "components_ge20": 28,
+      "faces": 78263,
+      "largest": 54906
+    }
+  ],
+  "note": "Surface connectivity depends on input geometry. Camera cores use calibrated optical centers, not Gaussian cloud centroids."
+}

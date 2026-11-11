@@ -1,0 +1,36 @@
+{
+  "sources": [
+    {
+      "station": "2",
+      "retained": 141183,
+      "anchored": 131613,
+      "unchanged": 9570,
+      "max_shift": 0.19999925792217255
+    },
+    {
+      "station": "3",
+      "retained": 178562,
+      "anchored": 169838,
+      "unchanged": 8724,
+      "max_shift": 0.19999556243419647
+    },
+    {
+      "station": "4",
+      "retained": 129477,
+      "anchored": 126017,
+      "unchanged": 3460,
+      "max_shift": 0.19999559223651886
+    },
+    {
+      "station": "5",
+      "retained": 112392,
+      "anchored": 104171,
+      "unchanged": 8221,
+      "max_shift": 0.1999846249818802
+    }
+  ],
+  "points": 561614,
+  "painted_points": 569766,
+  "painted_secondary_points": 8152,
+  "note": "The core candidate preserves source colors/opacity. The painted candidate reprojects original photos and blends optical depth only in a depth/color-consistent narrow band. Ray-plane projection uses covariance Jacobians and accepted common geometry; wrong geometry remains wrong."
+}

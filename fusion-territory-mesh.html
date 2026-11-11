@@ -1,0 +1,81 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会议室 · 通用接缝融合网格</title>
+<style>
+body{margin:0;background:#14191f;color:white;font:14px system-ui}canvas{display:block}
+#panel{position:fixed;z-index:2;left:12px;top:12px;max-width:min(390px,85vw);padding:13px;background:#17202ded;border-radius:8px}
+h1{font-size:16px;margin:0 0 7px}p{margin:8px 0}button{margin:3px;padding:5px 9px}a{color:#9cdeff;margin-right:9px}
+</style>
+<div id="panel"><h1>会议室 · 通用接缝融合网格</h1><div id="buttons"></div><p>W/S 前后 · A/D 左右平移 · Q 上升 / E 下降</p><p id="status">正在加载网格和原片贴图…</p>
+<a href="/four-room/fusion-territory/textured-room.zip" download>下载 OBJ + 贴图</a><a href="/four-room/fusion-territory/compare.jpg">同视点对照</a><a href="/fusion-territory-room.html">对应高斯版</a></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script>
+<script type="module">
+import {installRoomNavigation} from "./room-navigation.js";
+import * as T from 'three';
+import {OrbitControls} from './mesh-orbit-controls.js';
+const base='/four-room/fusion-territory/';
+const status=document.getElementById('status');
+try{
+ const [meta,data]=await Promise.all([
+  fetch(base+'mesh.json').then(r=>{if(!r.ok)throw Error('网格清单不可用');return r.json()}),
+  fetch(base+'mesh.bin').then(r=>{if(!r.ok)throw Error('网格文件不可用');return r.arrayBuffer()})
+ ]);
+ const a=new Float32Array(data),count=a.length/5;
+ if(count!==meta.triangles*3)throw Error('网格文件不完整');
+ const p=new Float32Array(count*3),uv=new Float32Array(count*2);
+ for(let i=0;i<count;i++){
+  p[i*3]=a[i*5];p[i*3+1]=a[i*5+1];p[i*3+2]=a[i*5+2];
+  uv[i*2]=a[i*5+3];uv[i*2+1]=1-a[i*5+4];
+ }
+ const scene=new T.Scene();scene.background=new T.Color(0x15191f);
+ const camera=new T.PerspectiveCamera(75,innerWidth/innerHeight,.015,100);
+ camera.up.set(...meta.up);
+ const poses=meta.centers.map(p=>new T.Vector3(...p));
+ const mid=(i)=>poses[i].clone().lerp(poses[(i+1)%poses.length],.5);
+ camera.position.copy(mid(0));
+ const renderer=new T.WebGLRenderer({antialias:true});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+ renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+ const controls=new OrbitControls(camera,renderer.domElement);
+ controls.target.set(4,0,-.6);controls.enableDamping=true;
+ controls.update();
+ const geometry=new T.BufferGeometry();
+ geometry.setAttribute('position',new T.BufferAttribute(p,3));
+ geometry.setAttribute('uv',new T.BufferAttribute(uv,2));
+ const textures=new T.TextureLoader();
+ const materials=await Promise.all(meta.groups.map(async (g,i)=>{
+  const texture=await textures.loadAsync(base+g.texture);
+  texture.colorSpace=T.SRGBColorSpace;
+  texture.wrapS=T.RepeatWrapping;
+  texture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+  geometry.addGroup(g.start,g.count,i);
+  return new T.MeshBasicMaterial({map:texture,side:T.DoubleSide});
+ }));
+ scene.add(new T.Mesh(geometry,materials));
+ let move=null;
+ controls.addEventListener('start',()=>{move=null;});
+ const buttons=document.getElementById('buttons');
+ const button=(name,to)=>{
+  const b=document.createElement('button');b.textContent=name;
+  b.onclick=()=>{move={from:camera.position.clone(),to:to.clone(),started:performance.now()};};
+  buttons.appendChild(b);
+ };
+ poses.forEach((p,i)=>button(meta.stations[i]+' 号机位',p));
+ buttons.appendChild(document.createElement('br'));
+ poses.forEach((_,i)=>button(meta.stations[i]+'→'+meta.stations[(i+1)%poses.length]+' 中点',mid(i)));
+ addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+ renderer.setAnimationLoop(()=>{
+  if(move){
+   const t=Math.min(1,(performance.now()-move.started)/1050);
+   const ease=t*t*t*(10-15*t+6*t*t);
+   const next=move.from.clone().lerp(move.to,ease);
+   const delta=next.clone().sub(camera.position);
+   camera.position.copy(next);controls.target.add(delta);
+   if(t===1)move=null;
+  }
+  controls.update();renderer.render(scene,camera);
+ });
+ status.textContent='已加载 · 拖动转向，点击机位或中点检查';
+ installRoomNavigation({camera,controls,onMove:()=>{move=null;},render:()=>renderer.render(scene,camera)});
+ window.roomViewer={camera,controls,scene,geometry};
+}catch(e){status.textContent='载入失败：'+e.message;console.error(e)}
+</script></html>
