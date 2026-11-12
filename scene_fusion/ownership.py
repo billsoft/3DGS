@@ -66,7 +66,7 @@ def run(out,mode='voxel',warped=False):
         fused=np.concatenate(pieces);np.save(out/'initial.npy',fused);np.save(out/'source.npy',np.concatenate(indices))
         gs.write(out/'initial.ply',fused);gs.to_splat(out/'initial.splat',fused)
         up=Q[:,:,2].mean(0);up/=np.linalg.norm(up)
-        write_json(out/'fusion.json',dict(stations=[s['id'] for s in scene['stations']],centers=C.tolist(),up=up.tolist(),splats=len(fused),method='N-camera visibility domains; single winning source; free-space conflict guard'))
+        write_json(out/'fusion.json',dict(stations=[s['id'] for s in scene['stations']],station_labels=[s.get('label',s['id']) for s in scene['stations']],centers=C.tolist(),up=up.tolist(),splats=len(fused),method='N-camera visibility domains; single winning source; free-space conflict guard'))
         write_json(out/'ownership-report.json',dict(mode=mode,stations=N,sources=reports,retained=len(fused)))
         print(json.dumps(reports),flush=True);return
     a=np.concatenate(clouds);source=np.concatenate(sources);quality=np.concatenate(quality)
@@ -92,4 +92,8 @@ def run(out,mode='voxel',warped=False):
     write_json(out/'ownership-report.json',report);print(json.dumps(report),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--mode',choices=['voxel','visible-domains'],default='visible-domains');p.add_argument('--warped',action='store_true');a=p.parse_args();run(a.out,a.mode,a.warped)
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--mode',choices=['voxel','visible-domains'],default='visible-domains');p.add_argument('--warped',action='store_true');p.add_argument('--snapshot');a=p.parse_args();run(a.out,a.mode,a.warped)
+    if a.snapshot:
+        import shutil
+        shutil.copyfile(a.out/'initial.npy',a.out/(a.snapshot+'.npy'))
+        shutil.copyfile(a.out/'fusion.json',a.out/(a.snapshot+'-meta.json'))

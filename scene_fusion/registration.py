@@ -14,13 +14,16 @@ def features(photo,station):
     W,H=3840,1920
     im=cv.resize(raw,(W,H),interpolation=cv.INTER_AREA)
     uv,des=prep.features(im,cv.SIFT_create(nfeatures=28000,contrastThreshold=.012))
+    if des is None or len(uv)<12:raise ValueError('Insufficient panorama features: '+str(photo))
     lon=(uv[:,0]/W-.5)*2*np.pi;lat=uv[:,1]/H*np.pi
     rays=np.stack([np.cos(lon)*np.sin(lat),-np.sin(lon)*np.sin(lat),np.cos(lat)],1)
     points=np.zeros_like(rays);valid=np.zeros(len(rays),bool)
     face=np.argmax(np.array([rays@b[:,2] for b in prep.FACES]),axis=0)
     C=np.load(station/'cache.npz')['C']
     for k,b in enumerate(prep.FACES):
-        ids=np.flatnonzero(face==k);q=rays[ids]@b
+        ids=np.flatnonzero(face==k)
+        if not len(ids):continue
+        q=rays[ids]@b
         xy=q[:,:2]/q[:,2,None]*320+320
         xx,yy=xy.T.astype('f')
         z=np.load(station/f'depth-{k}.npz')
@@ -59,12 +62,17 @@ def pair(a,b,rng):
     # Relative to the scene's robust extent, not a presumed metric room size.
     extent=np.median(np.linalg.norm(y-np.median(y,axis=0),axis=1))
     tol=max(.02,extent*.065);best=np.zeros(len(x),bool)
-    for _ in range(10000):
+    expected=np.median(np.linalg.norm(y-np.median(y,axis=0),axis=1))/max(np.median(np.linalg.norm(x-np.median(x,axis=0),axis=1)),1e-9)
+    budget=10000
+    for iteration in range(10000):
+        if iteration>=max(512,budget):break
         k=rng.choice(train,3,False);m=similarity(x[k],y[k])
         scale=np.cbrt(np.linalg.det(m[:3,:3]))
-        if not .62<scale<1.62:continue
+        if not expected/4<scale<expected*4:continue
         good=(np.linalg.norm(apply(m,x)-y,axis=1)<tol)&~hold
-        if good.sum()>best.sum():best=good
+        if good.sum()>best.sum():
+            best=good;fraction=float(best.sum())/len(train)
+            if fraction>.05:budget=min(budget,int(np.ceil(np.log(.001)/np.log(max(1e-12,1-fraction**3)))))
     if best.sum()<6:return None
     for _ in range(4):
         m=similarity(x[best],y[best]);err=np.linalg.norm(apply(m,x)-y,axis=1)
@@ -76,11 +84,9 @@ def solve(inputs,out,numbers):
     fs=[]
     for item in inputs:
         path=out/item['id']/'registration-features.npz'
-        if path.exists():
-            z=np.load(path);fs.append(tuple(z[k] for k in ['desc','points','held','cells']))
-        else:
-            row=features(Path(item['photo']),out/item['id']);fs.append(row)
-            np.savez_compressed(path,desc=row[0],points=row[1],held=row[2],cells=row[3])
+        # The runner owns checkpoints; a rerun must not reuse stale calibration features.
+        row=features(Path(item['photo']),out/item['id']);fs.append(row)
+        np.savez_compressed(path,desc=row[0],points=row[1],held=row[2],cells=row[3])
         print('Features',item['id'],len(fs[-1][0]),flush=True)
     edges={};results={};rng=np.random.default_rng(44)
     for i,j in combinations(range(len(numbers)),2):

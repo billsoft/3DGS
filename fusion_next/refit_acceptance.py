@@ -17,7 +17,7 @@ def run():
     checksum=hashlib.sha256((folder/'optimized.npy').read_bytes()).hexdigest()
     results=[]
     for name,size in [('eval',1024),('eval-low',512)]:
-        report=json.loads((folder/name/'evaluation.json').read_text())
+        report=json.loads((folder/name/'evaluation.json').read_text(encoding='utf8'))
         assert report['candidate_sha256']==checksum, 'Evaluation is not for the current model'
         s=report['summary']
         assert s['candidate_mean_ssim']>s['baseline_mean_ssim']
@@ -25,7 +25,7 @@ def run():
         assert s['worst_ssim_delta']>=-.01
         assert max(r['new_holes'] for r in report['views'])<=size*size*.0005
         results.append(dict(size=size,summary=s))
-    export=json.loads((folder/'export-check.json').read_text())
+    export=json.loads((folder/'export-check.json').read_text(encoding='utf8'))
     assert export['ply_roundtrip_exact'] and export['opacity_unchanged']
     result=dict(numeric_checks_passed=True,visual_review_required=True,
         evaluated_array_sha256=checksum,ply_sha256=hashlib.sha256((folder/'fused.ply').read_bytes()).hexdigest(),

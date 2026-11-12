@@ -7,8 +7,8 @@ from core import load,prep,write_json
 import json
 
 def run(out):
-    scene=load(out);reg=json.loads((out/'registration.json').read_text());bundle=np.load(out/'photo-bundle/bundle.npz')
-    C,Q=bundle['C'],bundle['Q'];tracks=json.loads((out/'photo-bundle/tracks.json').read_text());train=bundle['train'];P=bundle['points']
+    scene=load(out);reg=json.loads((out/'registration.json').read_text(encoding='utf8'));bundle=np.load(out/'photo-bundle/bundle.npz')
+    C,Q=bundle['C'],bundle['Q'];tracks=json.loads((out/'photo-bundle/tracks.json').read_text(encoding='utf8'));train=bundle['train'];P=bundle['points']
     matrices=[];reports=[]
     for i,item in enumerate(scene['stations']):
         folder=out/item['id'];cam=np.load(folder/'cache.npz');f=np.load(out/'photo-bundle'/f"features-{item['id']}.npz")
@@ -16,10 +16,13 @@ def run(out):
         for k,track_id in enumerate(train):
             for camera,feature in tracks[track_id]:
                 if camera==i:rays.append(f['ray'][feature]);targets.append(P[k])
+        if len(rays)<12:raise ValueError('Insufficient scale tracks for '+item['id'])
         rays=np.array(rays);targets=np.array(targets);depth=np.zeros(len(rays));valid=np.zeros(len(rays),bool)
         face=np.argmax(np.array([rays@b[:,2] for b in prep.FACES]),axis=0)
         for k,b in enumerate(prep.FACES):
-            ids=np.flatnonzero(face==k);q=rays[ids]@b;xy=(q[:,:2]/q[:,2,None]*320+320).astype('f');z=np.load(folder/f'depth-{k}.npz')
+            ids=np.flatnonzero(face==k)
+            if not len(ids):continue
+            q=rays[ids]@b;xy=(q[:,:2]/q[:,2,None]*320+320).astype('f');z=np.load(folder/f'depth-{k}.npz')
             dep=cv.remap(z['depth'],xy[:,0,None],xy[:,1,None],cv.INTER_LINEAR)[:,0]
             alpha=cv.remap(z['alpha'],xy[:,0,None],xy[:,1,None],cv.INTER_LINEAR)[:,0]
             depth[ids]=dep/q[:,2];valid[ids]=(alpha>.95)&(dep>.1)

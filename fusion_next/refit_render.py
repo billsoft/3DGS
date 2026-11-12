@@ -41,4 +41,4 @@ def save_scene(path, scene):
 
 def load_dataset(folder):
     folder = Path(folder)
-    return json.loads((folder/'dataset.json').read_text()), np.load(folder/'targets.npy')
+    return json.loads((folder/'dataset.json').read_text(encoding='utf8')), np.load(folder/'targets.npy')

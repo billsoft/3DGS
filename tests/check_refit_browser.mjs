@@ -30,7 +30,14 @@ try{
   await writeFile(`${root}/browser-${name}.png`,Buffer.from(data.split(',')[1],'base64'));
  }
  const result=await evaluate("({status:document.querySelector('#status').textContent,buttons:document.querySelectorAll('#positions button').length,download:document.querySelector('#download').getAttribute('href'),scenes:window.roomViewer.splatMesh.getSceneCount()})");
- assert(result.buttons>=8);assert.equal(result.scenes,1);
+ const scene=await evaluate('window.sceneMeta||null');
+ if(scene){
+  const preview=new URL(process.env.PREVIEW_URL);const id=preview.searchParams.get('scene');
+  const data=await(await fetch(preview.origin+'/four-room/scenes/'+id+'/data-512/dataset.json')).json();
+  assert.equal(result.buttons,scene.stations.length+data.midpoint_edges.length+3);
+  result.stationCount=scene.stations.length;result.labels=scene.station_labels||scene.stations;
+ }else assert(result.buttons>=8);
+ assert.equal(result.scenes,1);
  await writeFile(`${root}/browser-check.json`,JSON.stringify({passed:true,...result,errors},null,2));
  console.log(JSON.stringify(result));
 }finally{ws.close()}

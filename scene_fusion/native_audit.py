@@ -3,7 +3,7 @@
 This catches holes that an already-cropped fusion baseline would hide. Photos
 are fitting references, not held-out novel-view truth. Uses a fixed native mask.
 """
-import argparse,json
+import argparse,json,hashlib
 from pathlib import Path
 import numpy as np
 import torch
@@ -17,7 +17,7 @@ args=p.parse_args();args.report.mkdir(parents=True,exist_ok=True);scene=load(arg
 fused=load_scene(args.candidate);records=[]
 for i,item in enumerate(scene['stations']):
     path=args.out/'aligned'/(item['id']+'-full.npy')
-    if not path.exists():np.save(path,gs.transform(np.load(args.out/item['id']/'original.npy'),cams['matrices'][i]))
+    np.save(path,gs.transform(np.load(args.out/item['id']/'original.npy'),cams['matrices'][i]))
     native=load_scene(path)
     with torch.no_grad():
         for idx,v in enumerate(meta['views']):
@@ -35,5 +35,5 @@ summary=dict(views=len(records),native_ssim=float(np.mean([r['native']['ssim'] f
     fused_ssim=float(np.mean([r['fused']['ssim'] for r in records])),
     newly_low_alpha_pixels=sum(r['fused']['holes'] for r in records),
     native_high_alpha_pixels=sum(r['native']['mask_pixels'] for r in records))
-write_json(args.report/'audit.json',dict(summary=summary,views=records,note='Fixed full-native alpha mask; photo fitting diagnostic, no independent novel-view reference.'))
+write_json(args.report/'audit.json',dict(summary=summary,views=records,candidate_sha256=hashlib.sha256(args.candidate.read_bytes()).hexdigest(),size=args.size,note='Fixed full-native alpha mask; photo fitting diagnostic, no independent novel-view reference.'))
 print(json.dumps(summary),flush=True)

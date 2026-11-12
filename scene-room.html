@@ -17,8 +17,9 @@ try{
  await viewer.addSplatScenes([{path:base+'/'+filename+'.splat',splatAlphaRemovalThreshold:3}],true);viewer.start();
  let movement=0;const panel=document.querySelector('#positions');const button=(label,action)=>{const b=document.createElement('button');b.textContent=label;b.onclick=action;panel.appendChild(b)};
  const go=point=>{const token=++movement,from=viewer.camera.position.clone(),start=performance.now();const tick=()=>{if(token!==movement)return;const t=Math.min(1,(performance.now()-start)/1100),e=t*t*t*(10-15*t+6*t*t),next=from.clone().lerp(point,e),delta=next.clone().sub(viewer.camera.position);viewer.camera.position.copy(next);viewer.controls.target.add(delta);viewer.controls.update();viewer.forceRenderNextFrame();if(t<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};
- centers.forEach((c,i)=>button(meta.stations[i]+'号机位',()=>go(c)));
- panel.appendChild(document.createElement('br'));data.midpoint_edges.forEach(([i,j])=>button(meta.stations[i]+'–'+meta.stations[j]+'中点',()=>go(centers[i].clone().lerp(centers[j],.5))));
+ const labels=meta.station_labels||meta.stations;
+ centers.forEach((c,i)=>button(labels[i]+'号机位',()=>go(c)));
+ panel.appendChild(document.createElement('br'));data.midpoint_edges.forEach(([i,j])=>button(labels[i]+'–'+labels[j]+'中点',()=>go(centers[i].clone().lerp(centers[j],.5))));
  const inspect=i=>{const v=data.views[i];movement++;viewer.camera.position.fromArray(v.center);viewer.controls.target.fromArray(v.center.map((x,k)=>x+v.basis[k][2]));viewer.controls.update();viewer.forceRenderNextFrame()};
  panel.appendChild(document.createElement('br'));button('向下检查',()=>inspect(5));button('向上检查',()=>inspect(4));button('水平视向',()=>inspect(3));
  installRoomNavigation({camera:viewer.camera,controls:viewer.controls,onMove:()=>movement++,render:()=>viewer.forceRenderNextFrame()});

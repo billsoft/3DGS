@@ -1,0 +1,311 @@
+{
+  "unit_tests": 23,
+  "resume": {
+    "passed": true,
+    "reused_stages": [
+      "preflight",
+      "prepare",
+      "registration",
+      "bundle",
+      "scales",
+      "domains",
+      "activate",
+      "dataset-512",
+      "dataset-1024",
+      "neighbors",
+      "fit-low",
+      "fit-hd",
+      "eval-512",
+      "native-512",
+      "eval-1024",
+      "native-1024",
+      "quality",
+      "export",
+      "publish"
+    ]
+  },
+  "real_data_note": "2,4,6 are subsets of the same six-view real room, not three independent rooms.",
+  "synthetic_note": "Independent procedural room; two cameras, Unicode labels, PLY unit scale factors 0.01 and 100.",
+  "runs": [
+    {
+      "scene": "general-two-v2",
+      "synthetic": false,
+      "sources": 2,
+      "labels": [
+        "1",
+        "2"
+      ],
+      "stages": 19,
+      "quality": {
+        "passed": true,
+        "reasons": [],
+        "native_coverage_loss_fraction": 0.0,
+        "limitations": "Automatic regression checks only; unseen regions, reflections and intermediate-view geometry still require visual review.",
+        "candidate_sha256": "cbac0c57407bea4524c8b451716e10bba30f40bf8d0ff3bc811662ac19714797"
+      },
+      "native": {
+        "views": 12,
+        "native_ssim": 0.9537402453234786,
+        "fused_ssim": 0.9728034795973016,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 12425427
+      },
+      "fit": {
+        "source_views": 12,
+        "novel_views": 3,
+        "baseline_mean_ssim": 0.9211792379313116,
+        "candidate_mean_ssim": 0.972554111722868,
+        "baseline_mean_mae": 0.019000247348063926,
+        "candidate_mean_mae": 0.005585370775521816,
+        "improved_ssim_views": 12,
+        "worst_ssim_delta": 0.004502160545939993,
+        "new_holes": 0
+      },
+      "export": {
+        "points": 590771,
+        "finite": true,
+        "ply_roundtrip_exact": true,
+        "candidate_sha256": "cbac0c57407bea4524c8b451716e10bba30f40bf8d0ff3bc811662ac19714797",
+        "ply_sha256": "c76469b1e50eda58193ef95862290fb95d55dd033306e18d4383705943f8d76b"
+      },
+      "held_tracks": 49,
+      "held_before": {
+        "median_equivalent_px": 0.45534100777150466,
+        "p90_equivalent_px": 3.128368209641586,
+        "observations": 98
+      },
+      "held_after": {
+        "median_equivalent_px": 0.31806034220131263,
+        "p90_equivalent_px": 1.5614965945802721,
+        "observations": 98
+      },
+      "original_inputs_unchanged": true,
+      "browser": {
+        "passed": true,
+        "status": "已加载 · 2机位 · 联合优化",
+        "buttons": 6,
+        "download": "/four-room/scenes/general-two-v2/final/fused.ply",
+        "scenes": 1,
+        "stationCount": 2,
+        "labels": [
+          "1",
+          "2"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "scene": "general-four-v2",
+      "synthetic": false,
+      "sources": 4,
+      "labels": [
+        "1",
+        "2",
+        "4",
+        "6"
+      ],
+      "stages": 19,
+      "quality": {
+        "passed": true,
+        "reasons": [],
+        "native_coverage_loss_fraction": 0.0,
+        "limitations": "Automatic regression checks only; unseen regions, reflections and intermediate-view geometry still require visual review.",
+        "candidate_sha256": "7a153fe3c26537266cbf3f2ca15ee6437438f18f31f7fdf3a0922610fb2c7545"
+      },
+      "native": {
+        "views": 24,
+        "native_ssim": 0.9551166880478089,
+        "fused_ssim": 0.962045586435123,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 24853454
+      },
+      "fit": {
+        "source_views": 24,
+        "novel_views": 15,
+        "baseline_mean_ssim": 0.8841258442018723,
+        "candidate_mean_ssim": 0.9612471245959026,
+        "baseline_mean_mae": 0.03097221623664348,
+        "candidate_mean_mae": 0.008506589164780982,
+        "improved_ssim_views": 24,
+        "worst_ssim_delta": 0.004054746338180815,
+        "new_holes": 0
+      },
+      "export": {
+        "points": 915524,
+        "finite": true,
+        "ply_roundtrip_exact": true,
+        "candidate_sha256": "7a153fe3c26537266cbf3f2ca15ee6437438f18f31f7fdf3a0922610fb2c7545",
+        "ply_sha256": "69dd8fadc77444c304043d78ec51cfba4f6e6ca04013c7acfcd45ccaf7668904"
+      },
+      "held_tracks": 82,
+      "held_before": {
+        "median_equivalent_px": 0.6951054590211458,
+        "p90_equivalent_px": 5.1758003874119165,
+        "observations": 171
+      },
+      "held_after": {
+        "median_equivalent_px": 0.5755210137277561,
+        "p90_equivalent_px": 5.076104691225712,
+        "observations": 171
+      },
+      "original_inputs_unchanged": true,
+      "browser": {
+        "passed": true,
+        "status": "已加载 · 4机位 · 联合优化",
+        "buttons": 12,
+        "download": "/four-room/scenes/general-four-v2/final/fused.ply",
+        "scenes": 1,
+        "stationCount": 4,
+        "labels": [
+          "1",
+          "2",
+          "4",
+          "6"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "scene": "general-six-v2",
+      "synthetic": false,
+      "sources": 6,
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "stages": 19,
+      "quality": {
+        "passed": true,
+        "reasons": [],
+        "native_coverage_loss_fraction": 0.0,
+        "limitations": "Automatic regression checks only; unseen regions, reflections and intermediate-view geometry still require visual review.",
+        "candidate_sha256": "36e581b6d7b4c4848a5e131a057356abce8b3b8ff79c69af700a5ddee638ffdd"
+      },
+      "native": {
+        "views": 36,
+        "native_ssim": 0.9517263477536014,
+        "fused_ssim": 0.9529370130556399,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 37264106
+      },
+      "fit": {
+        "source_views": 36,
+        "novel_views": 18,
+        "baseline_mean_ssim": 0.8725815716792593,
+        "candidate_mean_ssim": 0.9517565312970133,
+        "baseline_mean_mae": 0.0330029771612332,
+        "candidate_mean_mae": 0.01082626934639204,
+        "improved_ssim_views": 36,
+        "worst_ssim_delta": 0.0038737979367331477,
+        "new_holes": 0
+      },
+      "export": {
+        "points": 1077353,
+        "finite": true,
+        "ply_roundtrip_exact": true,
+        "candidate_sha256": "36e581b6d7b4c4848a5e131a057356abce8b3b8ff79c69af700a5ddee638ffdd",
+        "ply_sha256": "21b2cf8bf3bb338295a6316e77593af8fb86027d3747dc1461a5b385460c6dd3"
+      },
+      "held_tracks": 192,
+      "held_before": {
+        "median_equivalent_px": 1.1810356873347456,
+        "p90_equivalent_px": 4.978835578227313,
+        "observations": 431
+      },
+      "held_after": {
+        "median_equivalent_px": 0.6514952149229404,
+        "p90_equivalent_px": 3.856070154570518,
+        "observations": 431
+      },
+      "original_inputs_unchanged": true,
+      "browser": {
+        "passed": true,
+        "status": "已加载 · 6机位 · 联合优化",
+        "buttons": 15,
+        "download": "/four-room/scenes/general-six-v2/final/fused.ply",
+        "scenes": 1,
+        "stationCount": 6,
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "scene": "general-synthetic-v2",
+      "synthetic": true,
+      "sources": 2,
+      "labels": [
+        "view-final",
+        "机位 甲"
+      ],
+      "stages": 19,
+      "quality": {
+        "passed": true,
+        "reasons": [],
+        "native_coverage_loss_fraction": 0.0,
+        "limitations": "Automatic regression checks only; unseen regions, reflections and intermediate-view geometry still require visual review.",
+        "candidate_sha256": "d094bfc9b8e3dc7dd48e8f265b480775d4238fcf294945c2361145b97b30d45a"
+      },
+      "native": {
+        "views": 12,
+        "native_ssim": 0.9416447540753915,
+        "fused_ssim": 0.9935708164376534,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 12582912
+      },
+      "fit": {
+        "source_views": 12,
+        "novel_views": 3,
+        "baseline_mean_ssim": 0.9287293912530891,
+        "candidate_mean_ssim": 0.9935713854624219,
+        "baseline_mean_mae": 0.03928545045279811,
+        "candidate_mean_mae": 0.004556639276503317,
+        "improved_ssim_views": 12,
+        "worst_ssim_delta": 0.013075587288711943,
+        "new_holes": 0
+      },
+      "export": {
+        "points": 55020,
+        "finite": true,
+        "ply_roundtrip_exact": true,
+        "candidate_sha256": "d094bfc9b8e3dc7dd48e8f265b480775d4238fcf294945c2361145b97b30d45a",
+        "ply_sha256": "2d295d6427e7b096fe4b9d21e3f54505d8134e7200ca3c02b4c84e72e267f7c5"
+      },
+      "held_tracks": 104,
+      "held_before": {
+        "median_equivalent_px": 0.6802581266971857,
+        "p90_equivalent_px": 2.019044184074084,
+        "observations": 208
+      },
+      "held_after": {
+        "median_equivalent_px": 0.680394496085903,
+        "p90_equivalent_px": 2.1224803069465055,
+        "observations": 208
+      },
+      "original_inputs_unchanged": true,
+      "browser": {
+        "passed": true,
+        "status": "已加载 · 2机位 · 联合优化",
+        "buttons": 6,
+        "download": "/four-room/scenes/general-synthetic-v2/final/fused.ply",
+        "scenes": 1,
+        "stationCount": 2,
+        "labels": [
+          "view-final",
+          "机位 甲"
+        ],
+        "errors": []
+      }
+    }
+  ]
+}

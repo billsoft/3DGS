@@ -15,16 +15,16 @@ spec=importlib.util.spec_from_file_location('fusion',ROOT/'four-fuse.py')
 f=importlib.util.module_from_spec(spec);spec.loader.exec_module(f)
 parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True);args=parser.parse_args();D=args.out;OUT=D/'photo-bundle';OUT.mkdir(exist_ok=True)
 scene=json.loads((D/'scene.json').read_text(encoding='utf8'));photos={s['id']:Path(s['photo']) for s in scene['stations']}
-reg=json.loads((D/'registration.json').read_text());ns=reg['stations'];ms=np.array(reg['matrices'])
+reg=json.loads((D/'registration.json').read_text(encoding='utf8'));ns=reg['stations'];ms=np.array(reg['matrices'])
 Cs=[];Qs=[];fs=[]
 for n,m in zip(ns,ms):
     cache=OUT/f'features-{n}.npz'
-    if not cache.exists():
-        im=cv.imdecode(np.fromfile(photos[n],np.uint8),1)
-        im=cv.resize(im,(3840,1920));uv,desc=f.prep.features(im,cv.SIFT_create(nfeatures=30000,contrastThreshold=.012))
-        lon=(uv[:,0]/3840-.5)*2*np.pi;lat=uv[:,1]/1920*np.pi
-        ray=np.stack([np.cos(lon)*np.sin(lat),-np.sin(lon)*np.sin(lat),np.cos(lat)],1)
-        np.savez(cache,uv=uv,desc=desc,ray=ray)
+    # Whole-stage checkpoints handle reuse, including feature-code changes.
+    im=cv.imdecode(np.fromfile(photos[n],np.uint8),1)
+    im=cv.resize(im,(3840,1920));uv,desc=f.prep.features(im,cv.SIFT_create(nfeatures=30000,contrastThreshold=.012))
+    lon=(uv[:,0]/3840-.5)*2*np.pi;lat=uv[:,1]/1920*np.pi
+    ray=np.stack([np.cos(lon)*np.sin(lat),-np.sin(lon)*np.sin(lat),np.cos(lat)],1)
+    np.savez(cache,uv=uv,desc=desc,ray=ray)
     fs.append(np.load(cache));c=np.load(D/n/'cache.npz');s=np.cbrt(np.linalg.det(m[:3,:3]))
     Cs.append(m[:3,:3]@c['C']+m[:3,3]);Qs.append(m[:3,:3]/s@c['R'].T)
 C0=np.array(Cs);Q0=np.array(Qs)
@@ -67,7 +67,9 @@ for k,idx in enumerate(train):
     for c,b in tracks[idx]:obs_c.append(c);obs_p.append(k);obs_r.append(fs[c]['ray'][b])
 oc=np.array(obs_c);op=np.array(obs_p);rr=np.array(obs_r)
 if np.any(np.bincount(oc,minlength=len(ns))<12):raise ValueError('A camera has insufficient bundle observations')
-base=np.linalg.norm(C0[1]-C0[0]);N=len(train);camera_parameters=6*(len(ns)-1)
+gauge_peer=int(np.argmax(np.linalg.norm(C0-C0[0],axis=1)))
+base=np.linalg.norm(C0[gauge_peer]-C0[0]);N=len(train);camera_parameters=6*(len(ns)-1)
+if base<1e-4:raise ValueError('Camera baseline is degenerate; distinct capture positions are required')
 def unpack(x):
     C=C0.copy();C[1:]+=x[:camera_parameters].reshape(len(ns)-1,6)[:,3:]
     Q=Q0.copy();Q[1:]=Rotation.from_rotvec(x[:camera_parameters].reshape(len(ns)-1,6)[:,:3]).as_matrix()@Q0[1:]
@@ -75,17 +77,17 @@ def unpack(x):
 def residual(x):
     C,Q,P=unpack(x);d=P[op]-C[oc];d/=np.linalg.norm(d,axis=1)[:,None]
     ray=np.einsum('nij,nj->ni',Q[oc],rr)
-    return np.r_[(d-ray).ravel(),(np.linalg.norm(C[1]-C[0])-base)*10]
+    return np.r_[(d-ray).ravel(),(np.linalg.norm(C[gauge_peer]-C[0])-base)*10]
 sp=lil_matrix((3*len(oc)+1,camera_parameters+3*N),dtype=int)
 for k,(c,p) in enumerate(zip(oc,op)):
     sp[3*k:3*k+3,camera_parameters+3*p:camera_parameters+3*p+3]=1
     if c:sp[3*k:3*k+3,6*(c-1):6*c]=1
-sp[-1,3:6]=1
+sp[-1,6*(gauge_peer-1)+3:6*gauge_peer]=1
 x=np.r_[np.zeros(camera_parameters),points[train].ravel()]
 print('tracks',len(tracks),'train',N,'hold',int(hold.sum()),flush=True)
 sol=least_squares(residual,x,jac_sparsity=sp.tocsr(),loss='soft_l1',f_scale=.002,max_nfev=500,verbose=1,ftol=1e-5,tr_options={'atol':1e-8,'btol':1e-8})
 C,Q,P=unpack(sol.x)
-report={'tracks':len(tracks),'train_tracks':N,'held_tracks':int(hold.sum()),'gauge':'first camera fixed; first baseline length fixed; scale is arbitrary', 'optimizer_success':bool(sol.success),'optimizer_message':sol.message}
+report={'tracks':len(tracks),'train_tracks':N,'held_tracks':int(hold.sum()),'gauge':'first camera fixed; longest initial baseline from it fixed; scale is arbitrary','gauge_peer':ns[gauge_peer], 'optimizer_success':bool(sol.success),'optimizer_message':sol.message}
 for label,cc,qq in [('before',C0,Q0),('after',C,Q)]:
     for split,sel in [('train',~hold),('held',hold)]:
         es=[]
