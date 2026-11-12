@@ -39,6 +39,8 @@ def run():
     parser.add_argument('--color-lr', type=float, default=.008)
     parser.add_argument('--position-lr', type=float, default=.00016)
     parser.add_argument('--scale-lr', type=float, default=.001)
+    parser.add_argument('--shape-free', action='store_true',
+        help='Also fit Gaussian rotation and opacity after color warmup (joint mode only)')
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     torch.manual_seed(1729); np.random.seed(1729)
@@ -59,12 +61,14 @@ def run():
         for i, v in enumerate(views):
             im, alpha, _ = render(initial, v, size)
             reference[i], alphas[i] = im.detach(), alpha.detach()
-    for key in ['means', 'colors', 'logs']:
+    for key in ['means', 'colors', 'logs'] + (['quats','opacity'] if args.shape_free else []):
         scene[key] = torch.nn.Parameter(scene[key])
     optim = torch.optim.Adam([
         {'params': [scene['colors']], 'lr': args.color_lr},
         {'params': [scene['means']], 'lr': args.position_lr},
-        {'params': [scene['logs']], 'lr': args.scale_lr}], eps=1e-8)
+        {'params': [scene['logs']], 'lr': args.scale_lr}] + ([
+        {'params': [scene['quats']], 'lr': .0002},
+        {'params': [scene['opacity']], 'lr': .01}] if args.shape_free else []), eps=1e-8)
     records = []; started = time.monotonic(); order = []
     for step in range(args.steps):
         if not order: order = list(np.random.permutation(train_ids))
@@ -98,6 +102,8 @@ def run():
         loss.backward()
         if args.mode=='color' or step<args.warmup:
             scene['means'].grad = None; scene['logs'].grad = None
+            if args.shape_free:
+                scene['quats'].grad = None; scene['opacity'].grad = None
         optim.step()
         with torch.no_grad():
             scene['colors'].clamp_(0, 1)
@@ -106,6 +112,9 @@ def run():
             scene['means'].copy_(initial['means']+delta*(args.move_limit/norm).clamp_max(1))
             scene['logs'].copy_(torch.maximum(initial['logs']+np.log(.8),
                                 torch.minimum(initial['logs']+np.log(1.25), scene['logs'])))
+            if args.shape_free and args.mode!='color' and step>=args.warmup:
+                scene['quats'].copy_(F.normalize(scene['quats'],dim=1))
+                scene['opacity'].clamp_(-2.,8.)
         if step%50==0 or step==args.steps-1:
             record = dict(step=step+1, loss=float(loss.detach()), coverage_loss=float(coverage.detach()),
                 seconds=time.monotonic()-started, peak_gpu_gb=torch.cuda.max_memory_allocated()/1e9)
@@ -116,7 +125,9 @@ def run():
     with torch.no_grad():
         movement = (scene['means']-initial['means']).norm(dim=1)
         stats = dict(max_movement=float(movement.max()), mean_movement=float(movement.mean()),
-            same_point_count=True, fixed_opacity=True, fixed_rotations=True,
+            same_point_count=True,
+            fixed_opacity=not (args.shape_free and args.mode=='joint' and args.steps>args.warmup),
+            fixed_rotations=not (args.shape_free and args.mode=='joint' and args.steps>args.warmup),
             semantic_rules=False, view_dependent_colors=False,
             config={k: str(v) if isinstance(v, Path) else v for k,v in vars(args).items()}, records=records)
     (args.out/'training.json').write_text(json.dumps(stats, indent=2))

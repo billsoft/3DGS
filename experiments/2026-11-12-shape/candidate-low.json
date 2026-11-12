@@ -1,0 +1,557 @@
+{
+  "summary": {
+    "source_views": 26,
+    "novel_views": 12,
+    "baseline_mean_ssim": 0.9012569006767218,
+    "candidate_mean_ssim": 0.9075754032895448,
+    "baseline_mean_mae": 0.02039774270302417,
+    "candidate_mean_mae": 0.019642582812821188,
+    "improved_ssim_views": 25,
+    "worst_ssim_delta": -0.000436557948916394,
+    "new_holes": 0
+  },
+  "views": [
+    {
+      "view": "source-2-0",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0030223571229726076,
+      "baseline": {
+        "mae": 0.024317185520817793,
+        "ssim": 0.914909967768689,
+        "holes": 0,
+        "mask_pixels": 262144
+      },
+      "candidate": {
+        "mae": 0.02287638872483839,
+        "ssim": 0.9230755819454131,
+        "holes": 0,
+        "mask_pixels": 262144
+      }
+    },
+    {
+      "view": "source-2-1",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0011024143313989043,
+      "baseline": {
+        "mae": 0.003389931066211422,
+        "ssim": 0.9902676334074811,
+        "holes": 0,
+        "mask_pixels": 262128
+      },
+      "candidate": {
+        "mae": 0.0031395159070131606,
+        "ssim": 0.9919651501911265,
+        "holes": 0,
+        "mask_pixels": 262128
+      }
+    },
+    {
+      "view": "source-2-2",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.003777615027502179,
+      "baseline": {
+        "mae": 0.042168621745884746,
+        "ssim": 0.7731068112107926,
+        "holes": 0,
+        "mask_pixels": 262074
+      },
+      "candidate": {
+        "mae": 0.04048890472270826,
+        "ssim": 0.7841125320020799,
+        "holes": 0,
+        "mask_pixels": 262074
+      }
+    },
+    {
+      "view": "source-2-3",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.002282900968566537,
+      "baseline": {
+        "mae": 0.013735432132588139,
+        "ssim": 0.9348851127598168,
+        "holes": 0,
+        "mask_pixels": 262130
+      },
+      "candidate": {
+        "mae": 0.01319994628652379,
+        "ssim": 0.9395555412416867,
+        "holes": 0,
+        "mask_pixels": 262130
+      }
+    },
+    {
+      "view": "source-2-4",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0014631185913458467,
+      "baseline": {
+        "mae": 0.016152184785911503,
+        "ssim": 0.9506282051583568,
+        "holes": 0,
+        "mask_pixels": 262144
+      },
+      "candidate": {
+        "mae": 0.015896446377931986,
+        "ssim": 0.9538284910283998,
+        "holes": 0,
+        "mask_pixels": 262144
+      }
+    },
+    {
+      "view": "source-2-5",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0035554913338273764,
+      "baseline": {
+        "mae": 0.0183943625856436,
+        "ssim": 0.8703121436201862,
+        "holes": 0,
+        "mask_pixels": 261766
+      },
+      "candidate": {
+        "mae": 0.016944736087645094,
+        "ssim": 0.8849384332557446,
+        "holes": 0,
+        "mask_pixels": 261766
+      }
+    },
+    {
+      "view": "source-3-0",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0021698474884033203,
+      "baseline": {
+        "mae": 0.02465893145065984,
+        "ssim": 0.9091264564294879,
+        "holes": 0,
+        "mask_pixels": 262141
+      },
+      "candidate": {
+        "mae": 0.023656025326364957,
+        "ssim": 0.914045733882735,
+        "holes": 0,
+        "mask_pixels": 262141
+      }
+    },
+    {
+      "view": "source-3-1",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.002486379584297538,
+      "baseline": {
+        "mae": 0.015448023348755873,
+        "ssim": 0.8015980293206223,
+        "holes": 0,
+        "mask_pixels": 262027
+      },
+      "candidate": {
+        "mae": 0.014308754050502592,
+        "ssim": 0.8171365922293157,
+        "holes": 0,
+        "mask_pixels": 262027
+      }
+    },
+    {
+      "view": "source-3-2",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.004056564997881651,
+      "baseline": {
+        "mae": 0.027347288283932434,
+        "ssim": 0.8428384402924575,
+        "holes": 0,
+        "mask_pixels": 262108
+      },
+      "candidate": {
+        "mae": 0.02613790755234017,
+        "ssim": 0.8542075653550331,
+        "holes": 0,
+        "mask_pixels": 262108
+      }
+    },
+    {
+      "view": "source-3-3",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.002947386121377349,
+      "baseline": {
+        "mae": 0.0315077567763759,
+        "ssim": 0.8650394153069404,
+        "holes": 0,
+        "mask_pixels": 262121
+      },
+      "candidate": {
+        "mae": 0.02979596585208344,
+        "ssim": 0.8758952618663416,
+        "holes": 0,
+        "mask_pixels": 262121
+      }
+    },
+    {
+      "view": "source-3-4",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0015462860465049744,
+      "baseline": {
+        "mae": 0.011361570299279275,
+        "ssim": 0.9573150962725291,
+        "holes": 0,
+        "mask_pixels": 262136
+      },
+      "candidate": {
+        "mae": 0.012056906949539448,
+        "ssim": 0.9576521964592424,
+        "holes": 0,
+        "mask_pixels": 262136
+      }
+    },
+    {
+      "view": "source-3-5",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.004376289900392294,
+      "baseline": {
+        "mae": 0.02496074529350712,
+        "ssim": 0.8429905151729638,
+        "holes": 0,
+        "mask_pixels": 262005
+      },
+      "candidate": {
+        "mae": 0.022862646843648145,
+        "ssim": 0.8623782229464299,
+        "holes": 0,
+        "mask_pixels": 262005
+      }
+    },
+    {
+      "view": "source-4-0",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0011549732880666852,
+      "baseline": {
+        "mae": 0.0049006502496853534,
+        "ssim": 0.9870074070947875,
+        "holes": 0,
+        "mask_pixels": 262139
+      },
+      "candidate": {
+        "mae": 0.0043139858661733685,
+        "ssim": 0.9889583603422212,
+        "holes": 0,
+        "mask_pixels": 262139
+      }
+    },
+    {
+      "view": "source-4-1",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.002912624040618539,
+      "baseline": {
+        "mae": 0.026958630868392862,
+        "ssim": 0.8750336704974291,
+        "holes": 0,
+        "mask_pixels": 262125
+      },
+      "candidate": {
+        "mae": 0.02592859384513993,
+        "ssim": 0.881582732448422,
+        "holes": 0,
+        "mask_pixels": 262125
+      }
+    },
+    {
+      "view": "source-4-2",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.003557542571797967,
+      "baseline": {
+        "mae": 0.027833994669210074,
+        "ssim": 0.848117776085922,
+        "holes": 0,
+        "mask_pixels": 262093
+      },
+      "candidate": {
+        "mae": 0.026509646566098267,
+        "ssim": 0.8600109063067898,
+        "holes": 0,
+        "mask_pixels": 262093
+      }
+    },
+    {
+      "view": "source-4-3",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0027061260771006346,
+      "baseline": {
+        "mae": 0.032195965765042335,
+        "ssim": 0.8758880091986294,
+        "holes": 0,
+        "mask_pixels": 261781
+      },
+      "candidate": {
+        "mae": 0.030767505884340098,
+        "ssim": 0.8824750857817519,
+        "holes": 0,
+        "mask_pixels": 261781
+      }
+    },
+    {
+      "view": "source-4-4",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0011824405519291759,
+      "baseline": {
+        "mae": 0.0132951747105439,
+        "ssim": 0.9654118559363282,
+        "holes": 0,
+        "mask_pixels": 262144
+      },
+      "candidate": {
+        "mae": 0.013393884220103546,
+        "ssim": 0.9661424695702018,
+        "holes": 0,
+        "mask_pixels": 262144
+      }
+    },
+    {
+      "view": "source-4-5",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0019343183375895023,
+      "baseline": {
+        "mae": 0.012770593061124333,
+        "ssim": 0.9266879543597198,
+        "holes": 0,
+        "mask_pixels": 261313
+      },
+      "candidate": {
+        "mae": 0.012513786386916994,
+        "ssim": 0.9314269737736012,
+        "holes": 0,
+        "mask_pixels": 261313
+      }
+    },
+    {
+      "view": "source-5-0",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0010938429040834308,
+      "baseline": {
+        "mae": 0.004379447722734305,
+        "ssim": 0.9839993068940887,
+        "holes": 0,
+        "mask_pixels": 262130
+      },
+      "candidate": {
+        "mae": 0.0039993178591307375,
+        "ssim": 0.9859079846845392,
+        "holes": 0,
+        "mask_pixels": 262130
+      }
+    },
+    {
+      "view": "source-5-1",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0034590864088386297,
+      "baseline": {
+        "mae": 0.03079033397205537,
+        "ssim": 0.8581984568450322,
+        "holes": 0,
+        "mask_pixels": 262142
+      },
+      "candidate": {
+        "mae": 0.02960367017624247,
+        "ssim": 0.8661659223269982,
+        "holes": 0,
+        "mask_pixels": 262142
+      }
+    },
+    {
+      "view": "source-5-2",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0026713840197771788,
+      "baseline": {
+        "mae": 0.03279954038722986,
+        "ssim": 0.850696139570609,
+        "holes": 0,
+        "mask_pixels": 261980
+      },
+      "candidate": {
+        "mae": 0.03174982551494955,
+        "ssim": 0.8558994512563002,
+        "holes": 0,
+        "mask_pixels": 261980
+      }
+    },
+    {
+      "view": "source-5-3",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0026404440868645906,
+      "baseline": {
+        "mae": 0.01648423504556251,
+        "ssim": 0.920264582140222,
+        "holes": 0,
+        "mask_pixels": 261776
+      },
+      "candidate": {
+        "mae": 0.016337706505473684,
+        "ssim": 0.9225653347284287,
+        "holes": 0,
+        "mask_pixels": 261776
+      }
+    },
+    {
+      "view": "source-5-4",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.0017357111210003495,
+      "baseline": {
+        "mae": 0.0169646503832129,
+        "ssim": 0.9436946669313112,
+        "holes": 0,
+        "mask_pixels": 262102
+      },
+      "candidate": {
+        "mae": 0.016591645459353235,
+        "ssim": 0.9473139264203535,
+        "holes": 0,
+        "mask_pixels": 262102
+      }
+    },
+    {
+      "view": "source-5-5",
+      "role": "train",
+      "new_holes": 0,
+      "changed_mae": 0.001996702281758189,
+      "baseline": {
+        "mae": 0.013164923697984875,
+        "ssim": 0.9218045288266816,
+        "holes": 0,
+        "mask_pixels": 260443
+      },
+      "candidate": {
+        "mae": 0.01263252856869878,
+        "ssim": 0.9270696628898125,
+        "holes": 0,
+        "mask_pixels": 260443
+      }
+    },
+    {
+      "view": "detail-0",
+      "role": "detail",
+      "new_holes": 0,
+      "changed_mae": 0.001953897299245,
+      "baseline": {
+        "mae": 0.022717163115120283,
+        "ssim": 0.9121786377109673,
+        "holes": 0,
+        "mask_pixels": 262144
+      },
+      "candidate": {
+        "mae": 0.02279849599533028,
+        "ssim": 0.9124083317613962,
+        "holes": 0,
+        "mask_pixels": 262144
+      }
+    },
+    {
+      "view": "detail-1",
+      "role": "detail",
+      "new_holes": 0,
+      "changed_mae": 0.0023218069691210985,
+      "baseline": {
+        "mae": 0.021643973341161724,
+        "ssim": 0.9106785987827162,
+        "holes": 0,
+        "mask_pixels": 262144
+      },
+      "candidate": {
+        "mae": 0.022202415604260613,
+        "ssim": 0.9102420408337998,
+        "holes": 0,
+        "mask_pixels": 262144
+      }
+    },
+    {
+      "view": "mid-0-room",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.0023559387773275375
+    },
+    {
+      "view": "mid-0-ceiling",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.002083370229229331
+    },
+    {
+      "view": "mid-0-table",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.004151294939219952
+    },
+    {
+      "view": "mid-1-room",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.002769277198240161
+    },
+    {
+      "view": "mid-1-ceiling",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.0015903422608971596
+    },
+    {
+      "view": "mid-1-table",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.003654663683846593
+    },
+    {
+      "view": "mid-2-room",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.0023477785289287567
+    },
+    {
+      "view": "mid-2-ceiling",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.0017458804650232196
+    },
+    {
+      "view": "mid-2-table",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.001838336349464953
+    },
+    {
+      "view": "mid-3-room",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.003668914781883359
+    },
+    {
+      "view": "mid-3-ceiling",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.0015937952557578683
+    },
+    {
+      "view": "mid-3-table",
+      "role": "novel",
+      "new_holes": 0,
+      "changed_mae": 0.004153523128479719
+    }
+  ],
+  "candidate_sha256": "6c0dac7d5302dafebca8eaab8fbcf60937193f69bab05ed053151f09d2f5a52a",
+  "note": "Source metrics reuse fitting photographs. Novel views have no independent reference."
+}

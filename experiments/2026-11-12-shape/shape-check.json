@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "points": 3166125,
+  "centers_exactly_unchanged": true,
+  "finite": true,
+  "quaternion_max_norm_error": 1.1920928955078125e-07,
+  "scale_ratio_range": [
+    0.8428396582603455,
+    1.2433154582977295
+  ],
+  "rotation_degrees_p50_p90_p99": [
+    2.8305368423461914,
+    6.678708553314209,
+    10.142526626586914
+  ],
+  "mean_absolute_opacity_change": 0.00028462274349294603,
+  "initial_opacity_logits_outside_bounds": 0,
+  "candidate_sha256": "6c0dac7d5302dafebca8eaab8fbcf60937193f69bab05ed053151f09d2f5a52a"
+}

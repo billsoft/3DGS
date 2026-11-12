@@ -15,7 +15,7 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms));
 try{
  await request('Runtime.enable');
  await request('Emulation.setDeviceMetricsOverride',{width:640,height:480,deviceScaleFactor:1,mobile:false});
- if(!process.argv.includes('--reuse-page'))await request('Page.navigate',{url:'http://127.0.0.1:7870/refit-room.html'});
+ if(!process.argv.includes('--reuse-page'))await request('Page.navigate',{url:process.env.PREVIEW_URL||'http://127.0.0.1:7870/refit-room.html'});
  let ready=false;
  for(let i=0;i<120;i++){await pause(1000);if(await evaluate('!!window.roomViewer')){ready=true;break}}
  assert(ready,'Preview did not load');

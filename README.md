@@ -112,6 +112,10 @@ $env:GS_INPUT_DIR = 'D:\your-room-input'
 
 验证策略函数可运行 `node tests/test_native_anchor.mjs`。独立测试浏览器的CDP端口19346打开预览后，运行 `node tests/check_native_browser.mjs` 检查四机位端点、中点回退和模式按钮；加 `--screenshots` 可读回两个 WebGL 画布，但软件渲染环境可能超时。不是控制用户日常浏览器的脚本。公开指标位于 `experiments/native-fidelity/`；原照片、高斯和截图不提交。预览与诊断不会替换已接受基线。
 
+## 固定配准的形状优化
+
+最新增量试验见 [固定配准的高斯形状对照](experiments/2026-11-12-shape/README.md)。`shape-room.html` 展示朝向与透明度参与优化的独立候选；`shape-report.html` 提供同视点比较。已接受的 `refit-room.html` 保留。该试验改善较小，灯与桌边的残余轮廓缺陷尚未解决。
+
 ## 第三方组件与许可
 
 - `three.js`：Three.js r160 / 0.160.0，MIT。
