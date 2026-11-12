@@ -1,0 +1,161 @@
+{
+  "views": [
+    {
+      "view": "lamp 1",
+      "station": "2",
+      "models": {
+        "native": {
+          "photo_mae": 0.011683182622872147,
+          "photo_ssim": 0.9489294528008618,
+          "new_hole_pixels": 2
+        },
+        "baseline": {
+          "photo_mae": 0.02070161034079159,
+          "photo_ssim": 0.896625187884608,
+          "new_hole_pixels": 0
+        },
+        "recolor": {
+          "photo_mae": 0.020703579397762524,
+          "photo_ssim": 0.8965575724599235,
+          "new_hole_pixels": 0
+        },
+        "split": {
+          "photo_mae": 0.020934617285634956,
+          "photo_ssim": 0.8931324572688611,
+          "new_hole_pixels": 0
+        }
+      }
+    },
+    {
+      "view": "lamp 2",
+      "station": "3",
+      "models": {
+        "native": {
+          "photo_mae": 0.013289277693804573,
+          "photo_ssim": 0.9454183428478719,
+          "new_hole_pixels": 21
+        },
+        "baseline": {
+          "photo_mae": 0.02339755787568934,
+          "photo_ssim": 0.8995428939025968,
+          "new_hole_pixels": 0
+        },
+        "recolor": {
+          "photo_mae": 0.023409755557191138,
+          "photo_ssim": 0.8992419743443879,
+          "new_hole_pixels": 0
+        },
+        "split": {
+          "photo_mae": 0.02367416082643995,
+          "photo_ssim": 0.8962490037026398,
+          "new_hole_pixels": 0
+        }
+      }
+    },
+    {
+      "view": "window 2",
+      "station": "2",
+      "models": {
+        "native": {
+          "photo_mae": 0.02300569683897729,
+          "photo_ssim": 0.8903280438567395,
+          "new_hole_pixels": 1
+        },
+        "baseline": {
+          "photo_mae": 0.060132527818866806,
+          "photo_ssim": 0.6767621995332037,
+          "new_hole_pixels": 0
+        },
+        "recolor": {
+          "photo_mae": 0.0601376963596718,
+          "photo_ssim": 0.6764657615206084,
+          "new_hole_pixels": 0
+        },
+        "split": {
+          "photo_mae": 0.06096561656278723,
+          "photo_ssim": 0.6715620551926396,
+          "new_hole_pixels": 0
+        }
+      }
+    },
+    {
+      "view": "window 3",
+      "station": "3",
+      "models": {
+        "native": {
+          "photo_mae": 0.027088372847613167,
+          "photo_ssim": 0.8738876674347865,
+          "new_hole_pixels": 19
+        },
+        "baseline": {
+          "photo_mae": 0.04325338251450483,
+          "photo_ssim": 0.7290470534506667,
+          "new_hole_pixels": 0
+        },
+        "recolor": {
+          "photo_mae": 0.04301006840724571,
+          "photo_ssim": 0.728828802102003,
+          "new_hole_pixels": 0
+        },
+        "split": {
+          "photo_mae": 0.04558241227093865,
+          "photo_ssim": 0.7068058087889302,
+          "new_hole_pixels": 0
+        }
+      }
+    },
+    {
+      "view": "table 2",
+      "station": "2",
+      "models": {
+        "native": {
+          "photo_mae": 0.01908755769916609,
+          "photo_ssim": 0.8829061658447871,
+          "new_hole_pixels": 27
+        },
+        "baseline": {
+          "photo_mae": 0.04345123066621668,
+          "photo_ssim": 0.7598775157420498,
+          "new_hole_pixels": 0
+        },
+        "recolor": {
+          "photo_mae": 0.04346758898566751,
+          "photo_ssim": 0.7598368374963423,
+          "new_hole_pixels": 0
+        },
+        "split": {
+          "photo_mae": 0.044530543159036075,
+          "photo_ssim": 0.7469885686620036,
+          "new_hole_pixels": 0
+        }
+      }
+    },
+    {
+      "view": "board 3",
+      "station": "3",
+      "models": {
+        "native": {
+          "photo_mae": 0.01946258357926911,
+          "photo_ssim": 0.8378341044458243,
+          "new_hole_pixels": 0
+        },
+        "baseline": {
+          "photo_mae": 0.026897325702742034,
+          "photo_ssim": 0.7256811547957454,
+          "new_hole_pixels": 0
+        },
+        "recolor": {
+          "photo_mae": 0.02667868371103324,
+          "photo_ssim": 0.7256821630728749,
+          "new_hole_pixels": 0
+        },
+        "split": {
+          "photo_mae": 0.02681581272798426,
+          "photo_ssim": 0.7220644706476074,
+          "new_hole_pixels": 0
+        }
+      }
+    }
+  ],
+  "note": "Same camera and 90-degree FOV. All methods use the baseline high-alpha mask, including newly missing pixels. Photos are input constraints, not independent novel-view ground truth."
+}

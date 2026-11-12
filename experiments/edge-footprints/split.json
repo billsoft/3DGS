@@ -1,0 +1,25 @@
+{
+  "mode": "split",
+  "original_points": 3166125,
+  "output_points": 3985661,
+  "sources": [
+    {
+      "source": "2",
+      "affected": 24261
+    },
+    {
+      "source": "3",
+      "affected": 38010
+    },
+    {
+      "source": "4",
+      "affected": 25672
+    },
+    {
+      "source": "5",
+      "affected": 14499
+    }
+  ],
+  "semantic_rules": false,
+  "note": "Cross-edge image contrast selects splats. Recolor keeps geometry intact; split preserves Gaussian mixture moments but not exact alpha-compositing coverage. Both are experiments requiring multi-view validation."
+}
