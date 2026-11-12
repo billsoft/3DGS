@@ -77,6 +77,8 @@ class RunnerTests(unittest.TestCase):
         self.assertFalse(assess(bundle,bad,evaluation)['passed'])
         bad=copy.deepcopy(bundle);bad['after_held']['median_equivalent_px']=4
         self.assertFalse(assess(bad,native,evaluation)['passed'])
+        bad=copy.deepcopy(bundle);bad['acceptance']={'passed':False}
+        self.assertFalse(assess(bad,native,evaluation)['passed'])
         bad=copy.deepcopy(native);bad['views'][0]['fused']['ssim']=float('nan')
         self.assertFalse(assess(bundle,bad,evaluation)['passed'])
 

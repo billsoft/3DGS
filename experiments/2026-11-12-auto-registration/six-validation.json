@@ -1,0 +1,137 @@
+{
+  "tracks": 992,
+  "train_tracks": 795,
+  "held_tracks": 197,
+  "gauge": "first camera fixed; longest initial baseline from it fixed; scale is arbitrary",
+  "gauge_peer": "cam-0004",
+  "optimizer_success": true,
+  "optimizer_message": "`ftol` termination condition is satisfied.",
+  "update_selection": {
+    "fraction": 1.0,
+    "initial_retained": false,
+    "attempts": [
+      {
+        "fraction": 1.0,
+        "passed": true,
+        "reasons": []
+      }
+    ]
+  },
+  "validation_role": "Whole withheld tracks are used for acceptance/backtracking, not optimization residuals; these scores are model-selection validation, not an unbiased test.",
+  "before_train": {
+    "median_equivalent_px": 1.123349615151084,
+    "p90_equivalent_px": 5.5238175962258556,
+    "observations": 1767
+  },
+  "before_held": {
+    "median_equivalent_px": 1.108096908395505,
+    "p90_equivalent_px": 5.703267929051196,
+    "observations": 445
+  },
+  "after_train": {
+    "median_equivalent_px": 0.6309519566763773,
+    "p90_equivalent_px": 4.285844062543063,
+    "observations": 1767
+  },
+  "after_held": {
+    "median_equivalent_px": 0.5710313428455936,
+    "p90_equivalent_px": 4.782101757186493,
+    "observations": 445
+  },
+  "acceptance": {
+    "passed": true,
+    "reasons": []
+  },
+  "robust_rounds": [
+    {
+      "angular_scale": 0.004056704436616793,
+      "downweighted_tracks": 143,
+      "effective_observations": [
+        170.5541265130498,
+        252.22912920575666,
+        228.14829634483317,
+        281.2563243998054,
+        312.41864226936593,
+        143.81774496973162
+      ]
+    },
+    {
+      "angular_scale": 0.0038488813605894977,
+      "downweighted_tracks": 146,
+      "effective_observations": [
+        169.2480414895048,
+        251.1915359453694,
+        226.90661835652648,
+        279.7841560710869,
+        311.0881153617242,
+        143.78681522218136
+      ]
+    }
+  ],
+  "per_camera_held": [
+    {
+      "id": "cam-0001",
+      "observations": 75,
+      "before_median": 0.7414107334320319,
+      "after_median": 0.8245045848536449,
+      "before_p90": 4.3647226947279405,
+      "after_p90": 4.025311462830571
+    },
+    {
+      "id": "cam-0002",
+      "observations": 83,
+      "before_median": 0.960296584628223,
+      "after_median": 0.7428770441881849,
+      "before_p90": 4.783225824772761,
+      "after_p90": 4.554456870530368
+    },
+    {
+      "id": "cam-0003",
+      "observations": 68,
+      "before_median": 2.2024840788238484,
+      "after_median": 0.933647531962225,
+      "before_p90": 9.476670901900471,
+      "after_p90": 8.004755532384458
+    },
+    {
+      "id": "cam-0004",
+      "observations": 77,
+      "before_median": 1.0931618149440623,
+      "after_median": 0.31554261519388815,
+      "before_p90": 4.727849014333851,
+      "after_p90": 4.099549150774607
+    },
+    {
+      "id": "cam-0005",
+      "observations": 97,
+      "before_median": 1.1707570178539526,
+      "after_median": 0.4319881275813033,
+      "before_p90": 4.920429919065819,
+      "after_p90": 3.9457686522505764
+    },
+    {
+      "id": "cam-0006",
+      "observations": 45,
+      "before_median": 0.7183213514779565,
+      "after_median": 0.4658913405533439,
+      "before_p90": 4.145775006220326,
+      "after_p90": 3.4173854810164106
+    }
+  ],
+  "camera_translation_change_model_units": [
+    0.0,
+    0.018161186681543883,
+    0.06631230509214993,
+    0.02991370697626012,
+    0.05972658758824029,
+    0.04737396254368336
+  ],
+  "camera_rotation_change_deg": [
+    0.0,
+    0.07567901667734923,
+    0.22619042142985174,
+    0.1916840186788222,
+    0.21266407587886305,
+    0.15518057422492965
+  ]
+}

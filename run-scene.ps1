@@ -6,6 +6,7 @@ param(
     [switch]$Resume,
     [switch]$Check,
     [switch]$DepthWarp,
+    [switch]$CalibrationOnly,
     [string]$SettingsPath = "$PSScriptRoot/scene_fusion/settings.local.json"
 )
 $ErrorActionPreference = 'Stop'
@@ -20,6 +21,7 @@ if ($Stations) { $sceneArguments += @('--stations') + $Stations }
 if ($Resume) { $sceneArguments += '--resume' }
 if ($Check) { $sceneArguments += '--check' }
 if ($DepthWarp) { $sceneArguments += '--depth-warp' }
+if ($CalibrationOnly) { $sceneArguments += '--calibration-only' }
 $env:OPENBLAS_NUM_THREADS = '1'
 Push-Location $PSScriptRoot
 try { & $settings.cpu_python @sceneArguments; $sceneExitCode = $LASTEXITCODE }

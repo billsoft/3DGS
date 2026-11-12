@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cam-0001",
+    "initial_scale": 1.0,
+    "scale": 1.0004637354865278,
+    "cells": 54,
+    "consensus_cells": 44,
+    "rejected_cells": 10,
+    "samples": 155,
+    "cell_scale_interval95": [
+      0.9889770013616361,
+      1.0086665298506827
+    ],
+    "relative_interval_width": 0.019680401988255505,
+    "relative_spread": 0.0430458681612114
+  },
+  {
+    "id": "cam-0002",
+    "initial_scale": 1.044287901963179,
+    "scale": 1.045349661608927,
+    "cells": 64,
+    "consensus_cells": 53,
+    "rejected_cells": 11,
+    "samples": 190,
+    "cell_scale_interval95": [
+      1.0359088238183904,
+      1.056353465263323
+    ],
+    "relative_interval_width": 0.01955770609182167,
+    "relative_spread": 0.052251855828595456
+  },
+  {
+    "id": "cam-0004",
+    "initial_scale": 0.9029082309027832,
+    "scale": 0.9207674647385676,
+    "cells": 71,
+    "consensus_cells": 54,
+    "rejected_cells": 17,
+    "samples": 245,
+    "cell_scale_interval95": [
+      0.9138758033367197,
+      0.9251111192513591
+    ],
+    "relative_interval_width": 0.012202120888176118,
+    "relative_spread": 0.04394229819293762
+  },
+  {
+    "id": "cam-0005",
+    "initial_scale": 1.0046852031596378,
+    "scale": 1.021346310611507,
+    "cells": 80,
+    "consensus_cells": 62,
+    "rejected_cells": 18,
+    "samples": 270,
+    "cell_scale_interval95": [
+      1.0105462048514307,
+      1.0287872731540404
+    ],
+    "relative_interval_width": 0.017859826890340783,
+    "relative_spread": 0.051563405965945934
+  }
+]

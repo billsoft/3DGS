@@ -7,6 +7,7 @@ from run_state import digest
 
 def assess(bundle,native,evaluation):
     reasons=[];n=native['summary'];e=evaluation['summary'];rows=native['views']
+    if bundle.get('acceptance',{}).get('passed') is False:reasons.append('Camera calibration validation rejected the solution')
     if not rows or n['native_high_alpha_pixels']<=0 or not np.isfinite([n['fused_ssim'],n['native_ssim'],e['baseline_mean_ssim']]).all():reasons.append('Missing or non-finite fidelity evidence')
     if any(not np.isfinite([r['native']['ssim'],r['fused']['ssim']]).all() or r['native']['mask_pixels']<=0 for r in rows):reasons.append('Invalid source-direction evidence')
     if bundle['held_tracks']<8:reasons.append('Fewer than 8 held-out geometry tracks')

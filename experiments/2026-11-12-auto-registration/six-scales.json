@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cam-0001",
+    "initial_scale": 1.0,
+    "scale": 0.9991704754777978,
+    "cells": 71,
+    "consensus_cells": 50,
+    "rejected_cells": 21,
+    "samples": 195,
+    "cell_scale_interval95": [
+      0.9899321632309134,
+      1.0101864947977883
+    ],
+    "relative_interval_width": 0.020271146980388347,
+    "relative_spread": 0.12456411154377173
+  },
+  {
+    "id": "cam-0002",
+    "initial_scale": 1.041293614386447,
+    "scale": 1.0471415731419378,
+    "cells": 78,
+    "consensus_cells": 66,
+    "rejected_cells": 12,
+    "samples": 280,
+    "cell_scale_interval95": [
+      1.0443208321431994,
+      1.0550235430551298
+    ],
+    "relative_interval_width": 0.010220882435043667,
+    "relative_spread": 0.04949042764943895
+  },
+  {
+    "id": "cam-0003",
+    "initial_scale": 0.8699917104331344,
+    "scale": 0.8756825632873269,
+    "cells": 92,
+    "consensus_cells": 71,
+    "rejected_cells": 21,
+    "samples": 267,
+    "cell_scale_interval95": [
+      0.8604480278006803,
+      0.88369237569164
+    ],
+    "relative_interval_width": 0.026544262573529022,
+    "relative_spread": 0.10189212855063356
+  },
+  {
+    "id": "cam-0004",
+    "initial_scale": 0.9036888261720382,
+    "scale": 0.913955033987817,
+    "cells": 94,
+    "consensus_cells": 72,
+    "rejected_cells": 22,
+    "samples": 312,
+    "cell_scale_interval95": [
+      0.9112218917397006,
+      0.9178251603750754
+    ],
+    "relative_interval_width": 0.007224938196973573,
+    "relative_spread": 0.09178677969626271
+  },
+  {
+    "id": "cam-0005",
+    "initial_scale": 1.0065656517774095,
+    "scale": 1.0165122190332305,
+    "cells": 90,
+    "consensus_cells": 71,
+    "rejected_cells": 19,
+    "samples": 344,
+    "cell_scale_interval95": [
+      1.0071828234658078,
+      1.0231813942691195
+    ],
+    "relative_interval_width": 0.015738690105001757,
+    "relative_spread": 0.05333136170871733
+  },
+  {
+    "id": "cam-0006",
+    "initial_scale": 1.0182854773232848,
+    "scale": 1.0239657423477222,
+    "cells": 70,
+    "consensus_cells": 53,
+    "rejected_cells": 17,
+    "samples": 174,
+    "cell_scale_interval95": [
+      1.010117061117549,
+      1.0303827369330858
+    ],
+    "relative_interval_width": 0.019791361153423184,
+    "relative_spread": 0.3888838786495333
+  }
+]

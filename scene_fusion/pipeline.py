@@ -14,6 +14,7 @@ def main():
     p.add_argument('--steps',type=int,default=2800);p.add_argument('--hd-steps',type=int,default=1400)
     p.add_argument('--depth-warp',action='store_true');p.add_argument('--resume',action='store_true')
     p.add_argument('--check',action='store_true',help='Validate inputs only, without GPU processing')
+    p.add_argument('--calibration-only',action='store_true',help='Recover and validate camera poses/scales without fusion or training')
     a=p.parse_args();a.inputs=a.inputs.resolve();a.gpu_python=a.gpu_python.resolve()
     if a.out is None:
         base=a.serve_root.resolve() if a.serve_root else ROOT
@@ -50,6 +51,7 @@ def main():
     execute('registration','scene_fusion/registration.py','--out',a.out,outputs=['registration.json'])
     execute('bundle','scene_fusion/bundle.py','--out',a.out,outputs=['photo-bundle/bundle.npz','photo-bundle/tracks.json','photo-bundle/report.json'])
     execute('scales','scene_fusion/align_scales.py','--out',a.out,outputs=['aligned-cameras.npz','scales.json',*[s['id']+'/depth-anchors.npz' for s in scene['stations']]])
+    if a.calibration_only:state.complete();print('CALIBRATION COMPLETE',a.out,flush=True);return
     execute('domains','scene_fusion/ownership.py','--out',a.out,'--snapshot','rigid-initial',outputs=['rigid-initial.npy','rigid-initial-meta.json',*[f"aligned/{s['id']}.npy" for s in scene['stations']]])
     if a.depth_warp:
         execute('warp','scene_fusion/warp.py','--out',a.out,outputs=['warp-report.json',*[f"warped/{s['id']}.npy" for s in scene['stations']]])

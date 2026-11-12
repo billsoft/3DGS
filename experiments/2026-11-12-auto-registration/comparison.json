@@ -1,0 +1,83 @@
+{
+  "common_untouched_tracks": 80,
+  "unit": "equivalent pixels at 3840 panorama width; angular consistency, not geometry ground truth",
+  "validation_role": "Not used in optimization residuals; may be used in automatic update selection, so not an unbiased test set",
+  "old": {
+    "all": {
+      "median": 0.7004403899402799,
+      "p90": 2.8100632076467873,
+      "observations": 183
+    },
+    "cameras": {
+      "cam-0001": {
+        "median": 0.5745220059723687,
+        "p90": 1.7939087090766688,
+        "observations": 56
+      },
+      "cam-0002": {
+        "median": 0.7382675912824299,
+        "p90": 2.3271268391995914,
+        "observations": 58
+      },
+      "cam-0003": {
+        "median": 1.202056897181389,
+        "p90": 7.59791121222135,
+        "observations": 23
+      },
+      "cam-0004": {
+        "median": 0.4235815458560111,
+        "p90": 3.999133834923646,
+        "observations": 15
+      },
+      "cam-0005": {
+        "median": 0.7699231786414563,
+        "p90": 2.6694928547761263,
+        "observations": 21
+      },
+      "cam-0006": {
+        "median": 0.43947394064995976,
+        "p90": 2.0193859665299674,
+        "observations": 10
+      }
+    }
+  },
+  "new": {
+    "all": {
+      "median": 0.6901636304926505,
+      "p90": 3.144392988836665,
+      "observations": 183
+    },
+    "cameras": {
+      "cam-0001": {
+        "median": 0.46742035592369335,
+        "p90": 1.5643176931576348,
+        "observations": 56
+      },
+      "cam-0002": {
+        "median": 0.7208123192944995,
+        "p90": 2.449010577074693,
+        "observations": 58
+      },
+      "cam-0003": {
+        "median": 1.074000254464485,
+        "p90": 7.637128240556478,
+        "observations": 23
+      },
+      "cam-0004": {
+        "median": 0.31844176312719485,
+        "p90": 3.922400102488894,
+        "observations": 15
+      },
+      "cam-0005": {
+        "median": 0.9497814279245118,
+        "p90": 3.066048498900762,
+        "observations": 21
+      },
+      "cam-0006": {
+        "median": 0.3431150210145178,
+        "p90": 2.000627857592669,
+        "observations": 10
+      }
+    }
+  }
+}
