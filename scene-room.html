@@ -14,12 +14,15 @@ try{
  const filename=optimized?'fused':'initial';document.querySelector('#download').href=base+'/'+filename+'.ply';
  document.querySelector('#title').textContent=meta.preview_title||meta.stations.length+'机位 · 场景融合试验';
  if(meta.preview_note){const note=document.createElement('p');note.textContent=meta.preview_note;document.querySelector('#tools').appendChild(note)}
+ if(meta.report_page==='tour-distill-report.html')document.querySelector('#report').href='/tour-distill-report.html?scene='+scene;
  if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){document.querySelector('#initial').href='?scene='+meta.reference_scene+'&inspect=3';document.querySelector('#initial').textContent=meta.reference_label||'修复前对照'}
+ if(meta.native_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.native_scene)){document.querySelector('#initial').href='/native-tour-room.html?scene='+meta.native_scene;document.querySelector('#initial').textContent='原始漫游对照'}
  const centers=meta.centers.map(p=>new THREE.Vector3(...p)),up=new THREE.Vector3(...meta.up),target=centers.reduce((s,c)=>s.add(c),new THREE.Vector3()).multiplyScalar(1/centers.length).addScaledVector(up,-.5);
  const shDegree=optimized?(meta.sh_degree||0):0;
  if(![0,1,2].includes(shDegree))throw Error('当前播放器仅支持到二阶球谐颜色');
  const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].toArray(),initialCameraLookAt:target.toArray(),sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,sphericalHarmonicsDegree:shDegree,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
- await viewer.addSplatScenes([{path:base+'/'+filename+(shDegree?'.ply':'.splat'),splatAlphaRemovalThreshold:3}],true);viewer.start();
+ const alphaThreshold=Number.isInteger(meta.splat_alpha_threshold)&&meta.splat_alpha_threshold>=0&&meta.splat_alpha_threshold<=255?meta.splat_alpha_threshold:3;
+ await viewer.addSplatScenes([{path:base+'/'+filename+(shDegree?'.ply':'.splat'),splatAlphaRemovalThreshold:alphaThreshold}],true);viewer.start();
  const sortRefresh=installRoomSortRefresh(viewer);window.roomSortRefresh=sortRefresh;
  window.addEventListener('pagehide',()=>sortRefresh.dispose(),{once:true});
  let movement=0;const panel=document.querySelector('#positions');const button=(label,action)=>{const b=document.createElement('button');b.textContent=label;b.onclick=action;panel.appendChild(b)};

@@ -1,0 +1,51 @@
+{
+  "summary": {
+    "anchors": {
+      "initial": {
+        "mae": 0.021592117128117632,
+        "ssim": 0.9150277046635077,
+        "holes": 123.44444444444444
+      },
+      "student": {
+        "mae": 0.00872073435716124,
+        "ssim": 0.9749275683638212,
+        "holes": 3.4722222222222223
+      },
+      "views": 36
+    },
+    "heldout": {
+      "initial": {
+        "mae": 0.02380966539897566,
+        "ssim": 0.9103084631267856,
+        "holes": 146.90277777777777
+      },
+      "student": {
+        "mae": 0.012603324192308786,
+        "ssim": 0.957498998225939,
+        "holes": 38.91203703703704
+      },
+      "views": 216
+    }
+  },
+  "anchor_fidelity_passed": false,
+  "failed_anchor_directions": 17,
+  "synthetic_targets": true,
+  "export": {
+    "points": 917420,
+    "degree": 2,
+    "roundtrip_exact": true,
+    "independent_ply": true,
+    "teacher_models_required_at_playback": false,
+    "sha256": "7aff8da90ee337f8eefbe8dc640e8e6d7bd8aec34b2b08d9e64bf383af3de3be",
+    "anchor_fidelity_passed": false
+  },
+  "browser_single_ply": true,
+  "browser_errors": [],
+  "renderer_mae_mean": 0.003769838670145229,
+  "known_defects": [
+    "Whiteboard text and thin router antennae lose fidelity",
+    "Some local silhouette, table and transition errors remain",
+    "Not an exact bake of the stateful player"
+  ],
+  "promoted_to_default": false
+}
