@@ -18,5 +18,5 @@ write_json(args.out/'result.json',report)
 if (args.out/'quality.json').exists():
     report['metrics']['自动质量检查']=json.loads((args.out/'quality.json').read_text(encoding='utf8'))
     write_json(args.out/'result.json',report)
-for name in ['scene-room.html','scene-report.html','room-navigation.js']:shutil.copyfile(ROOT/name,args.serve_root/name)
+for name in ['scene-room.html','scene-report.html','room-navigation.js','room-sorting.js']:shutil.copyfile(ROOT/name,args.serve_root/name)
 print('Published scene',args.out.name,flush=True)

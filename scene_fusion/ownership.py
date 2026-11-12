@@ -44,7 +44,7 @@ def run(out,mode='voxel',warped=False):
         clouds.append(a);sources.append(np.full(len(a),i,dtype='i2'));quality.append(score.astype('f'))
     if mode=='visible-domains':
         views=[gs.View(out/'warped-depth'/item['id'],np.eye(4)) if warped else gs.View(out/item['id'],m) for item,m in zip(scene['stations'],M)]
-        pieces=[];indices=[];reports=[]
+        pieces=[];indices=[];reports=[];protected=[]
         for i,a in enumerate(clouds):
             p=a[:,:3];scores=np.zeros((len(a),N),dtype='f');scores[:,i]=quality[i]
             normals=Rotation.from_quat(a[:,[11,12,13,10]]).as_matrix()[np.arange(len(a)),:,a[:,7:10].argmin(1)]
@@ -61,9 +61,12 @@ def run(out,mode='voxel',warped=False):
             winner=scores.argmax(1)
             keep=(winner==i)&~((conflict>=2)&(support==0))
             pieces.append(a[keep]);indices.append(np.full(keep.sum(),i,dtype='i2'))
+            maskfile=out/'warped'/(scene['stations'][i]['id']+'-protected.npy')
+            protected.append(np.load(maskfile)[keep] if warped and maskfile.exists() else np.zeros(int(keep.sum()),bool))
             reports.append(dict(id=scene['stations'][i]['id'],input=len(a),retained=int(keep.sum()),
                 multiple_free_space_conflicts=int(((conflict>=2)&(support==0)).sum())))
         fused=np.concatenate(pieces);np.save(out/'initial.npy',fused);np.save(out/'source.npy',np.concatenate(indices))
+        np.save(out/'geometry-protected.npy',np.concatenate(protected))
         gs.write(out/'initial.ply',fused);gs.to_splat(out/'initial.splat',fused)
         up=Q[:,:,2].mean(0);up/=np.linalg.norm(up)
         write_json(out/'fusion.json',dict(stations=[s['id'] for s in scene['stations']],station_labels=[s.get('label',s['id']) for s in scene['stations']],centers=C.tolist(),up=up.tolist(),splats=len(fused),method='N-camera visibility domains; single winning source; free-space conflict guard'))

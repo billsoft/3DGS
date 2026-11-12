@@ -36,6 +36,7 @@ def run():
     parser.add_argument('--ssim-weight', type=float, default=.2)
     parser.add_argument('--graph-weight', type=float, default=0.)
     parser.add_argument('--preserve-color-differences', action='store_true',help='Regularize changes to neighboring colors instead of flattening their original contrast')
+    parser.add_argument('--protected-geometry',type=Path,help='Boolean mask of independently constrained geometry; preserve its center, covariance and opacity')
     parser.add_argument('--edge-weight', type=float, default=.08)
     parser.add_argument('--color-lr', type=float, default=.008)
     parser.add_argument('--position-lr', type=float, default=.00016)
@@ -52,6 +53,11 @@ def run():
     size = meta['size']; views = meta['views']
     initial = load_scene(args.data/'initial.npy')
     scene = load_scene(args.resume or args.data/'initial.npy')
+    protected=None
+    if args.protected_geometry:
+        mask=np.load(args.protected_geometry)
+        if mask.dtype!=bool or mask.shape!=(len(scene['means']),):raise ValueError('Invalid protected geometry mask')
+        protected=torch.as_tensor(mask,device='cuda')
     train_ids = [i for i, v in enumerate(views) if v['role']=='train']
     novel_ids = [i for i, v in enumerate(views) if v['role']=='novel']
     truth = torch.tensor(targets, device='cuda', dtype=torch.float32)/255
@@ -121,6 +127,8 @@ def run():
             if args.shape_free and args.mode!='color' and step>=args.warmup:
                 scene['quats'].copy_(F.normalize(scene['quats'],dim=1))
                 scene['opacity'].clamp_(args.opacity_min,args.opacity_max)
+            if protected is not None:
+                for key in ['means','logs','quats','opacity']:scene[key][protected]=initial[key][protected]
         if step%50==0 or step==args.steps-1:
             record = dict(step=step+1, loss=float(loss.detach()), coverage_loss=float(coverage.detach()),
                 seconds=time.monotonic()-started, peak_gpu_gb=torch.cuda.max_memory_allocated()/1e9)

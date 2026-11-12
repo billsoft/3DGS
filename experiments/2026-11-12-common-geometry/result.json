@@ -1,0 +1,27 @@
+{
+  "candidate_ssim": 0.9515358157875519,
+  "browser_sort_small_move_passed": true,
+  "status": "partial_fix_experimental",
+  "source_regression_gate_passed": true,
+  "manual_scene_coordinates": false,
+  "points": 1464515,
+  "browser_sort_small_move_units": 0.02,
+  "candidate_sha256": "e085a5982252cf9abbc59cf617aa66ca4a591631b55c1d85795ee761e49c80da",
+  "strict_plane_gate_passed": false,
+  "source_high_alpha_pixels": 37264106,
+  "plane_holdout_mean_pixels": 3.9522812327648493,
+  "remaining": [
+    "Door and support geometry artifacts",
+    "Only one bounded plane improved",
+    "Fixed appearance does not reproduce view-dependent reflections",
+    "Composite contours require further rejection"
+  ],
+  "plane_holdout_max_pixels": 6.64112977753666,
+  "semantic_rules": false,
+  "default_baseline_replaced": false,
+  "source_views": 36,
+  "python_tests": 31,
+  "new_low_alpha_pixels": 0,
+  "sort_unit_tests": 3,
+  "native_ssim": 0.9517263477536014
+}

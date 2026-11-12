@@ -12,6 +12,7 @@ ws.onmessage=e=>{const x=JSON.parse(e.data);if(x.method==='Runtime.exceptionThro
 const request=(method,params={})=>new Promise((resolve,reject)=>{const id=++sequence;const timer=setTimeout(()=>{pending.delete(id);reject(Error('CDP timeout '+method))},180000);pending.set(id,{resolve,reject,timer});ws.send(JSON.stringify({id,method,params}))});
 const evaluate=async expression=>{const r=await request('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value};
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
+const settleSort=async()=>{const result=await evaluate("(async()=>{const v=window.roomViewer;if(window.roomSortRefresh){await window.roomSortRefresh.flush()}else{for(let i=0;i<5;i++){if(v.sortPromise)await v.sortPromise;v.camera.updateMatrixWorld(true);await v.runSplatSort(true,true);if(v.sortPromise)await v.sortPromise;if(v.splatSortCount===v.splatRenderCount)break}}v.forceRenderNextFrame();return {sorted:v.splatSortCount,visible:v.splatRenderCount}})()");assert.equal(result.sorted,result.visible,'Camera still has a partial splat sort')};
 try{
  await request('Runtime.enable');
  await request('Emulation.setDeviceMetricsOverride',{width:640,height:480,deviceScaleFactor:1,mobile:false});
@@ -23,9 +24,10 @@ try{
  assert.equal(errors.length,0,JSON.stringify(errors));
  assert.match(await evaluate("document.querySelector('#status').textContent"),/已加载/);
  await mkdir(root,{recursive:true});
- for(const name of ['room','lamp']){
-  if(name==='lamp')await evaluate('window.inspectRoom(0)');
+ for(const name of (process.argv.includes('--sort-only')?[]:['room','lamp'])){
+  if(name==='lamp')await evaluate('window.inspectRoom(window.sceneMeta?4:0)');
   await pause(2000);
+  await settleSort();
   const data=await evaluate("(()=>{const v=window.roomViewer;v.render();return v.renderer.domElement.toDataURL('image/png')})()");
   await writeFile(`${root}/browser-${name}.png`,Buffer.from(data.split(',')[1],'base64'));
  }
@@ -36,6 +38,21 @@ try{
   const data=await(await fetch(preview.origin+'/four-room/scenes/'+id+'/data-512/dataset.json')).json();
   assert.equal(result.buttons,scene.stations.length+data.midpoint_edges.length+3);
   result.stationCount=scene.stations.length;result.labels=scene.station_labels||scene.stations;
+  result.automaticSortRefresh=await evaluate('!!window.roomSortRefresh');
+  if(result.automaticSortRefresh){
+   result.smallMoveResorted=await evaluate("(async()=>{const v=window.roomViewer;await window.roomSortRefresh.flush();const before=v.sortPromise;v.camera.position.x+=.02;v.controls.target.x+=.02;v.controls.update();await window.roomSortRefresh.flush();return before!==v.sortPromise&&v.splatSortCount===v.splatRenderCount})()");
+   assert(result.smallMoveResorted,'A 0.02-unit camera movement did not refresh the sort');
+  }
+  if(process.argv.includes('--diagnostic-poses')){
+   const C=scene.centers,poses=[['source',C[0],data.views[3].basis],['midpoint',C[0].map((x,k)=>(x+C.at(-1)[k])/2),data.views[3].basis],['up',C[0],data.views[4].basis],['down',C[0],data.views[5].basis]];
+   for(const [name,center,basis] of poses){
+    await evaluate(`(()=>{const v=window.roomViewer,c=${JSON.stringify(center)},b=${JSON.stringify(basis)};v.camera.position.fromArray(c);v.controls.target.fromArray(c.map((x,k)=>x+b[k][2]));v.controls.update();v.forceRenderNextFrame()})()`);
+    await pause(2000);
+    await settleSort();
+    const image=await evaluate("(()=>{const v=window.roomViewer;v.render();return v.renderer.domElement.toDataURL('image/png')})()");
+    await writeFile(`${root}/browser-${name}.png`,Buffer.from(image.split(',')[1],'base64'));
+   }
+  }
  }else assert(result.buttons>=8);
  assert.equal(result.scenes,1);
  await writeFile(`${root}/browser-check.json`,JSON.stringify({passed:true,...result,errors},null,2));
