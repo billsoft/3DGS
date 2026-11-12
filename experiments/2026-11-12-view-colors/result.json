@@ -1,0 +1,1602 @@
+{
+  "status": "Independent experimental preview; strict native source fidelity NOT passed",
+  "phases": {
+    "fit-hd": {
+      "evaluation": {
+        "source_views": 36,
+        "novel_views": 18,
+        "baseline_mean_ssim": 0.9511734590004194,
+        "candidate_mean_ssim": 0.963024977674357,
+        "baseline_mean_mae": 0.010638186124629733,
+        "candidate_mean_mae": 0.01036132484611863,
+        "improved_ssim_views": 35,
+        "worst_ssim_delta": -7.313591475521797e-05,
+        "new_holes": 0
+      },
+      "native": {
+        "views": 36,
+        "native_ssim": 0.9517263477536014,
+        "fused_ssim": 0.9637647006394618,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 37264106
+      },
+      "strict_source": {
+        "passed": false,
+        "failed_directions": [
+          {
+            "view": "source-cam-0001-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 15
+          },
+          {
+            "view": "source-cam-0001-1",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 32
+          },
+          {
+            "view": "source-cam-0001-2",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 12
+          },
+          {
+            "view": "source-cam-0001-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 7
+          },
+          {
+            "view": "source-cam-0001-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0001-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 23
+          },
+          {
+            "view": "source-cam-0002-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 13
+          },
+          {
+            "view": "source-cam-0002-2",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0002-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0003-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 8
+          },
+          {
+            "view": "source-cam-0003-1",
+            "reasons": [
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 39
+          },
+          {
+            "view": "source-cam-0003-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0003-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0003-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0004-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 47
+          },
+          {
+            "view": "source-cam-0004-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 8
+          },
+          {
+            "view": "source-cam-0004-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 3
+          },
+          {
+            "view": "source-cam-0004-3",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 19
+          },
+          {
+            "view": "source-cam-0004-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 12
+          },
+          {
+            "view": "source-cam-0004-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 22
+          },
+          {
+            "view": "source-cam-0005-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 55
+          },
+          {
+            "view": "source-cam-0005-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 10
+          },
+          {
+            "view": "source-cam-0005-2",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 23
+          },
+          {
+            "view": "source-cam-0005-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 25
+          },
+          {
+            "view": "source-cam-0005-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0006-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 54
+          },
+          {
+            "view": "source-cam-0006-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0006-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 17
+          },
+          {
+            "view": "source-cam-0006-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 7
+          },
+          {
+            "view": "source-cam-0006-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 17
+          }
+        ],
+        "total_directions": 36,
+        "note": "Explicit per-direction and local-patch tolerances, plus visual review; not a pixel-exact guarantee."
+      }
+    },
+    "fit-coherent": {
+      "evaluation": {
+        "source_views": 36,
+        "novel_views": 18,
+        "baseline_mean_ssim": 0.9511734590004194,
+        "candidate_mean_ssim": 0.964040559149973,
+        "baseline_mean_mae": 0.010638186124629733,
+        "candidate_mean_mae": 0.010475219776844298,
+        "improved_ssim_views": 34,
+        "worst_ssim_delta": -0.00022371281874233873,
+        "new_holes": 0
+      },
+      "native": {
+        "views": 36,
+        "native_ssim": 0.9517263477536014,
+        "fused_ssim": 0.9647578493933483,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 37264106
+      },
+      "strict_source": {
+        "passed": false,
+        "failed_directions": [
+          {
+            "view": "source-cam-0001-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 5
+          },
+          {
+            "view": "source-cam-0001-1",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 51
+          },
+          {
+            "view": "source-cam-0001-2",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 26
+          },
+          {
+            "view": "source-cam-0001-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0001-4",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 51
+          },
+          {
+            "view": "source-cam-0001-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 21
+          },
+          {
+            "view": "source-cam-0002-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 13
+          },
+          {
+            "view": "source-cam-0002-1",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 58
+          },
+          {
+            "view": "source-cam-0002-2",
+            "reasons": [
+              "directional SSIM",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0002-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0002-4",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 30
+          },
+          {
+            "view": "source-cam-0002-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 5
+          },
+          {
+            "view": "source-cam-0003-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0003-1",
+            "reasons": [
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 31
+          },
+          {
+            "view": "source-cam-0003-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 3
+          },
+          {
+            "view": "source-cam-0003-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0003-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 14
+          },
+          {
+            "view": "source-cam-0003-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0004-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 17
+          },
+          {
+            "view": "source-cam-0004-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0004-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0004-3",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0004-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0004-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 2
+          },
+          {
+            "view": "source-cam-0005-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 60
+          },
+          {
+            "view": "source-cam-0005-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 21
+          },
+          {
+            "view": "source-cam-0005-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 8
+          },
+          {
+            "view": "source-cam-0005-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 30
+          },
+          {
+            "view": "source-cam-0005-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0005-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 10
+          },
+          {
+            "view": "source-cam-0006-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 56
+          },
+          {
+            "view": "source-cam-0006-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0006-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0006-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 5
+          },
+          {
+            "view": "source-cam-0006-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0006-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 23
+          }
+        ],
+        "total_directions": 36,
+        "note": "Explicit per-direction and local-patch tolerances, plus visual review; not a pixel-exact guarantee."
+      }
+    },
+    "fit-color-consistent": {
+      "evaluation": {
+        "source_views": 36,
+        "novel_views": 18,
+        "baseline_mean_ssim": 0.9511734590004194,
+        "candidate_mean_ssim": 0.9607436835164097,
+        "baseline_mean_mae": 0.010638186124629733,
+        "candidate_mean_mae": 0.011557249526305692,
+        "improved_ssim_views": 36,
+        "worst_ssim_delta": 6.302518722889339e-05,
+        "new_holes": 0
+      },
+      "native": {
+        "views": 36,
+        "native_ssim": 0.9517263477536014,
+        "fused_ssim": 0.9614145877478365,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 37264106
+      },
+      "strict_source": {
+        "passed": false,
+        "failed_directions": [
+          {
+            "view": "source-cam-0001-0",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 19
+          },
+          {
+            "view": "source-cam-0001-1",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 32
+          },
+          {
+            "view": "source-cam-0001-2",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 26
+          },
+          {
+            "view": "source-cam-0001-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 23
+          },
+          {
+            "view": "source-cam-0001-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0001-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 16
+          },
+          {
+            "view": "source-cam-0002-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 24
+          },
+          {
+            "view": "source-cam-0002-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0002-2",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 12
+          },
+          {
+            "view": "source-cam-0002-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 3
+          },
+          {
+            "view": "source-cam-0002-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 13
+          },
+          {
+            "view": "source-cam-0003-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 7
+          },
+          {
+            "view": "source-cam-0003-1",
+            "reasons": [
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 23
+          },
+          {
+            "view": "source-cam-0003-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 10
+          },
+          {
+            "view": "source-cam-0003-3",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 13
+          },
+          {
+            "view": "source-cam-0003-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 19
+          },
+          {
+            "view": "source-cam-0003-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0004-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0004-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 13
+          },
+          {
+            "view": "source-cam-0004-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 10
+          },
+          {
+            "view": "source-cam-0004-3",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 21
+          },
+          {
+            "view": "source-cam-0004-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 24
+          },
+          {
+            "view": "source-cam-0004-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 25
+          },
+          {
+            "view": "source-cam-0005-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 35
+          },
+          {
+            "view": "source-cam-0005-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0005-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 28
+          },
+          {
+            "view": "source-cam-0005-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 39
+          },
+          {
+            "view": "source-cam-0005-4",
+            "reasons": [
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 31
+          },
+          {
+            "view": "source-cam-0005-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 18
+          },
+          {
+            "view": "source-cam-0006-0",
+            "reasons": [
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 58
+          },
+          {
+            "view": "source-cam-0006-1",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 11
+          },
+          {
+            "view": "source-cam-0006-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 16
+          },
+          {
+            "view": "source-cam-0006-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 17
+          },
+          {
+            "view": "source-cam-0006-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 21
+          },
+          {
+            "view": "source-cam-0006-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          }
+        ],
+        "total_directions": 36,
+        "note": "Explicit per-direction and local-patch tolerances, plus visual review; not a pixel-exact guarantee."
+      }
+    },
+    "fit-browser": {
+      "evaluation": {
+        "source_views": 36,
+        "novel_views": 18,
+        "baseline_mean_ssim": 0.9511734590004194,
+        "candidate_mean_ssim": 0.9596799756359677,
+        "baseline_mean_mae": 0.010638186124629733,
+        "candidate_mean_mae": 0.009328363275891738,
+        "improved_ssim_views": 36,
+        "worst_ssim_delta": 0.00019670845066832587,
+        "new_holes": 0
+      },
+      "native": {
+        "views": 36,
+        "native_ssim": 0.9517263477536014,
+        "fused_ssim": 0.9604066653207037,
+        "newly_low_alpha_pixels": 0,
+        "native_high_alpha_pixels": 37264106
+      },
+      "strict_source": {
+        "passed": false,
+        "failed_directions": [
+          {
+            "view": "source-cam-0001-0",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 10
+          },
+          {
+            "view": "source-cam-0001-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 3
+          },
+          {
+            "view": "source-cam-0001-2",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "local patches"
+            ],
+            "regressed_tiles": 8
+          },
+          {
+            "view": "source-cam-0001-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 12
+          },
+          {
+            "view": "source-cam-0001-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0002-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0002-2",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 7
+          },
+          {
+            "view": "source-cam-0002-3",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 2
+          },
+          {
+            "view": "source-cam-0003-0",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 2
+          },
+          {
+            "view": "source-cam-0003-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 5
+          },
+          {
+            "view": "source-cam-0003-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0003-3",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0003-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 3
+          },
+          {
+            "view": "source-cam-0004-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 5
+          },
+          {
+            "view": "source-cam-0004-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0004-3",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 9
+          },
+          {
+            "view": "source-cam-0004-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0004-5",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 4
+          },
+          {
+            "view": "source-cam-0005-1",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 3
+          },
+          {
+            "view": "source-cam-0005-2",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 16
+          },
+          {
+            "view": "source-cam-0005-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 12
+          },
+          {
+            "view": "source-cam-0005-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 2
+          },
+          {
+            "view": "source-cam-0006-0",
+            "reasons": [
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 39
+          },
+          {
+            "view": "source-cam-0006-1",
+            "reasons": [
+              "directional SSIM",
+              "local patches"
+            ],
+            "regressed_tiles": 6
+          },
+          {
+            "view": "source-cam-0006-2",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          },
+          {
+            "view": "source-cam-0006-3",
+            "reasons": [
+              "directional SSIM",
+              "directional RGB error",
+              "low-frequency color blotches",
+              "local patches"
+            ],
+            "regressed_tiles": 17
+          },
+          {
+            "view": "source-cam-0006-4",
+            "reasons": [
+              "local patches"
+            ],
+            "regressed_tiles": 1
+          }
+        ],
+        "total_directions": 36,
+        "note": "Explicit per-direction and local-patch tolerances, plus visual review; not a pixel-exact guarantee."
+      }
+    }
+  },
+  "previous_strict_source": {
+    "passed": false,
+    "failed_directions": [
+      {
+        "view": "source-cam-0001-0",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "low-frequency color blotches",
+          "local patches"
+        ],
+        "regressed_tiles": 26
+      },
+      {
+        "view": "source-cam-0001-2",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "low-frequency color blotches",
+          "local patches"
+        ],
+        "regressed_tiles": 17
+      },
+      {
+        "view": "source-cam-0001-3",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 12
+      },
+      {
+        "view": "source-cam-0001-4",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 5
+      },
+      {
+        "view": "source-cam-0002-0",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 18
+      },
+      {
+        "view": "source-cam-0002-2",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "low-frequency color blotches",
+          "local patches"
+        ],
+        "regressed_tiles": 14
+      },
+      {
+        "view": "source-cam-0002-3",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 5
+      },
+      {
+        "view": "source-cam-0002-4",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 3
+      },
+      {
+        "view": "source-cam-0003-0",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 20
+      },
+      {
+        "view": "source-cam-0003-3",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 19
+      },
+      {
+        "view": "source-cam-0003-4",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 2
+      },
+      {
+        "view": "source-cam-0004-0",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 4
+      },
+      {
+        "view": "source-cam-0004-1",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 13
+      },
+      {
+        "view": "source-cam-0004-3",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "local patches"
+        ],
+        "regressed_tiles": 24
+      },
+      {
+        "view": "source-cam-0004-4",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 3
+      },
+      {
+        "view": "source-cam-0005-1",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "local patches"
+        ],
+        "regressed_tiles": 20
+      },
+      {
+        "view": "source-cam-0005-2",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 12
+      },
+      {
+        "view": "source-cam-0005-3",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "low-frequency color blotches",
+          "local patches"
+        ],
+        "regressed_tiles": 21
+      },
+      {
+        "view": "source-cam-0005-4",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 16
+      },
+      {
+        "view": "source-cam-0005-5",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 3
+      },
+      {
+        "view": "source-cam-0006-1",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 15
+      },
+      {
+        "view": "source-cam-0006-2",
+        "reasons": [
+          "directional SSIM",
+          "local patches"
+        ],
+        "regressed_tiles": 10
+      },
+      {
+        "view": "source-cam-0006-3",
+        "reasons": [
+          "directional SSIM",
+          "directional RGB error",
+          "low-frequency color blotches",
+          "local patches"
+        ],
+        "regressed_tiles": 19
+      },
+      {
+        "view": "source-cam-0006-4",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 2
+      },
+      {
+        "view": "source-cam-0006-5",
+        "reasons": [
+          "local patches"
+        ],
+        "regressed_tiles": 1
+      }
+    ],
+    "total_directions": 36,
+    "note": "Explicit per-direction and local-patch tolerances, plus visual review; not a pixel-exact guarantee."
+  },
+  "source_direction_comparison": [
+    {
+      "view": "source-cam-0001-0",
+      "previous_blotch": 0.011427738703787327,
+      "candidate_blotch": 0.007826995104551315,
+      "previous_rgb": 0.016050107877673542,
+      "candidate_rgb": 0.01341385723129271
+    },
+    {
+      "view": "source-cam-0001-1",
+      "previous_blotch": 0.001600590767338872,
+      "candidate_blotch": 0.0029723707120865583,
+      "previous_rgb": 0.002535089978334214,
+      "candidate_rgb": 0.0035171749221400415
+    },
+    {
+      "view": "source-cam-0001-2",
+      "previous_blotch": 0.00966725591570139,
+      "candidate_blotch": 0.006688929162919521,
+      "previous_rgb": 0.01822260195211701,
+      "candidate_rgb": 0.014894234427498475
+    },
+    {
+      "view": "source-cam-0001-3",
+      "previous_blotch": 0.007729813456535339,
+      "candidate_blotch": 0.008674873039126396,
+      "previous_rgb": 0.011668371842407935,
+      "candidate_rgb": 0.012362758397732064
+    },
+    {
+      "view": "source-cam-0001-4",
+      "previous_blotch": 0.003490831470116973,
+      "candidate_blotch": 0.0014720548642799258,
+      "previous_rgb": 0.006402529259756001,
+      "candidate_rgb": 0.004824854387159024
+    },
+    {
+      "view": "source-cam-0001-5",
+      "previous_blotch": 0.002768212230876088,
+      "candidate_blotch": 0.002953093033283949,
+      "previous_rgb": 0.008788482444719468,
+      "candidate_rgb": 0.008503043558938205
+    },
+    {
+      "view": "source-cam-0002-0",
+      "previous_blotch": 0.006246163044124842,
+      "candidate_blotch": 0.0030840530525892973,
+      "previous_rgb": 0.011167516219190918,
+      "candidate_rgb": 0.008209004957556337
+    },
+    {
+      "view": "source-cam-0002-1",
+      "previous_blotch": 0.0016612643375992775,
+      "candidate_blotch": 0.00112531881313771,
+      "previous_rgb": 0.0028271303928078723,
+      "candidate_rgb": 0.002401960179348842
+    },
+    {
+      "view": "source-cam-0002-2",
+      "previous_blotch": 0.01215131115168333,
+      "candidate_blotch": 0.007558200508356094,
+      "previous_rgb": 0.021521079800321145,
+      "candidate_rgb": 0.017667861755111463
+    },
+    {
+      "view": "source-cam-0002-3",
+      "previous_blotch": 0.0042655677534639835,
+      "candidate_blotch": 0.002336229430511594,
+      "previous_rgb": 0.00946832785224665,
+      "candidate_rgb": 0.008074625328203251
+    },
+    {
+      "view": "source-cam-0002-4",
+      "previous_blotch": 0.003120711073279381,
+      "candidate_blotch": 0.0014480606187134981,
+      "previous_rgb": 0.006058661590827156,
+      "candidate_rgb": 0.004560881268489894
+    },
+    {
+      "view": "source-cam-0002-5",
+      "previous_blotch": 0.0036420852411538363,
+      "candidate_blotch": 0.004215613938868046,
+      "previous_rgb": 0.010503096559394517,
+      "candidate_rgb": 0.010331604189201602
+    },
+    {
+      "view": "source-cam-0003-0",
+      "previous_blotch": 0.006528913043439388,
+      "candidate_blotch": 0.0027366268914192915,
+      "previous_rgb": 0.010312246977250944,
+      "candidate_rgb": 0.007842530876919976
+    },
+    {
+      "view": "source-cam-0003-1",
+      "previous_blotch": 0.003008888103067875,
+      "candidate_blotch": 0.0039023365825414658,
+      "previous_rgb": 0.007832200652751623,
+      "candidate_rgb": 0.008157397281764725
+    },
+    {
+      "view": "source-cam-0003-2",
+      "previous_blotch": 0.004929250106215477,
+      "candidate_blotch": 0.004169585648924112,
+      "previous_rgb": 0.012946225903534862,
+      "candidate_rgb": 0.01244604744576684
+    },
+    {
+      "view": "source-cam-0003-3",
+      "previous_blotch": 0.007870766334235668,
+      "candidate_blotch": 0.0039030101615935564,
+      "previous_rgb": 0.013947502620900424,
+      "candidate_rgb": 0.01020707061156682
+    },
+    {
+      "view": "source-cam-0003-4",
+      "previous_blotch": 0.003167173359543085,
+      "candidate_blotch": 0.004362345207482576,
+      "previous_rgb": 0.005570047563619744,
+      "candidate_rgb": 0.005851341165526385
+    },
+    {
+      "view": "source-cam-0003-5",
+      "previous_blotch": 0.0032046944834291935,
+      "candidate_blotch": 0.004347369074821472,
+      "previous_rgb": 0.01092734429268568,
+      "candidate_rgb": 0.011212909307317562
+    },
+    {
+      "view": "source-cam-0004-0",
+      "previous_blotch": 0.002606041030958295,
+      "candidate_blotch": 0.001145722228102386,
+      "previous_rgb": 0.003624266685880364,
+      "candidate_rgb": 0.002535358105712536
+    },
+    {
+      "view": "source-cam-0004-1",
+      "previous_blotch": 0.006945583038032055,
+      "candidate_blotch": 0.0035486810375005007,
+      "previous_rgb": 0.012098832122075047,
+      "candidate_rgb": 0.00893477217377026
+    },
+    {
+      "view": "source-cam-0004-2",
+      "previous_blotch": 0.004156782291829586,
+      "candidate_blotch": 0.0025148619897663593,
+      "previous_rgb": 0.011491300521827261,
+      "candidate_rgb": 0.010774947708405992
+    },
+    {
+      "view": "source-cam-0004-3",
+      "previous_blotch": 0.010480222292244434,
+      "candidate_blotch": 0.005827708635479212,
+      "previous_rgb": 0.017343466006732297,
+      "candidate_rgb": 0.012182159230810483
+    },
+    {
+      "view": "source-cam-0004-4",
+      "previous_blotch": 0.002629854716360569,
+      "candidate_blotch": 0.0044368538074195385,
+      "previous_rgb": 0.0056335437839208115,
+      "candidate_rgb": 0.005824180561039988
+    },
+    {
+      "view": "source-cam-0004-5",
+      "previous_blotch": 0.002715140115469694,
+      "candidate_blotch": 0.00427764467895031,
+      "previous_rgb": 0.006666263821992927,
+      "candidate_rgb": 0.007325485953885428
+    },
+    {
+      "view": "source-cam-0005-0",
+      "previous_blotch": 0.0018038779962807894,
+      "candidate_blotch": 0.002377957571297884,
+      "previous_rgb": 0.0031759197303182496,
+      "candidate_rgb": 0.0033399763055973583
+    },
+    {
+      "view": "source-cam-0005-1",
+      "previous_blotch": 0.0077302162535488605,
+      "candidate_blotch": 0.0030523554887622595,
+      "previous_rgb": 0.014688426700227814,
+      "candidate_rgb": 0.011343290768713585
+    },
+    {
+      "view": "source-cam-0005-2",
+      "previous_blotch": 0.006564435549080372,
+      "candidate_blotch": 0.005658210255205631,
+      "previous_rgb": 0.013370769587498853,
+      "candidate_rgb": 0.012198568394607322
+    },
+    {
+      "view": "source-cam-0005-3",
+      "previous_blotch": 0.007105860393494368,
+      "candidate_blotch": 0.005918664392083883,
+      "previous_rgb": 0.013251418476526743,
+      "candidate_rgb": 0.011754477783243917
+    },
+    {
+      "view": "source-cam-0005-4",
+      "previous_blotch": 0.007068714592605829,
+      "candidate_blotch": 0.004048120696097612,
+      "previous_rgb": 0.009406956988205139,
+      "candidate_rgb": 0.006152073344953695
+    },
+    {
+      "view": "source-cam-0005-5",
+      "previous_blotch": 0.0032806533854454756,
+      "candidate_blotch": 0.004583541303873062,
+      "previous_rgb": 0.007733192408472882,
+      "candidate_rgb": 0.00806702679615608
+    },
+    {
+      "view": "source-cam-0006-0",
+      "previous_blotch": 0.0008842488168738782,
+      "candidate_blotch": 0.004838140215724707,
+      "previous_rgb": 0.002670846964792224,
+      "candidate_rgb": 0.005570077794270084
+    },
+    {
+      "view": "source-cam-0006-1",
+      "previous_blotch": 0.008359438739717007,
+      "candidate_blotch": 0.006450796965509653,
+      "previous_rgb": 0.013299261267574143,
+      "candidate_rgb": 0.011452300757985562
+    },
+    {
+      "view": "source-cam-0006-2",
+      "previous_blotch": 0.008513469249010086,
+      "candidate_blotch": 0.004719906486570835,
+      "previous_rgb": 0.016803993902277554,
+      "candidate_rgb": 0.012832251138480036
+    },
+    {
+      "view": "source-cam-0006-3",
+      "previous_blotch": 0.012301030568778515,
+      "candidate_blotch": 0.01101807039231062,
+      "previous_rgb": 0.01613602893024064,
+      "candidate_rgb": 0.015630368326249627
+    },
+    {
+      "view": "source-cam-0006-4",
+      "previous_blotch": 0.0030804781708866358,
+      "candidate_blotch": 0.004251434933394194,
+      "previous_rgb": 0.006881275361410325,
+      "candidate_rgb": 0.006844640543092254
+    },
+    {
+      "view": "source-cam-0006-5",
+      "previous_blotch": 0.0022406780626624823,
+      "candidate_blotch": 0.0016281891148537397,
+      "previous_rgb": 0.007472943153988916,
+      "candidate_rgb": 0.007090286542270828
+    }
+  ],
+  "export": {
+    "points": 1464515,
+    "degree": 2,
+    "geometry_opacity_exact": true,
+    "full_sh_ply_exact": true,
+    "sha256": "e5a76367975f6aa70c0399c91f10e113ca4f9ab603e48fbd53b236455b7c8fc5",
+    "protected_appearance_points": 404438,
+    "protected_appearance_exact": true
+  },
+  "notes": [
+    "Source photos participated in fitting; no novel-view truth",
+    "First three phases used gsplat lower-only color clamping; final uses browser-compatible per-Gaussian [0,1] clamp",
+    "Geometry and opacity unchanged; no panorama overlay",
+    "Public-surface protection retains 404438 already accepted DC colors; other points learn SH2"
+  ],
+  "browser": {
+    "passed": true,
+    "status": "已加载 · 6机位 · 二阶球谐颜色",
+    "buttons": 15,
+    "download": "/four-room/scenes/view-color-sh2-v1/final/fused.ply",
+    "scenes": 1,
+    "stationCount": 6,
+    "labels": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "automaticSortRefresh": true,
+    "shDegree": 2,
+    "loadedShDegree": 2,
+    "activeShDegree": 2,
+    "directionalColorChangesImage": true,
+    "smallMoveResorted": true,
+    "lookStayedAtStation": true,
+    "dragPositionError": 1.1114752051637947e-13,
+    "dragChangedDirection": true,
+    "errors": []
+  }
+}

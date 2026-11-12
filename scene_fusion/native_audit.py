@@ -12,7 +12,7 @@ from core import load,gs,write_json
 from refit_render import load_scene,load_dataset,render
 from refit_evaluate import metrics
 
-p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--report',type=Path,required=True);p.add_argument('--size',type=int,default=512)
+p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--report',type=Path,required=True);p.add_argument('--size',type=int,default=512);p.add_argument('--strict-source',action='store_true')
 args=p.parse_args();args.report.mkdir(parents=True,exist_ok=True);scene=load(args.out);cams=np.load(args.out/'aligned-cameras.npz');meta,targets=load_dataset(args.out/f'data-{args.size}')
 fused=load_scene(args.candidate);records=[]
 for i,item in enumerate(scene['stations']):
@@ -26,6 +26,9 @@ for i,item in enumerate(scene['stations']):
             raw=raw.clamp(0,1).cpu().numpy();result=result.clamp(0,1).cpu().numpy();ra=ra.cpu().numpy();fa=fa.cpu().numpy();photo=targets[idx]/255
             before=metrics(raw,photo,ra,ra);after=metrics(result,photo,fa,ra)
             records.append(dict(view=v['name'],native=before,fused=after))
+            if args.strict_source:
+                from source_fidelity import local_fidelity
+                records[-1]['local_fidelity']=local_fidelity(raw,result,photo,ra>.95,tile=max(32,args.size//8))
             sheet=Image.new('RGB',(args.size*3,args.size+30));draw=ImageDraw.Draw(sheet)
             for col,(title,im) in enumerate([('photo',photo),('original PLY',raw),('fused',result)]):
                 sheet.paste(Image.fromarray((im*255).astype('u1')),(col*args.size,30));draw.text((col*args.size+6,8),title,fill='white')
@@ -37,3 +40,6 @@ summary=dict(views=len(records),native_ssim=float(np.mean([r['native']['ssim'] f
     native_high_alpha_pixels=sum(r['native']['mask_pixels'] for r in records))
 write_json(args.report/'audit.json',dict(summary=summary,views=records,candidate_sha256=hashlib.sha256(args.candidate.read_bytes()).hexdigest(),size=args.size,note='Fixed full-native alpha mask; photo fitting diagnostic, no independent novel-view reference.'))
 print(json.dumps(summary),flush=True)
+if args.strict_source:
+    from source_fidelity import strict_source_gate
+    gate=strict_source_gate(records);write_json(args.report/'strict-source.json',gate);print('Strict source gate:',gate['passed'],'failed directions:',len(gate['failed_directions']),flush=True)

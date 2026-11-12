@@ -3,6 +3,7 @@
 <div id="tools"><h1 id="title">多机位场景</h1><p><a id="current">优化版</a><a id="initial">初始融合</a><a id="report">验证报告</a></p><div id="positions"></div><p>W/S 前后 · A/D 平移 · Q 上升 / E 下降</p><p id="status" role="status">加载中…</p><p>实验模型；局部重影与未观测区域仍可能有缺损。</p><a id="download" download>下载 PLY</a></div>
 <script type="importmap">{"imports":{"three":"/three.js"}}</script><script type="module">
 import * as THREE from 'three';import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';import {installRoomNavigation} from './room-navigation.js';import {installRoomSortRefresh} from './room-sorting.js';
+import {installRoomLook,setRoomLook} from './room-look.js';
 const query=new URLSearchParams(location.search),scene=query.get('scene')||'six-20261112';
 if(!/^[a-zA-Z0-9_-]+$/.test(scene))throw Error('Invalid scene ID');
 const root='/four-room/scenes/'+scene,initial=query.get('version')==='initial';
@@ -15,8 +16,10 @@ try{
  if(meta.preview_note){const note=document.createElement('p');note.textContent=meta.preview_note;document.querySelector('#tools').appendChild(note)}
  if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){document.querySelector('#initial').href='?scene='+meta.reference_scene+'&inspect=3';document.querySelector('#initial').textContent=meta.reference_label||'修复前对照'}
  const centers=meta.centers.map(p=>new THREE.Vector3(...p)),up=new THREE.Vector3(...meta.up),target=centers.reduce((s,c)=>s.add(c),new THREE.Vector3()).multiplyScalar(1/centers.length).addScaledVector(up,-.5);
- const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].toArray(),initialCameraLookAt:target.toArray(),sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
- await viewer.addSplatScenes([{path:base+'/'+filename+'.splat',splatAlphaRemovalThreshold:3}],true);viewer.start();
+ const shDegree=optimized?(meta.sh_degree||0):0;
+ if(![0,1,2].includes(shDegree))throw Error('当前播放器仅支持到二阶球谐颜色');
+ const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].toArray(),initialCameraLookAt:target.toArray(),sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,sphericalHarmonicsDegree:shDegree,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
+ await viewer.addSplatScenes([{path:base+'/'+filename+(shDegree?'.ply':'.splat'),splatAlphaRemovalThreshold:3}],true);viewer.start();
  const sortRefresh=installRoomSortRefresh(viewer);window.roomSortRefresh=sortRefresh;
  window.addEventListener('pagehide',()=>sortRefresh.dispose(),{once:true});
  let movement=0;const panel=document.querySelector('#positions');const button=(label,action)=>{const b=document.createElement('button');b.textContent=label;b.onclick=action;panel.appendChild(b)};
@@ -24,8 +27,11 @@ try{
  const labels=meta.station_labels||meta.stations;
  centers.forEach((c,i)=>button(labels[i]+'号机位',()=>go(c)));
  panel.appendChild(document.createElement('br'));data.midpoint_edges.forEach(([i,j])=>button(labels[i]+'–'+labels[j]+'中点',()=>go(centers[i].clone().lerp(centers[j],.5))));
- const inspect=i=>{const v=data.views[i];movement++;viewer.camera.position.fromArray(v.center);viewer.controls.target.fromArray(v.center.map((x,k)=>x+v.basis[k][2]));viewer.controls.update();viewer.forceRenderNextFrame()};
- panel.appendChild(document.createElement('br'));button('向下检查',()=>inspect(5));button('向上检查',()=>inspect(4));button('水平视向',()=>inspect(3));
+ const disposeLook=installRoomLook({camera:viewer.camera,controls:viewer.controls,element:viewer.renderer.domElement,render:()=>viewer.forceRenderNextFrame(),onStart:()=>movement++});
+ window.addEventListener('pagehide',disposeLook,{once:true});
+ const inspect=i=>{const v=data.views[i];movement++;viewer.camera.position.fromArray(v.center);setRoomLook(viewer.camera,viewer.controls,new THREE.Vector3(...v.basis.map(row=>row[2])));viewer.forceRenderNextFrame()};
+ const lookFromHere=face=>{movement++;const nearest=centers.reduce((best,c,i)=>c.distanceToSquared(viewer.camera.position)<centers[best].distanceToSquared(viewer.camera.position)?i:best,0),v=data.views.find(v=>v.source===nearest&&v.name.endsWith('-'+face));if(!v)return;setRoomLook(viewer.camera,viewer.controls,new THREE.Vector3(...v.basis.map(row=>row[2])));viewer.forceRenderNextFrame()};
+ panel.appendChild(document.createElement('br'));button('向下检查',()=>lookFromHere(5));button('向上检查',()=>lookFromHere(4));button('水平视向',()=>lookFromHere(3));
  installRoomNavigation({camera:viewer.camera,controls:viewer.controls,onMove:()=>movement++,render:()=>viewer.forceRenderNextFrame()});
  viewer.controls.addEventListener('start',()=>movement++);window.roomViewer=viewer;window.inspectRoom=inspect;window.sceneMeta=meta;
  document.querySelector('#status').textContent='已加载 · '+meta.stations.length+'机位 · '+(optimized?(meta.preview_status||'联合优化'):'初始融合');

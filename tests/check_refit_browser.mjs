@@ -39,9 +39,31 @@ try{
   assert.equal(result.buttons,scene.stations.length+data.midpoint_edges.length+3);
   result.stationCount=scene.stations.length;result.labels=scene.station_labels||scene.stations;
   result.automaticSortRefresh=await evaluate('!!window.roomSortRefresh');
+  result.shDegree=await evaluate('window.roomViewer.sphericalHarmonicsDegree');
+  assert.equal(result.shDegree,scene.sh_degree||0);
+  if(result.shDegree){
+   result.loadedShDegree=await evaluate('window.roomViewer.splatMesh.minSphericalHarmonicsDegree');
+   result.activeShDegree=await evaluate('window.roomViewer.splatMesh.material.uniforms.sphericalHarmonicsDegree.value');
+   assert.equal(result.loadedShDegree,result.shDegree,'PLY lost its SH coefficients during browser loading');
+   assert.equal(result.activeShDegree,result.shDegree,'Shader did not enable directional color');
+   result.directionalColorChangesImage=await evaluate("(()=>{const v=window.roomViewer;v.setActiveSphericalHarmonicsDegrees(0);v.render();const dc=v.renderer.domElement.toDataURL();v.setActiveSphericalHarmonicsDegrees(2);v.render();return dc!==v.renderer.domElement.toDataURL()})()");
+   assert(result.directionalColorChangesImage,'SH enabled but did not affect the framebuffer');
+  }
   if(result.automaticSortRefresh){
    result.smallMoveResorted=await evaluate("(async()=>{const v=window.roomViewer;await window.roomSortRefresh.flush();const before=v.sortPromise;v.camera.position.x+=.02;v.controls.target.x+=.02;v.controls.update();await window.roomSortRefresh.flush();return before!==v.sortPromise&&v.splatSortCount===v.splatRenderCount})()");
    assert(result.smallMoveResorted,'A 0.02-unit camera movement did not refresh the sort');
+  }
+  if(process.argv.includes('--check-look-in-place')){
+   result.lookStayedAtStation=await evaluate("(async()=>{const v=window.roomViewer,c=window.sceneMeta.centers.at(-1);v.camera.position.fromArray(c);v.controls.target.fromArray(c.map((x,k)=>x+(k===0?1:0)));v.controls.update();const before=v.camera.position.clone();[...document.querySelectorAll('#positions button')].find(b=>b.textContent==='向上检查').click();await window.roomSortRefresh.flush();return before.distanceTo(v.camera.position)<1e-5})()");
+   assert(result.lookStayedAtStation,'Look-up teleported the camera away from its capture station');
+   const before=await evaluate('({position:window.roomViewer.camera.position.toArray(),direction:window.roomViewer.controls.target.clone().sub(window.roomViewer.camera.position).normalize().toArray()})');
+   await request('Input.dispatchMouseEvent',{type:'mousePressed',x:560,y:400,button:'left',buttons:1,clickCount:1});
+   await request('Input.dispatchMouseEvent',{type:'mouseMoved',x:600,y:365,button:'left',buttons:1});
+   await request('Input.dispatchMouseEvent',{type:'mouseReleased',x:600,y:365,button:'left',buttons:0,clickCount:1});
+   const after=await evaluate('({position:window.roomViewer.camera.position.toArray(),direction:window.roomViewer.controls.target.clone().sub(window.roomViewer.camera.position).normalize().toArray()})');
+   result.dragPositionError=Math.hypot(...before.position.map((x,k)=>x-after.position[k]));
+   result.dragChangedDirection=Math.hypot(...before.direction.map((x,k)=>x-after.direction[k]))>1e-4;
+   assert(result.dragPositionError<1e-5&&result.dragChangedDirection,'Dragging must rotate the view without orbiting the camera');
   }
   if(process.argv.includes('--diagnostic-poses')){
    const C=scene.centers,poses=[['source',C[0],data.views[3].basis],['midpoint',C[0].map((x,k)=>(x+C.at(-1)[k])/2),data.views[3].basis],['up',C[0],data.views[4].basis],['down',C[0],data.views[5].basis]];
