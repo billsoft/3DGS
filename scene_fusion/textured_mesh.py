@@ -299,6 +299,15 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
         result['surface_repair']=json.loads(repair_report.read_text('utf8'))
         result['preview_title']='单一 PLY 网格 · 碎片清理与局部补洞'
         result['preview_note']='使用连通片清理、有限尺寸补洞和射线可见性贴图。小碎片和孔洞减少；椅子等复杂遮挡处仍可能缺损，小孤立真实细节也可能被清理。'
+    if capture_path.exists() and capture.get('representation')=='2D surface Gaussians':
+        result.update(source_depth='surface-Gaussian-median',reference_scene=None,preview_title='表面约束重建 · 原片高清贴图',
+            preview_note='从原照片优化表面高斯的法线与深度一致性，使用中值深度重建网格并贴原片。仍是实验模型；斜视、细结构和未观测区域可能有缺损。')
+    poisson_path=geometry.parent/'poisson.json'
+    if poisson_path.exists():
+        from oblique_views import make_views
+        result.update(poisson_reconstruction=json.loads(poisson_path.read_text('utf8')),preview_title='连续表面重建 · 原片高清贴图',
+            inspection_views=make_views(C,Q,dataset['midpoint_edges']),
+            preview_note='使用带法线的表面样本进行泊松重建，再按射线可见性贴原片。补洞包含推断；未观测表面显示灰色，细杆、椅背和遮挡边缘仍可能变形。')
     repair_path=geometry.parent/'sphere-repair.json'
     if repair_path.exists():
         repair=json.loads(repair_path.read_text(encoding='utf8'))

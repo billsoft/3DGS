@@ -92,11 +92,14 @@ def train(a):
     from refit_render import load_scene,render,SH0
     from refit_train import structure_loss
     data=a.out/'data';meta=json.loads((data/'dataset.json').read_text('utf8'));views=meta['views'];size=a.train_size or meta['size']
-    target=np.load(data/'targets.npy',mmap_mode='r');alphas=np.load(data/'teacher-alpha.npy',mmap_mode='r');depths=np.load(data/'teacher-depth.npy',mmap_mode='r')
+    live=size!=meta['size'] or meta.get('live_teacher_required',False)
+    target=alphas=depths=None
+    if not live:
+        target=np.load(data/'targets.npy',mmap_mode='r');alphas=np.load(data/'teacher-alpha.npy',mmap_mode='r');depths=np.load(data/'teacher-depth.npy',mmap_mode='r')
     torch.set_num_threads(4);torch.manual_seed(721);rng=np.random.default_rng(721)
     model=load_scene(a.resume or data/'initial.npy');reference=np.load(data/'initial.npy')
     initial=torch.tensor(reference[:,:3],device='cuda');initial_logs=torch.tensor(reference[:,7:10],device='cuda')
-    teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))] if size!=meta['size'] else None
+    teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))] if live else None
     sh=model.get('sh',torch.zeros((len(initial),9,3),device='cuda'));sh[:,0]=(model['colors']-.5)/SH0
     for k in ['means','logs','quats','opacity']:model[k]=torch.nn.Parameter(model[k])
     dc=torch.nn.Parameter(sh[:,:1].clone());rest=torch.nn.Parameter(sh[:,1:].clone())
@@ -152,10 +155,13 @@ def evaluate(a):
     from refit_render import load_scene,render
     from refit_evaluate import metrics
     from PIL import Image,ImageDraw
-    data=a.out/'data';meta=json.loads((data/'dataset.json').read_text('utf8'));targets=np.load(data/'targets.npy',mmap_mode='r');alphas=np.load(data/'teacher-alpha.npy',mmap_mode='r')
-    model=load_scene(a.out/'optimized.npz');initial=load_scene(data/'initial.npy');records=[];out=a.out/a.evaluation_folder;out.mkdir(exist_ok=True)
+    data=a.out/'data';meta=json.loads((data/'dataset.json').read_text('utf8'))
+    targets=alphas=None
+    torch.set_num_threads(4)
+    model=load_scene(a.out/'optimized.npz');initial=load_scene(Path(meta['comparison_model']) if meta.get('comparison_model') else data/'initial.npy');records=[];out=a.out/a.evaluation_folder;out.mkdir(exist_ok=True)
     size=a.eval_size or meta['size'];teachers=None
-    if size!=meta['size']:teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))]
+    if size!=meta['size'] or meta.get('live_teacher_required',False):teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))]
+    else:targets=np.load(data/'targets.npy',mmap_mode='r');alphas=np.load(data/'teacher-alpha.npy',mmap_mode='r')
     with torch.no_grad():
         for j,v in enumerate(meta['views']):
             if v['kind']!='anchor' and v['role']!='test':continue
@@ -169,9 +175,9 @@ def evaluate(a):
             im,alpha,_=render(model,v,size);before,ba,_=render(initial,v,size)
             im=im.cpu().numpy().clip(0,1);alpha=alpha.cpu().numpy();before=before.cpu().numpy().clip(0,1)
             records.append(dict(view=v['name'],kind=v['kind'],role=v['role'],initial=metrics(before,truth,ba.cpu().numpy(),teacher_alpha),student=metrics(im,truth,alpha,teacher_alpha)))
-            if v['kind']=='anchor' or v['name'].endswith(('-3','-4','-5')):
+            if v['kind'] in ['anchor','oblique'] or v['name'].endswith(('-3','-4','-5')):
                 sheet=Image.new('RGB',(size*3,size+26));draw=ImageDraw.Draw(sheet)
-                for col,(label,img) in enumerate([('44% teacher',truth),('static initialization',before),('single PLY student',im)]):
+                for col,(label,img) in enumerate([(f'{meta["core"]:.0%} spatial teacher',truth),('previous PLY' if meta.get('comparison_model') else 'static initialization',before),('single PLY student',im)]):
                     sheet.paste(Image.fromarray(np.uint8(img*255)),(col*size,26));draw.text((col*size+4,6),label,fill='white')
                 sheet.save(out/(v['name']+'.jpg'),quality=95)
     summary={}
@@ -180,7 +186,7 @@ def evaluate(a):
         summary[name]['views']=len(subset)
     # Fidelity to teacher is necessary, but not proof of correctness or visual acceptance.
     gate=all(r['student']['ssim']>=.97 and r['student']['mae']<=.01 and r['student']['holes']==0 for r in records if r['kind']=='anchor')
-    write_json(out/'evaluation.json',dict(summary=summary,anchor_fidelity_passed=gate,views=records,synthetic_reference=True,size=size,
+    write_json(out/'evaluation.json',dict(summary=summary,anchor_fidelity_passed=gate,views=records,synthetic_reference=True,size=size,comparison_model=meta.get('comparison_model'),core=meta['core'],
         model_sha256=hashlib.sha256((a.out/'optimized.npz').read_bytes()).hexdigest()))
     print(json.dumps(summary),flush=True);print('Anchor fidelity gate',gate,flush=True)
 
@@ -194,7 +200,7 @@ def export(a):
     if ev['model_sha256']!=hashlib.sha256((a.out/'optimized.npz').read_bytes()).hexdigest():raise ValueError('Stale evaluation')
     (a.out/'data-512').mkdir(exist_ok=True);write_json(a.out/'data-512/dataset.json',meta)
     write_json(a.out/'fusion.json',dict(optimized=True,model_folder='final',sh_degree=2,splat_alpha_threshold=0,stations=meta['stations'],centers=meta['centers'],up=meta['up'],
-        native_scene=a.native.name if a.native else meta.get('native_scene'),report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,preview_title='44% 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
+        native_scene=a.native.name if a.native else meta.get('native_scene'),report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
         preview_note='由原始模型漫游渲染监督训练。不是无损烘焙；机位保真门槛'+('通过' if ev['anchor_fidelity_passed'] else '尚未通过')+'，请与原始漫游对照。'))
     write_json(final/'validation.json',dict(points=len(base),degree=2,roundtrip_exact=True,independent_ply=True,teacher_models_required_at_playback=False,
         sha256=hashlib.sha256((final/'fused.ply').read_bytes()).hexdigest(),anchor_fidelity_passed=ev['anchor_fidelity_passed']))

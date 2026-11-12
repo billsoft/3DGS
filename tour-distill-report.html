@@ -1,17 +1,18 @@
 <!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>原始漫游与单一 PLY 对照</title><style>body{margin:24px auto;padding:0 20px;max-width:1500px;background:#17222d;color:#edf3fa;font:16px/1.7 system-ui}a{color:#9ddcff;margin-right:18px}select{padding:9px;font:inherit;max-width:100%}img{display:block;width:100%;margin:16px 0;border:1px solid #607080}table{border-collapse:collapse}th,td{padding:10px;border:1px solid #607080}.note{color:#ffd69c}</style>
 <h1>原始漫游与单一 PLY 对照</h1><p><a id="preview">单一 PLY 预览</a><a id="native">原始机位漫游</a><a id="download">下载独立 PLY</a></p>
-<p>左：44% 规则的原始模型渲染　中：训练前的静态模型　右：训练后的独立 PLY。</p>
+<p id="legend">左：原始模型渲染　中：对照模型　右：训练后的独立 PLY。</p>
 <p class="note" id="status">正在读取验证结果…</p><div id="summary"></div><p><label>对照视图 <select id="views"></select></label></p><img id="comparison" alt="相同视点的三组渲染对照">
 <p>交界处的参考画面来自原始模型渲染，不是新增实拍。采样和训练只能逼近播放器效果，不能补出未拍到的真实结构。没有把原始照片覆盖在最终 PLY 上。</p>
 <script type="module">
 const id=new URLSearchParams(location.search).get('scene')||'tour-distilled-six-v1';if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');const root='/four-room/scenes/'+id;
 document.querySelector('#preview').href='/scene-room.html?scene='+id+'&inspect=3';document.querySelector('#download').href=root+'/final/fused.ply';
 try{const meta=await(await fetch(root+'/fusion.json')).json(),folder=meta.evaluation_folder||'evaluation';if(!/^[a-zA-Z0-9_-]+$/.test(folder))throw Error('Invalid evaluation');const r=await(await fetch(root+'/'+folder+'/evaluation.json')).json();document.querySelector('#status').textContent=r.anchor_fidelity_passed?'原机位数值门槛通过，仍需查看局部和过渡画面。':'尚未达到原机位无明显退化门槛：这是可下载的单模型试验，不替换原始漫游。';
-const table=document.createElement('table');table.innerHTML='<tr><th>视图</th><th>数量</th><th>初始 / 训练后 SSIM</th><th>初始 / 训练后平均颜色误差</th></tr>';
+document.querySelector('#legend').textContent=`左：${Math.round((r.core??.44)*100)}% 空间规则的原始模型渲染　中：${r.comparison_model?'上一版独立 PLY':'训练前静态模型'}　右：本次独立 PLY`;
+const table=document.createElement('table');table.innerHTML='<tr><th>视图</th><th>数量</th><th>对照 / 本次 SSIM</th><th>对照 / 本次平均颜色误差</th></tr>';
 if(meta.native_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.native_scene))document.querySelector('#native').href='/native-tour-room.html?scene='+meta.native_scene;
-for(const [key,title] of [['anchors','原机位'],['heldout','未训练位置']]){const s=r.summary[key];const row=table.insertRow();for(const value of [title,s.views,s.initial.ssim.toFixed(4)+' / '+s.student.ssim.toFixed(4),s.initial.mae.toFixed(4)+' / '+s.student.mae.toFixed(4)])row.insertCell().textContent=value}document.querySelector('#summary').append(table);
-const select=document.querySelector('#views');for(const v of r.views.filter(v=>v.kind==='anchor'||/-(3|4|5)$/.test(v.view))){const option=document.createElement('option');option.value=v.view;option.textContent=v.view+(v.role==='test'?'（未训练位置）':'（原机位）');select.append(option)}
+for(const [key,title] of [['anchors','原机位'],['heldout','未训练视点或方向']]){const s=r.summary[key];const row=table.insertRow();for(const value of [title,s.views,s.initial.ssim.toFixed(4)+' / '+s.student.ssim.toFixed(4),s.initial.mae.toFixed(4)+' / '+s.student.mae.toFixed(4)])row.insertCell().textContent=value}document.querySelector('#summary').append(table);
+const select=document.querySelector('#views');for(const v of r.views.filter(v=>['anchor','oblique'].includes(v.kind)||/-(3|4|5)$/.test(v.view))){const option=document.createElement('option');option.value=v.view;option.textContent=v.view+(v.role==='test'?'（未训练视点或方向）':'（原机位）');select.append(option)}
 select.value='source-1-3';const show=()=>document.querySelector('#comparison').src=root+'/'+folder+'/'+select.value+'.jpg';select.onchange=show;show();
 }catch(e){document.querySelector('#status').textContent='报告读取失败：'+e.message}
 </script></html>

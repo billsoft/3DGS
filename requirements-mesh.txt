@@ -2,3 +2,4 @@
 # synthetic plane integration smoke test on the development machine.
 numpy==1.26.4
 open3d==0.19.0
+scipy==1.13.1

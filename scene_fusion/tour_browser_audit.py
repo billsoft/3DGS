@@ -27,7 +27,7 @@ def run(out):
         record=dict(view=path.stem,browser_gpu_mae=float(abs(browser-rgb).mean()),browser_teacher_mae=float(abs(browser-teacher).mean()),gpu_teacher_mae=float(abs(rgb-teacher).mean()))
         records.append(record)
         sheet=Image.new('RGB',(w*3,h+26));draw=ImageDraw.Draw(sheet)
-        for i,(label,img) in enumerate([('44% teacher, actual camera',teacher),('student GPU',rgb),('exported PLY in browser',browser)]):
+        for i,(label,img) in enumerate([(f'{meta["core"]:.0%} teacher, actual camera',teacher),('student GPU',rgb),('exported PLY in browser',browser)]):
             sheet.paste(Image.fromarray(np.uint8(img*255)),(i*w,26));draw.text((i*w+4,6),label,fill='white')
         sheet.save(out/'browser'/(path.stem+'-parity.jpg'),quality=96)
     if not records:raise ValueError('No captured browser camera frames to audit')

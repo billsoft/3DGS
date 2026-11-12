@@ -1,0 +1,19 @@
+{
+  "reference_mesh": "single-gs-photo-mesh-six-v6",
+  "raycast_protocol": {"source_directions":18,"oblique_and_route_views":96,"width":384,"height":384},
+  "mesh_candidates": [
+    {"scene":"single-gs-photo-mesh-six-v6","missed_rays":90849,"boundary_edges":69586,"nonmanifold_edges":0,"decision":"retained baseline"},
+    {"scene":"surface-repair-six-v1","stage":"before texture","missed_rays":110364,"decision":"rejected: more oblique holes despite fewer fragments"},
+    {"scene":"planar-photo-mesh-six-v1","missed_rays":96550,"decision":"rejected: planar depth constraints insufficient"},
+    {"scene":"poisson-photo-mesh-six-v1","missed_rays":0,"faces":1590030,"boundary_edges":0,"nonmanifold_edges":981,"untextured_faces":196337,"decision":"separate visual candidate; inferred geometry, not a certified manifold solid"}
+  ],
+  "poisson_depth_change": {"median_across_view_medians":0.0011380910873413086,"median_across_view_p95":0.010941880941390956,"units":"calibrated scene units","domain":"rays hitting both old and new meshes"},
+  "static_ply": {
+    "reference":"tour-distilled-six-v1","candidate":"tour-distilled-six-v2","points_before":917420,"points_after":1367420,"spatial_core":0.49,"training_resolution":1024,"evaluation_resolution":1024,
+    "anchors":{"views":36,"previous_ssim":0.9732761574804907,"candidate_ssim":0.9814151173527293,"previous_mae":0.008887615028975738,"candidate_mae":0.008336483876013922,"improved_ssim_views":34},
+    "heldout":{"views":264,"previous_ssim":0.9488644053867962,"candidate_ssim":0.9554655499632074,"previous_mae":0.015279363127333592,"candidate_mae":0.014840927684086968},
+    "all_views_ssim_improved":246,"all_views":300,"strict_anchor_gate_passed":false,"independent_standard_sh2_ply":true,"synthetic_reference":true,
+    "heldout_note":"Includes new orientations at shared positions; older near/route position holdout remains disjoint."
+  },
+  "limitations":["No claim of correctness at all possible viewpoints","Closed inferred surfaces can hide geometry errors","Gray unobserved surfaces and thin-structure deformation remain","Static PLY does not reproduce the native player's temporal source selection","No semantic object templates or fixed camera count"]
+}
