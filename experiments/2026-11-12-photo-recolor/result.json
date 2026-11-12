@@ -1,0 +1,18 @@
+{
+  "geometry_opacity_fixed": true,
+  "source_ssim_before": 0.9503506770644348,
+  "flat_mae_after": 0.0058026475663710796,
+  "new_holes": 0,
+  "worst_source_ssim_delta": -0.0012057287576028308,
+  "flat_highpass_after": 0.002745135425357148,
+  "candidate_sha256": "4b27020e1d90fa3c9b31a7c15c529baca1cb3e456f30961d723bd587da31be0b",
+  "flat_highpass_before": 0.0027459299178897506,
+  "python_tests": 35,
+  "flat_mae_before": 0.006218448126067718,
+  "status": "incremental_color_improvement",
+  "source_views": 36,
+  "default_baseline_replaced": false,
+  "source_ssim_after": 0.9511734590004194,
+  "improved_source_views": 31,
+  "remaining": "Geometry, occlusion and fine noise remain; no independent intermediate-view ground truth"
+}

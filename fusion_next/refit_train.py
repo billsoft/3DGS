@@ -37,6 +37,7 @@ def run():
     parser.add_argument('--graph-weight', type=float, default=0.)
     parser.add_argument('--preserve-color-differences', action='store_true',help='Regularize changes to neighboring colors instead of flattening their original contrast')
     parser.add_argument('--protected-geometry',type=Path,help='Boolean mask of independently constrained geometry; preserve its center, covariance and opacity')
+    parser.add_argument('--protected-appearance',type=Path,help='Boolean mask of already accepted colors; keep these unchanged during fitting')
     parser.add_argument('--edge-weight', type=float, default=.08)
     parser.add_argument('--color-lr', type=float, default=.008)
     parser.add_argument('--position-lr', type=float, default=.00016)
@@ -58,6 +59,12 @@ def run():
         mask=np.load(args.protected_geometry)
         if mask.dtype!=bool or mask.shape!=(len(scene['means']),):raise ValueError('Invalid protected geometry mask')
         protected=torch.as_tensor(mask,device='cuda')
+    appearance_protected=None
+    if args.protected_appearance:
+        mask=np.load(args.protected_appearance)
+        if mask.dtype!=bool or mask.shape!=(len(scene['means']),):raise ValueError('Invalid protected appearance mask')
+        appearance_protected=torch.as_tensor(mask,device='cuda')
+    initial_colors=scene['colors'].clone().detach()
     train_ids = [i for i, v in enumerate(views) if v['role']=='train']
     novel_ids = [i for i, v in enumerate(views) if v['role']=='novel']
     truth = torch.tensor(targets, device='cuda', dtype=torch.float32)/255
@@ -129,6 +136,7 @@ def run():
                 scene['opacity'].clamp_(args.opacity_min,args.opacity_max)
             if protected is not None:
                 for key in ['means','logs','quats','opacity']:scene[key][protected]=initial[key][protected]
+            if appearance_protected is not None:scene['colors'][appearance_protected]=initial_colors[appearance_protected]
         if step%50==0 or step==args.steps-1:
             record = dict(step=step+1, loss=float(loss.detach()), coverage_loss=float(coverage.detach()),
                 seconds=time.monotonic()-started, peak_gpu_gb=torch.cuda.max_memory_allocated()/1e9)
