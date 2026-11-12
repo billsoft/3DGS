@@ -1,0 +1,140 @@
+{
+  "accepted_reference": "tour-distilled-six-v1",
+  "photo_detail": {
+    "scene": "tour-photo-detail-six-v1",
+    "metrics": {
+      "source_views": 36,
+      "novel_views": 18,
+      "baseline_mean_ssim": 0.9322035412478855,
+      "candidate_mean_ssim": 0.9473821519173301,
+      "baseline_mean_mae": 0.01656284269434282,
+      "candidate_mean_mae": 0.010793153813152033,
+      "improved_ssim_views": 36,
+      "worst_ssim_delta": 0.0022241924001379365,
+      "new_holes": 0
+    },
+    "source_metrics_are_training_fit": true,
+    "export": {
+      "points": 917420,
+      "sh_degree": 2,
+      "geometry_opacity_exact": true,
+      "roundtrip_exact": true,
+      "model_sha256": "81237da67f89d27fe3ca0d022a77a36dbbec5ad9d328a6f4cc04843dbdace8e5",
+      "ply_sha256": "97233f77166a4b95d13be42e743592da15de9442f7525148da242ed083bc2e99"
+    },
+    "browser": {
+      "passed": true,
+      "views": [
+        "source-1-3",
+        "source-1-4",
+        "source-1-5",
+        "source-4-3",
+        "source-4-4",
+        "source-4-5",
+        "test-edge-1-2-0.47-3"
+      ],
+      "errors": []
+    }
+  },
+  "mesh": {
+    "scene": "single-gs-photo-mesh-six-v2",
+    "backend": "Open3D ScalableTSDFVolume",
+    "backend_version": "0.19.0",
+    "synthetic_depth": true,
+    "depth_views": 72,
+    "voxel": 0.02343814751133323,
+    "truncation": 0.07031444253399968,
+    "raw_faces": 2859821,
+    "decimated_faces": 1600000,
+    "final_faces": 1437972,
+    "texture_size": [
+      7680,
+      3840
+    ],
+    "small_loops_closed": 857,
+    "repair_faces_added": 1280,
+    "browser": {
+      "passed": true,
+      "triangles": 1437972,
+      "sources": 6,
+      "views": [
+        {
+          "source": 0,
+          "face": 3
+        },
+        {
+          "source": 0,
+          "face": 4
+        },
+        {
+          "source": 0,
+          "face": 5
+        },
+        {
+          "source": 1,
+          "face": 3
+        },
+        {
+          "source": 1,
+          "face": 4
+        },
+        {
+          "source": 1,
+          "face": 5
+        },
+        {
+          "source": 2,
+          "face": 3
+        },
+        {
+          "source": 2,
+          "face": 4
+        },
+        {
+          "source": 2,
+          "face": 5
+        },
+        {
+          "source": 3,
+          "face": 3
+        },
+        {
+          "source": 3,
+          "face": 4
+        },
+        {
+          "source": 3,
+          "face": 5
+        },
+        {
+          "source": 4,
+          "face": 3
+        },
+        {
+          "source": 4,
+          "face": 4
+        },
+        {
+          "source": 4,
+          "face": 5
+        },
+        {
+          "source": 5,
+          "face": 3
+        },
+        {
+          "source": 5,
+          "face": 4
+        },
+        {
+          "source": 5,
+          "face": 5
+        }
+      ],
+      "midpoints": 6,
+      "errors": []
+    },
+    "visual_inspection": "Photo texture is sharper, but small holes remain in floor/ceiling, and thin edges are damaged. Closing small loops did not materially remove the visible defects. Do not promote this mesh as a quality replacement."
+  },
+  "decision": "Photo-only GS candidate improves all 36 source directions in aggregate without geometry/opacity changes; retained as independent preview. Mesh has sharper photograph detail but visible holes/edge defects and is not a replacement for the accepted Gaussian model."
+}

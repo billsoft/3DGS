@@ -273,6 +273,13 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
                 footprint_visibility=footprint,
                 fragment_cleanup=None if cleanup_report is None else {k:v for k,v in cleanup_report.items() if k!='candidates'},
                 texture_size=[W,H],feather_pixels=blended,experimental=True)
+    capture_path=source/'capture.json'
+    if capture_path.exists():
+        capture=json.loads(capture_path.read_text('utf8'))
+        result.update(source_depth='single-GS-rendered',source_model_sha256=capture['model_sha256'],
+            reference_scene=Path(capture['model']).parent.name,
+            preview_title='单一 PLY 重建 · 高清原片贴图',
+            preview_note='从已融合单一高斯的渲染深度提取网格，再按可见性投影原始全景。细结构可能变形或缺失，不能视作无损转换。')
     repair_path=geometry.parent/'sphere-repair.json'
     if repair_path.exists():
         repair=json.loads(repair_path.read_text(encoding='utf8'))

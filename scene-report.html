@@ -6,7 +6,7 @@ const p=t=>{const e=document.createElement('p');e.textContent=t;box.appendChild(
 const a=document.createElement('a');a.href='/scene-room.html?scene='+id;a.textContent='打开融合预览';box.appendChild(a);
 p(report.summary);p(report.limitations);
 const table=document.createElement('table');for(const [k,v] of Object.entries(report.metrics)){const row=document.createElement('tr');for(const value of [k,typeof v==='object'?JSON.stringify(v):v]){const td=document.createElement('td');td.textContent=value;row.appendChild(td)}table.appendChild(row)}box.appendChild(table);
-p('原图 / 完整原始 PLY / 最终融合：下列对照来自实际渲染，不是照片覆盖层。');
+p(report.comparison_caption||'原图 / 完整原始 PLY / 最终融合：下列对照来自实际渲染，不是照片覆盖层。');
 for(const name of report.comparisons){const h=document.createElement('h2');h.textContent=name;box.appendChild(h);const link=document.createElement('a');link.href=root+'/'+report.native_report+'/'+name+'.jpg';const im=document.createElement('img');im.src=link.href;link.appendChild(im);box.appendChild(link)}
 p('中间视点只有初始融合与候选对照，没有独立实拍真值。');
 for(const name of report.midpoints){const h=document.createElement('h2');h.textContent=name;box.appendChild(h);const im=document.createElement('img');im.src=root+'/'+report.evaluation_report+'/'+name+'.jpg';box.appendChild(im)}

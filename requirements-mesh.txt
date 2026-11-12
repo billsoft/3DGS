@@ -1,0 +1,4 @@
+# Isolate from the CUDA/gsplat environment. 0.20.0 Windows wheel failed the
+# synthetic plane integration smoke test on the development machine.
+numpy==1.26.4
+open3d==0.19.0

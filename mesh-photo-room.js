@@ -8,6 +8,11 @@ const base='/four-room/scenes/'+id+'/',status=document.querySelector('#status');
 try{
  const get=async name=>{const r=await fetch(base+name);if(!r.ok)throw Error(name+' 无法读取');return r};
  const [meta,buffer]=await Promise.all([get('mesh.json').then(r=>r.json()),get('mesh.bin').then(r=>r.arrayBuffer())]);
+ if(meta.preview_title)document.querySelector('h1').textContent=meta.preview_title;
+ if(meta.preview_note)document.querySelector('#note').textContent=meta.preview_note;
+ if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){
+  const link=document.createElement('a');link.href='/scene-room.html?scene='+meta.reference_scene+'&inspect=3';link.textContent='重建前的单一 PLY';document.querySelector('#tools').appendChild(link);
+ }
  const rows=new Float32Array(buffer),count=rows.length/5;
  if(count!==meta.triangles*3)throw Error('网格数据长度错误');
  const position=new Float32Array(count*3),uv=new Float32Array(count*2);
