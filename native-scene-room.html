@@ -1,0 +1,71 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>原始机位保真播放器</title><style>
+body{margin:0;background:#000;color:#fff;font:14px system-ui}.layer{position:absolute;inset:0}#native{pointer-events:none;background:#000;z-index:1}#tools{position:absolute;z-index:5;top:12px;left:12px;padding:14px;border-radius:10px;background:#18212ef0;max-width:min(420px,85vw)}h1{font-size:18px;margin:0 0 10px}p{margin:8px 0}button{margin:3px;padding:6px 9px}a{color:#9cdeff;margin-right:12px}#status{font-weight:bold}#progress{color:#cbd8e6}
+</style><div id="base" class="layer"></div><div id="native" class="layer"></div>
+<div id="tools"><h1>原始机位保真 · 多模型播放</h1><p>拍摄点完整显示该机位的原始 PLY；中间区域使用融合模型。</p>
+<p><button id="auto">机位保真</button><button id="baseline">融合对照</button></p><div id="positions"></div>
+<p>拖动原地转头 · W/S 前后 · A/D 平移 · Q/E 升降</p><p id="status">正在加载原始模型…</p><p id="progress">正在读取本场景的原始 PLY，请稍候。</p>
+<p>这是多模型播放器，不是一个新的融合 PLY。过渡带可能双影；中间区域与原始模型自身的缺陷仍保留。</p>
+<p><a id="reference" target="_blank">单份原始对照</a><a id="fused" target="_blank">上一版融合</a><a id="report" target="_blank">验证对照</a><a id="download" download>当前原始 PLY</a></p></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script><script type="module">
+import * as THREE from 'three';
+import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';
+import {anchorPolicy} from './native-anchor-policy.js';
+import {nativeTransform,syncNativeCamera} from './native-camera.js';
+import {installRoomLook,setRoomLook} from './room-look.js';
+import {installRoomNavigation} from './room-navigation.js';
+import {installRoomSortRefresh} from './room-sorting.js';
+const query=new URLSearchParams(location.search),id=query.get('scene')||'native-source-six-v1';
+if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');
+const root='/four-room/scenes/'+id,status=document.querySelector('#status'),progress=document.querySelector('#progress'),layer=document.querySelector('#native');
+try{
+ const meta=await(await fetch(root+'/native.json')).json(),standalone=query.get('standalone')==='1';
+ const first=Math.max(0,Math.min(meta.stations.length-1,Number(query.get('source')||0))),loaded=standalone?[first]:meta.stations.map((_,i)=>i);
+ const centers=meta.centers.map(c=>new THREE.Vector3(...c)),transforms=meta.stations.map(s=>nativeTransform(s.world_from_raw));
+ const viewFor=(source,face)=>meta.views.find(v=>v.source===source&&v.name.endsWith('-'+face));
+ const initial=viewFor(first,3),target=initial.center.map((x,k)=>x+initial.basis[k][2]);
+ const options={selfDrivenMode:false,cameraUp:meta.up,initialCameraPosition:meta.centers[first],initialCameraLookAt:target,sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant};
+ const base=new Viewer({...options,rootElement:document.querySelector('#base'),sphericalHarmonicsDegree:meta.baseline.sh_degree});
+ const native=new Viewer({...options,rootElement:layer,useBuiltInControls:false,sphericalHarmonicsDegree:0});
+ let baseReady=false,ready=false,mode='auto',movement=0,lastSource=-1,lastWeight=-1,alive=true,loadError=null;
+ const render=()=>{base.forceRenderNextFrame();native.forceRenderNextFrame()};
+ installRoomLook({camera:base.camera,controls:base.controls,element:base.renderer.domElement,render,onStart:()=>movement++});
+ installRoomNavigation({camera:base.camera,controls:base.controls,render,onMove:()=>movement++});
+ base.controls.addEventListener('start',()=>movement++);
+ const baseSort=installRoomSortRefresh(base),nativeSort=installRoomSortRefresh(native,{controls:base.controls});
+ const select=()=>{
+  base.updateForRendererSizeChanges();
+  const policy=anchorPolicy(base.camera.position.toArray(),meta.centers),source=standalone?first:policy.source;
+  if(source!==lastSource){loaded.forEach((s,j)=>native.getSplatScene(j).visible=s===source);lastSource=source;nativeSort.request();render()}
+  syncNativeCamera(base.camera,native.camera,transforms[source]);
+  const weight=standalone?1:baseReady?(mode==='baseline'?0:policy.weight):1;
+  if(weight!==lastWeight){layer.style.opacity=String(weight);lastWeight=weight;render()}
+  window.nativeState={...policy,source,weight,baseReady,ready,mode,standalone,worldPosition:base.camera.position.toArray(),localPosition:native.camera.position.toArray(),visibleSources:loaded.filter((s,j)=>native.getSplatScene(j).visible),originalFile:meta.stations[source].file};
+  const label=meta.stations[source].label;
+  status.textContent=standalone?'单份原始 '+label+' 号模型':weight===1?'原始 '+label+' 号机位 · 100% 原始 PLY':weight===0?'融合模型 · 机位之间':'过渡中 · 原始模型 '+Math.round(weight*100)+'%';
+  progress.textContent=loadError||(!baseReady&&!standalone?'原始模型已就绪，正在加载中间区域模型…':policy.distance<1e-4?'位于拍摄光心；原地转头不改变位置。':'距离最近拍摄点 '+policy.distance.toFixed(3)+' 个模型单位');
+  document.querySelector('#download').href=root+'/'+meta.stations[source].file;
+  document.querySelector('#reference').href='?scene='+id+'&standalone=1&source='+source;
+  return window.nativeState;
+ };
+ const flush=async()=>{if(!ready)return;select();if(lastWeight>0){nativeSort.request();await nativeSort.flush()}if(baseReady&&lastWeight<1){baseSort.request();await baseSort.flush()}select();if(lastWeight>0){native.update();native.render()}if(baseReady&&lastWeight<1){base.update();base.render()}return window.nativeState};
+ const inspect=async(source,face=3)=>{movement++;const v=viewFor(source,face);base.camera.position.fromArray(v.center);setRoomLook(base.camera,base.controls,new THREE.Vector3(...v.basis.map(row=>row[2])));render();return await flush()};
+ const look=face=>{const s=standalone?first:anchorPolicy(base.camera.position.toArray(),meta.centers).source,v=viewFor(s,face);movement++;setRoomLook(base.camera,base.controls,new THREE.Vector3(...v.basis.map(row=>row[2])));render()};
+ const go=point=>{const token=++movement,from=base.camera.position.clone(),started=performance.now();const tick=now=>{if(token!==movement)return;const t=Math.min(1,(now-started)/1400),e=t*t*t*(10-15*t+6*t*t),next=from.clone().lerp(point,e),delta=next.clone().sub(base.camera.position);base.camera.position.copy(next);base.controls.target.add(delta);base.controls.update();render();if(t<1)requestAnimationFrame(tick);else flush().catch(console.error)};requestAnimationFrame(tick)};
+ const panel=document.querySelector('#positions'),button=(label,fn)=>{const b=document.createElement('button');b.textContent=label;b.onclick=fn;panel.append(b)};
+ document.querySelector('#fused').href='/scene-room.html?scene='+meta.baseline.scene+'&inspect=3';
+ document.querySelector('#report').href='/native-report.html?scene='+id;
+ document.querySelector('#baseline').onclick=()=>{if(!standalone){mode='baseline';render()}};
+ document.querySelector('#auto').onclick=()=>{mode='auto';render()};
+ await native.addSplatScenes(loaded.map(s=>({path:root+'/'+meta.stations[s].file,visible:s===first,splatAlphaRemovalThreshold:0})),false);
+ native.renderer.setClearColor(0x000000,1);base.renderer.setClearColor(0x000000,1);ready=true;
+ loaded.forEach(s=>button(meta.stations[s].label+'号机位',()=>go(centers[s])));
+ if(!standalone){panel.append(document.createElement('br'));meta.midpoint_edges.forEach(([a,b])=>button(meta.stations[a].label+'–'+meta.stations[b].label+' 中点',()=>go(centers[a].clone().lerp(centers[b],.5))))}
+ panel.append(document.createElement('br'));button('向下检查',()=>look(5));button('向上检查',()=>look(4));button('水平视向',()=>look(3));
+ window.roomViewer=base;window.nativeViewer=native;window.nativeMeta=meta;window.inspectNative=inspect;window.flushNative=flush;window.nativeMode=value=>{mode=value;render()};
+ await inspect(first,3);
+ const update=()=>{if(!alive)return;select();if(lastWeight>0){native.update();if(native.shouldRender())native.render();native.renderNextFrame=false}if(baseReady&&lastWeight<1){base.update();if(base.shouldRender())base.render();base.renderNextFrame=false}requestAnimationFrame(update)};update();
+ window.addEventListener('pagehide',()=>{alive=false;baseSort.dispose();nativeSort.dispose()},{once:true});
+ if(!standalone){try{await base.addSplatScenes([{path:meta.baseline.path,splatAlphaRemovalThreshold:3}],false);baseReady=true;render()}catch(e){loadError='中间区域加载失败；原始机位仍可查看。';console.error(e)}}
+}catch(e){status.textContent='加载失败：'+e.message;console.error(e)}
+</script></html>

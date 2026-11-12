@@ -26,7 +26,8 @@ def load_scene(path, device='cuda'):
 def render(scene, view, size, depth=False):
     device = scene['means'].device
     viewmat = torch.tensor(view['viewmat'], device=device, dtype=torch.float32)[None]
-    K = torch.tensor([[size/2, 0, size/2], [0, size/2, size/2], [0, 0, 1]],
+    focal = size/(2*np.tan(np.deg2rad(view.get('fov',90))/2))
+    K = torch.tensor([[focal, 0, size/2], [0, focal, size/2], [0, 0, 1]],
                      device=device, dtype=torch.float32)[None]
     colors=scene['colors']
     if 'sh' in scene:

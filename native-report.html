@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>原始机位保真对照</title>
+<style>body{font:16px system-ui;background:#17202b;color:#eef3fa;margin:24px}a{color:#9cdeff}button,select{font:inherit;margin:8px;padding:8px}main{display:flex;gap:12px}figure{margin:0;flex:1;min-width:0}img{width:100%;display:block}figcaption{padding:12px 0}@media(max-width:800px){main{display:block}}</style>
+<h1>原始机位保真对照</h1><p id="status">正在读取验证结果…</p><p>左边是多模型播放器在拍摄点的画面；右边是只加载该份原始 PLY 的同机位画面。这里比较的是原始 PLY，不是原始全景照片。</p><p><a id="player">返回播放器</a></p><select id="station" aria-label="机位"></select><select id="face" aria-label="方向"><option value="3">水平视向</option><option value="4">向上</option><option value="5">向下</option></select><main><figure><figcaption>多模型 · 原机位保真</figcaption><img id="multi" alt="多模型机位保真截图"></figure><figure><figcaption>独立加载 · 原始 PLY</figcaption><img id="single" alt="单独原始模型截图"></figure></main>
+<script type="module">
+const id=new URLSearchParams(location.search).get('scene')||'native-source-six-v1';if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');
+const root='/four-room/scenes/'+id,station=document.querySelector('#station'),face=document.querySelector('#face');
+document.querySelector('#player').href='/native-scene-room.html?scene='+id;
+try{const [meta,check,comparison]=await Promise.all(['native.json','browser/check.json','standalone/comparison.json'].map(async p=>{const r=await fetch(root+'/'+p);if(!r.ok)throw Error('验证记录尚未就绪');return r.json()}));
+document.querySelector('#status').textContent=check.passed&&comparison.passed?`${meta.stations.length} 个机位、${check.directions} 个方向检查通过；${comparison.images} 张独立原始对照图通过。最大平均像素差异 ${comparison.maximum_mae_255.toFixed(3)} / 255。`:'尚未通过全部检查。';
+meta.stations.forEach((s,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent=s.label+'号机位';station.append(o)});
+const update=()=>{const file='source-'+station.value+'-face-'+face.value+'.png';document.querySelector('#multi').src=root+'/browser/'+file;document.querySelector('#single').src=root+'/standalone/'+file};station.onchange=face.onchange=update;update();
+}catch(e){document.querySelector('#status').textContent=e.message}
+</script></html>

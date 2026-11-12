@@ -12,7 +12,7 @@ export async function finishRoomSort(viewer) {
     viewer.forceRenderNextFrame();
 }
 
-export function installRoomSortRefresh(viewer,{delay=60,onError=console.error}={}) {
+export function installRoomSortRefresh(viewer,{delay=60,onError=console.error,controls=viewer.controls}={}) {
     let revision=0,completed=0,timer=null,running=null,disposed=false;
     const schedule=()=>{
         if(disposed||running||timer!==null)return;
@@ -35,7 +35,7 @@ export function installRoomSortRefresh(viewer,{delay=60,onError=console.error}={
         if(timer!==null){clearTimeout(timer);timer=null}
         do {await(running||start())} while(!disposed&&revision!==completed);
     };
-    viewer.controls.addEventListener('change',request);
+    controls.addEventListener('change',request);
     request();
-    return {request,flush,dispose(){disposed=true;if(timer!==null)clearTimeout(timer);viewer.controls.removeEventListener('change',request)}};
+    return {request,flush,dispose(){disposed=true;if(timer!==null)clearTimeout(timer);controls.removeEventListener('change',request)}};
 }
