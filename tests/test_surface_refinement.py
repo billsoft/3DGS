@@ -51,5 +51,9 @@ class SurfaceMathTests(unittest.TestCase):
         self.assertGreater((owner>=0).sum(),3000)
         np.testing.assert_allclose(result[2:15,2:15],2.,atol=1e-7)
 
+    def test_vertical_camera_baseline_uses_finite_horizontal_look(self):
+        poses=make_views([[0,0,0],[0,0,1]],np.repeat(np.eye(3)[None],2,axis=0),[(0,1)])
+        self.assertTrue(all(np.isfinite(p['viewmat']).all() for p in poses))
+
 
 if __name__=='__main__':unittest.main()

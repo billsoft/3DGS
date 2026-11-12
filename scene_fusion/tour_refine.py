@@ -3,7 +3,7 @@
 Uses a deterministic spatial teacher, not the player's history-dependent rest
 switch. Synthetic supervision is never described as observed scene geometry.
 """
-import argparse,json,time,os,hashlib
+import argparse,json,time,os,hashlib,shutil
 from pathlib import Path
 import numpy as np
 from core import write_json
@@ -41,10 +41,12 @@ def run(a):
     for file in (a.reference/'data').glob('*.npy'):
         if file.name!='initial.npy' and not (file.stem.startswith('teacher-') and file.stem[8:].isdigit()):continue
         dest=data/file.name
-        if not dest.exists():os.link(file,dest)
+        if not dest.exists():
+            try:os.link(file,dest)
+            except OSError:shutil.copy2(file,dest)
     write_json(data/'dataset.json',meta)
     teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))]
-    z=np.load(a.reference/'optimized.npz');base,coeff=z['base'],z['sh'];model={}
+    z=np.load(a.resume or a.reference/'optimized.npz');base,coeff=z['base'],z['sh'];model={}
     def setup(base,coeff):
         m={k:torch.nn.Parameter(torch.tensor(v.copy(),device='cuda')) for k,v in dict(means=base[:,:3],logs=base[:,7:10],quats=base[:,10:14],opacity=base[:,6],dc=coeff[:,:1],rest=coeff[:,1:]).items()}
         rates=dict(means=.00005,logs=.0004,quats=.0001,opacity=.003,dc=.003,rest=.001)
@@ -59,6 +61,7 @@ def run(a):
     ids=[i for i,v in enumerate(meta['views']) if v['role']=='train'];anchors=[i for i in ids if meta['views'][i]['kind']=='anchor']
     order=[];history=[];splits=[];start=time.monotonic();size=a.size
     for step in range(a.steps):
+        size=a.sizes[step%len(a.sizes)] if a.sizes else a.size
         if not order:order=list(rng.permutation(ids))
         j=int(rng.choice(anchors)) if step%3==0 else int(order.pop());v=meta['views'][j]
         with torch.no_grad():
@@ -83,7 +86,7 @@ def run(a):
         with torch.no_grad():
             model['means'].copy_(initial+(model['means']-initial).clamp(-.06,.06));model['logs'].copy_(torch.maximum(torch.minimum(model['logs'],logs0+.35),logs0-.5))
             model['quats'].copy_(F.normalize(model['quats'],dim=1));model['opacity'].clamp_(-8,10);model['dc'].clamp_(-.5/SH0,.5/SH0);model['rest'].clamp_(-2,2)
-        if step+1 in [500,1300,2100] and len(initial)<a.max_points:
+        if not a.no_split and step+1 in [500,1300,2100] and len(initial)<a.max_points:
             quality=score/count.clamp(min=1)*radius.sqrt();quality[(count<5)|(radius<3)]=0
             n=min(a.split_count,a.max_points-len(initial),int((quality>0).sum()))
             if n:
@@ -95,7 +98,7 @@ def run(a):
             rec=dict(step=step+1,loss=float(loss.detach()),points=len(initial),seconds=time.monotonic()-start,gpu_gb=torch.cuda.max_memory_allocated()/1e9);history.append(rec);print(rec,flush=True)
         if (step+1)%500==0 or step==a.steps-1:
             b,s=arrays();np.savez(a.out/'optimized.npz',base=b,sh=s)
-            write_json(a.out/'training.json',dict(steps=step+1,size=size,points=len(b),core=a.core,history=history,splits=splits,synthetic_supervision=True,teacher_temporal_state=False,
+            write_json(a.out/'training.json',dict(steps=step+1,size=size,training_sizes=a.sizes or [a.size],points=len(b),core=a.core,history=history,splits=splits,synthetic_supervision=True,teacher_temporal_state=False,
                 reference_model_sha256=hashlib.sha256((a.reference/'optimized.npz').read_bytes()).hexdigest()))
 
 
@@ -103,4 +106,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--reference',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--views',type=Path)
     p.add_argument('--core',type=float,default=.49);p.add_argument('--size',type=int,default=1024);p.add_argument('--steps',type=int,default=4000)
     p.add_argument('--max-points',type=int,default=1400000);p.add_argument('--split-count',type=int,default=150000)
+    p.add_argument('--resume',type=Path);p.add_argument('--no-split',action='store_true');p.add_argument('--sizes',type=int,nargs='+')
     a=p.parse_args();run(a)

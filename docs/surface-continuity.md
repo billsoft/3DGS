@@ -17,6 +17,15 @@ camera directions. Browser captures and raycasts use the same calibrated poses;
 the browser check verifies the CV/Three.js camera basis conversion. A ray miss
 counts absent geometry, not all dark pixels, wrong textures or wrong shapes.
 
+Tracing source-view ray misses back to the original rendered depth gives direct
+stage evidence. Of the published v6 mesh's 18,860 misses in 18 source directions,
+14,464 still have finite input depth in range and alpha >= 0.95. The pre-texture
+TSDF/decimated mesh already has 19,721 misses, including 14,490 with valid input
+depth. Thus most tested losses occur during depth-to-surface conversion, before
+photo ownership; they are not explained by missing photographs. This audit
+does not separately attribute integration versus simplification, and the input
+depth is synthetic rather than a measurement.
+
 ## Experiments and decision
 
 All ray counts below use 114 views at 384 square pixels. These views do not prove
@@ -82,6 +91,26 @@ baking of the native tour and not an independent photographic accuracy test.
 Some held-out oblique directions share positions with differently oriented
 training views. The older route/near-position holdout is still disjoint.
 
+Further 384-resolution evaluation exposed a regression in this HD-only v2:
+anchor SSIM 0.96995 → 0.96558 and held-out SSIM 0.93923 → 0.93578. Its HD result
+must not be presented as resolution-independent improvement. A subsequent
+candidate resumes these points with mixed 384/640/1024 supervision and no more
+splits. The changed sampling rate is explicitly tested instead of comparing only
+the training resolution. This is multi-resolution fitting with the existing
+standard renderer, not an implementation of Mip-Splatting's filters.
+
+The final preview is **tour-distilled-six-v3**, after 3,000 additional mixed-size
+steps with the same 1,367,420 points. Against the same original v1 reference:
+
+| Resolution | Source SSIM, old → v3 | Held-out SSIM, old → v3 |
+|---|---:|---:|
+| 384 | 0.96995 → 0.98220 | 0.93923 → 0.94715 |
+| 1024 | 0.97328 → 0.97861 | 0.94886 → 0.95465 |
+
+This trades some v2 HD gain for better cross-resolution behavior. Both scales
+improve over v1 on average, but neither passes the strict every-source gate.
+The report exposes both resolutions rather than hiding the lower-scale result.
+
 The exported PLY roundtrips exactly, loads independently as one SH2 PLY in the
 actual browser, and is checked at seven browser poses against GPU rendering.
 No original PLY or photograph is selected or overlaid during its playback.
@@ -106,6 +135,11 @@ node tests/check_tour_distill_browser.mjs tour-distilled-six-v2
 ./run-refit-gpu.ps1 scene_fusion/tour_browser_audit.py --out four-room/scenes/tour-distilled-six-v2
 ```
 
+For the final mixed-resolution candidate, use `tour_refine.py` with the same
+reference and views, a fresh `--out`, `--resume` pointing to v2's checkpoint,
+`--no-split --sizes 384 640 1024 --steps 3000`. Evaluate v3 independently at 384
+and 1024, export it, and repeat the standard-PLY browser/parity checks.
+
 ## Primary references and implementation boundary
 
 - [2DGS paper](https://arxiv.org/abs/2403.17888) and
@@ -113,6 +147,7 @@ node tests/check_tour_distill_browser.mjs tour-distilled-six-v2
 - [gsplat 2DGS example](https://github.com/nerfstudio-project/gsplat/blob/main/examples/simple_trainer_2dgs.py): the installed gsplat implementation is used by the optional surface experiment.
 - [PGSR](https://arxiv.org/abs/2406.06521): related plane/depth consistency research; the full PGSR pipeline is not implemented here.
 - [DN-Splatter](https://github.com/maturk/dn-splatter): related indoor geometry and depth/normal priors; not a dependency.
+- [Mip-Splatting](https://niujinshuchong.github.io/mip-splatting/): documents Gaussian dilation and sampling-rate artifacts. It informs the multi-resolution audit; its renderer and filters are not vendored here.
 - [PoissonRecon](https://github.com/mkazhdan/PoissonRecon) and
   [Open3D surface reconstruction](https://www.open3d.org/docs/release/tutorial/geometry/surface_reconstruction.html): Screened Poisson is used through Open3D. Its smooth extrapolation is why closure must be checked visually and cannot be equated with measured geometry.
 

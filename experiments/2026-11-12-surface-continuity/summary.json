@@ -1,19 +1,174 @@
 {
   "reference_mesh": "single-gs-photo-mesh-six-v6",
-  "raycast_protocol": {"source_directions":18,"oblique_and_route_views":96,"width":384,"height":384},
-  "mesh_candidates": [
-    {"scene":"single-gs-photo-mesh-six-v6","missed_rays":90849,"boundary_edges":69586,"nonmanifold_edges":0,"decision":"retained baseline"},
-    {"scene":"surface-repair-six-v1","stage":"before texture","missed_rays":110364,"decision":"rejected: more oblique holes despite fewer fragments"},
-    {"scene":"planar-photo-mesh-six-v1","missed_rays":96550,"decision":"rejected: planar depth constraints insufficient"},
-    {"scene":"poisson-photo-mesh-six-v1","missed_rays":0,"faces":1590030,"boundary_edges":0,"nonmanifold_edges":981,"untextured_faces":196337,"decision":"separate visual candidate; inferred geometry, not a certified manifold solid"}
-  ],
-  "poisson_depth_change": {"median_across_view_medians":0.0011380910873413086,"median_across_view_p95":0.010941880941390956,"units":"calibrated scene units","domain":"rays hitting both old and new meshes"},
-  "static_ply": {
-    "reference":"tour-distilled-six-v1","candidate":"tour-distilled-six-v2","points_before":917420,"points_after":1367420,"spatial_core":0.49,"training_resolution":1024,"evaluation_resolution":1024,
-    "anchors":{"views":36,"previous_ssim":0.9732761574804907,"candidate_ssim":0.9814151173527293,"previous_mae":0.008887615028975738,"candidate_mae":0.008336483876013922,"improved_ssim_views":34},
-    "heldout":{"views":264,"previous_ssim":0.9488644053867962,"candidate_ssim":0.9554655499632074,"previous_mae":0.015279363127333592,"candidate_mae":0.014840927684086968},
-    "all_views_ssim_improved":246,"all_views":300,"strict_anchor_gate_passed":false,"independent_standard_sh2_ply":true,"synthetic_reference":true,
-    "heldout_note":"Includes new orientations at shared positions; older near/route position holdout remains disjoint."
+  "raycast_protocol": {
+    "source_directions": 18,
+    "oblique_and_route_views": 96,
+    "width": 384,
+    "height": 384
   },
-  "limitations":["No claim of correctness at all possible viewpoints","Closed inferred surfaces can hide geometry errors","Gray unobserved surfaces and thin-structure deformation remain","Static PLY does not reproduce the native player's temporal source selection","No semantic object templates or fixed camera count"]
+  "mesh_candidates": [
+    {
+      "scene": "single-gs-photo-mesh-six-v6",
+      "missed_rays": 90849,
+      "boundary_edges": 69586,
+      "nonmanifold_edges": 0,
+      "decision": "retained baseline"
+    },
+    {
+      "scene": "surface-repair-six-v1",
+      "stage": "before texture",
+      "missed_rays": 110364,
+      "decision": "rejected: more oblique holes despite fewer fragments"
+    },
+    {
+      "scene": "planar-photo-mesh-six-v1",
+      "missed_rays": 96550,
+      "decision": "rejected: planar depth constraints insufficient"
+    },
+    {
+      "scene": "poisson-photo-mesh-six-v1",
+      "missed_rays": 0,
+      "faces": 1590030,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 981,
+      "untextured_faces": 196337,
+      "decision": "separate visual candidate; inferred geometry, not a certified manifold solid"
+    }
+  ],
+  "poisson_depth_change": {
+    "median_across_view_medians": 0.0011380910873413086,
+    "median_across_view_p95": 0.010941880941390956,
+    "units": "calibrated scene units",
+    "domain": "rays hitting both old and new meshes"
+  },
+  "limitations": [
+    "No claim of correctness at all possible viewpoints",
+    "Closed inferred surfaces can hide geometry errors",
+    "Gray unobserved surfaces and thin-structure deformation remain",
+    "Static PLY does not reproduce the native player's temporal source selection",
+    "No semantic object templates or fixed camera count"
+  ],
+  "hd_only_trial": {
+    "reference": "tour-distilled-six-v1",
+    "candidate": "tour-distilled-six-v2",
+    "points_before": 917420,
+    "points_after": 1367420,
+    "spatial_core": 0.49,
+    "training_resolution": 1024,
+    "evaluation_resolution": 1024,
+    "anchors": {
+      "views": 36,
+      "previous_ssim": 0.9732761574804907,
+      "candidate_ssim": 0.9814151173527293,
+      "previous_mae": 0.008887615028975738,
+      "candidate_mae": 0.008336483876013922,
+      "improved_ssim_views": 34
+    },
+    "heldout": {
+      "views": 264,
+      "previous_ssim": 0.9488644053867962,
+      "candidate_ssim": 0.9554655499632074,
+      "previous_mae": 0.015279363127333592,
+      "candidate_mae": 0.014840927684086968
+    },
+    "all_views_ssim_improved": 246,
+    "all_views": 300,
+    "strict_anchor_gate_passed": false,
+    "independent_standard_sh2_ply": true,
+    "synthetic_reference": true,
+    "heldout_note": "Includes new orientations at shared positions; older near/route position holdout remains disjoint.",
+    "low_resolution_regression": true
+  },
+  "static_ply": {
+    "candidate": "tour-distilled-six-v3",
+    "reference": "tour-distilled-six-v1",
+    "points": 1367420,
+    "training_sizes": [
+      384,
+      640,
+      1024
+    ],
+    "spatial_core": 0.49,
+    "independent_standard_sh2_ply": true,
+    "strict_anchor_gate_passed": false,
+    "synthetic_reference": true,
+    "evaluations": {
+      "1024": {
+        "summary": {
+          "anchors": {
+            "initial": {
+              "mae": 0.008887615028975738,
+              "ssim": 0.9732761574804907,
+              "holes": 8.88888888888889
+            },
+            "student": {
+              "mae": 0.008610360220902495,
+              "ssim": 0.9786108527457996,
+              "holes": 2.0833333333333335
+            },
+            "views": 36
+          },
+          "heldout": {
+            "initial": {
+              "mae": 0.015279363127333592,
+              "ssim": 0.9488644053867962,
+              "holes": 91.1780303030303
+            },
+            "student": {
+              "mae": 0.014705867697061463,
+              "ssim": 0.9546528234983668,
+              "holes": 61.053030303030305
+            },
+            "views": 264
+          }
+        },
+        "source_directions_ssim_improved": 29,
+        "total_views_ssim_improved": 248
+      },
+      "384": {
+        "summary": {
+          "anchors": {
+            "initial": {
+              "mae": 0.0095303797796886,
+              "ssim": 0.9699524046644794,
+              "holes": 0.16666666666666666
+            },
+            "student": {
+              "mae": 0.008141169525010305,
+              "ssim": 0.9822016045737312,
+              "holes": 0.0
+            },
+            "views": 36
+          },
+          "heldout": {
+            "initial": {
+              "mae": 0.01581172982520057,
+              "ssim": 0.9392341147718697,
+              "holes": 10.613636363636363
+            },
+            "student": {
+              "mae": 0.014950937332204458,
+              "ssim": 0.9471543494508949,
+              "holes": 7.132575757575758
+            },
+            "views": 264
+          }
+        },
+        "source_directions_ssim_improved": 36,
+        "total_views_ssim_improved": 264
+      }
+    },
+    "browser_views": 7,
+    "browser_gpu_mae_mean": 0.004062404479882265,
+    "ply_sha256": "39d2c1ff758d3ecd6a1bbfc3e5f2bb005e68f149b703d376c0cc15f45735c75c",
+    "roundtrip_exact": true
+  },
+  "input_depth_trace": {
+    "source_directions": 18,
+    "published_mesh_misses": 18860,
+    "published_misses_with_valid_input_depth": 14464,
+    "pretexture_mesh_misses": 19721,
+    "pretexture_misses_with_valid_input_depth": 14490,
+    "input_depth_is_synthetic": true
+  }
 }

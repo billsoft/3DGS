@@ -175,6 +175,7 @@ def evaluate(a):
             im,alpha,_=render(model,v,size);before,ba,_=render(initial,v,size)
             im=im.cpu().numpy().clip(0,1);alpha=alpha.cpu().numpy();before=before.cpu().numpy().clip(0,1)
             records.append(dict(view=v['name'],kind=v['kind'],role=v['role'],initial=metrics(before,truth,ba.cpu().numpy(),teacher_alpha),student=metrics(im,truth,alpha,teacher_alpha)))
+            if len(records)%30==0:print('Evaluated views',len(records),'size',size,flush=True)
             if v['kind'] in ['anchor','oblique'] or v['name'].endswith(('-3','-4','-5')):
                 sheet=Image.new('RGB',(size*3,size+26));draw=ImageDraw.Draw(sheet)
                 for col,(label,img) in enumerate([(f'{meta["core"]:.0%} spatial teacher',truth),('previous PLY' if meta.get('comparison_model') else 'static initialization',before),('single PLY student',im)]):
@@ -198,9 +199,14 @@ def export(a):
     if not np.array_equal(b,base) or not np.array_equal(s,sh):raise ValueError('Export roundtrip mismatch')
     meta=json.loads((a.out/'data/dataset.json').read_text('utf8'));ev=json.loads((a.out/a.evaluation_folder/'evaluation.json').read_text('utf8'))
     if ev['model_sha256']!=hashlib.sha256((a.out/'optimized.npz').read_bytes()).hexdigest():raise ValueError('Stale evaluation')
+    evaluations=[]
+    for folder in sorted(a.out.glob('evaluation*')):
+        if (folder/'evaluation.json').is_file():
+            candidate=json.loads((folder/'evaluation.json').read_text('utf8'))
+            if candidate.get('model_sha256')==ev['model_sha256']:evaluations.append(dict(folder=folder.name,size=candidate['size'],anchor_fidelity_passed=candidate['anchor_fidelity_passed']))
     (a.out/'data-512').mkdir(exist_ok=True);write_json(a.out/'data-512/dataset.json',meta)
     write_json(a.out/'fusion.json',dict(optimized=True,model_folder='final',sh_degree=2,splat_alpha_threshold=0,stations=meta['stations'],centers=meta['centers'],up=meta['up'],
-        native_scene=a.native.name if a.native else meta.get('native_scene'),report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
+        native_scene=a.native.name if a.native else meta.get('native_scene'),report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,evaluations=evaluations,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
         preview_note='由原始模型漫游渲染监督训练。不是无损烘焙；机位保真门槛'+('通过' if ev['anchor_fidelity_passed'] else '尚未通过')+'，请与原始漫游对照。'))
     write_json(final/'validation.json',dict(points=len(base),degree=2,roundtrip_exact=True,independent_ply=True,teacher_models_required_at_playback=False,
         sha256=hashlib.sha256((final/'fused.ply').read_bytes()).hexdigest(),anchor_fidelity_passed=ev['anchor_fidelity_passed']))
