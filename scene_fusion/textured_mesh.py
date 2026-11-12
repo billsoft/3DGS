@@ -1,0 +1,256 @@
+"""Bake calibrated panoramas onto one triangle surface, with visibility ownership.
+
+This does not treat Gaussian centers as a measured surface. The input is an
+explicit reconstructed mesh; its errors remain a separate geometric limitation.
+No object names, hand-painted masks, or fixed camera counts are used.
+"""
+import argparse, json, zipfile, hashlib
+from pathlib import Path
+import numpy as np
+import cv2 as cv
+from numba import njit
+from scipy.sparse import coo_matrix
+from core import load, prep, write_json
+from surface_export import adjacency, sample_photo
+from surface_volume import fields
+
+
+@njit(cache=True)
+def raster(xy, z, triangles, height, width, perspective=True):
+    depth = np.full((height, width), np.inf, np.float32)
+    face = np.full((height, width), -1, np.int32)
+    bary = np.zeros((height, width, 2), np.float32)
+    for fi in range(len(triangles)):
+        ia, ib, ic = triangles[fi]
+        za, zb, zc = z[ia], z[ib], z[ic]
+        if min(za, zb, zc) <= .01:
+            continue
+        ax, ay = xy[ia]; bx, by = xy[ib]; cx, cy = xy[ic]
+        det = (by-cy)*(ax-cx)+(cx-bx)*(ay-cy)
+        if abs(det) < 1e-9:
+            continue
+        x0 = max(0, int(np.floor(min(ax, bx, cx))))
+        x1 = min(width-1, int(np.ceil(max(ax, bx, cx))))
+        y0 = max(0, int(np.floor(min(ay, by, cy))))
+        y1 = min(height-1, int(np.ceil(max(ay, by, cy))))
+        for y in range(y0, y1+1):
+            for x in range(x0, x1+1):
+                a = ((by-cy)*(x-cx)+(cx-bx)*(y-cy))/det
+                b = ((cy-ay)*(x-cx)+(ax-cx)*(y-cy))/det
+                c = 1-a-b
+                if min(a,b,c) < -1e-6:
+                    continue
+                d = 1/(a/za+b/zb+c/zc) if perspective else a*za+b*zb+c*zc
+                if d < depth[y,x]:
+                    depth[y,x] = d; face[y,x] = fi
+                    if perspective:
+                        bary[y,x,0] = a/za*d; bary[y,x,1] = b/zb*d
+                    else:
+                        bary[y,x,0] = a; bary[y,x,1] = b
+    return depth, face, bary
+
+
+def erp_uv(p, C, Q):
+    q = (p-C)@Q
+    return np.c_[np.arctan2(-q[:,1],q[:,0])/(2*np.pi)+.5,
+                 np.arctan2(np.linalg.norm(q[:,:2],axis=1),q[:,2])/np.pi]
+
+
+def unwrap_triangle_uv(uv):
+    result = uv.copy()
+    wrapped = np.ptp(result[:,:,0],axis=1) > .5
+    result[:,:,0] += wrapped[:,None] & (result[:,:,0]<.5)
+    return result
+
+
+def smooth_mesh(p, tri, limit, iterations=5):
+    original = p.copy()
+    original_normal = np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
+    edge, count = np.unique(np.sort(np.concatenate([tri[:,[0,1]],tri[:,[1,2]],tri[:,[2,0]]]),axis=1),axis=0,return_counts=True)
+    a,b = edge.T
+    fixed = np.zeros(len(p),bool); fixed[np.unique(edge[count!=2])]=True
+    normal = np.zeros_like(p)
+    for k in range(3): np.add.at(normal,tri[:,k],original_normal)
+    normal /= np.maximum(np.linalg.norm(normal,axis=1)[:,None],1e-10)
+    dot = (normal[a]*normal[b]).sum(1)
+    fixed[np.unique(edge[dot<.75])]=True
+    w = np.clip((dot-.75)/.25,0,1)**3
+    W = coo_matrix((np.r_[w,w],(np.r_[a,b],np.r_[b,a])),shape=(len(p),len(p))).tocsr()
+    degree = np.maximum(np.asarray(W.sum(1)).ravel(),1e-10)
+    for _ in range(iterations):
+        average = W@p/degree[:,None]
+        step = np.sum((average-p)*normal,axis=1)*.35; step[fixed]=0
+        shift = np.clip(np.sum((p-original)*normal,axis=1)+step,-limit,limit)
+        p = original+shift[:,None]*normal
+    for _ in range(64):
+        new_normal=np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
+        bad=(new_normal*original_normal).sum(1)<=0
+        if not bad.any(): break
+        p[np.unique(tri[bad])]=original[np.unique(tri[bad])]
+    new_normal=np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
+    bad=(new_normal*original_normal).sum(1)<=0
+    if bad.any():
+        p=original.copy();bad[:]=False
+    return p, dict(max_displacement=float(np.linalg.norm(p-original,axis=1).max()),
+                   locked_vertices=int(fixed.sum()),invalid_faces=int(bad.sum()))
+
+
+def mesh_visibility(p,tri,C,Q,size,tolerance):
+    centers=p[tri].mean(1); q=(centers-C)@Q
+    faceid=np.argmax(np.stack([q@b[:,2] for b in prep.FACES]),axis=0)
+    visible=np.zeros(len(tri),bool)
+    for k,b in enumerate(prep.FACES):
+        v=(p-C)@Q@b; xy=(v[:,:2]/np.maximum(v[:,2,None],1e-7)+1)*size/2-.5
+        depth,_,_=raster(xy.astype('f'),v[:,2].astype('f'),tri,size,size)
+        ids=np.flatnonzero(faceid==k); v=(centers[ids]-C)@Q@b
+        uv=np.rint((v[:,:2]/np.maximum(v[:,2,None],1e-7)+1)*size/2-.5).astype(int).clip(0,size-1)
+        observed=depth[uv[:,1],uv[:,0]]
+        visible[ids]=np.isfinite(observed)&(v[:,2]>.01)&(v[:,2]<=observed+tolerance)
+    return visible
+
+
+def choose_owners(p,tri,C,Q,views,images,spacing,hints=None):
+    center=p[tri].mean(1); normal=np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
+    area=np.linalg.norm(normal,axis=1); normal/=np.maximum(area[:,None],1e-10)
+    scores=np.zeros((len(tri),len(C)),'f'); colors=np.zeros((len(tri),len(C),3),'f')
+    for i,view in enumerate(views):
+        visible=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7)
+        delta,confidence,dist=view.sample(center)
+        angle=np.abs(np.sum((C[i]-center)*normal,axis=1))/np.maximum(dist,1e-5)
+        depth_support=np.exp(-np.abs(delta)/(.18+.04*dist))
+        scores[:,i]=visible*(.1+.9*angle)**1.5/np.maximum(dist,.4)**1.6*(.2+.8*confidence)*depth_support
+        colors[:,i]=sample_photo(images[i],center,C[i],Q[i])
+        print('Visibility/texture evidence',i+1,int(visible.sum()),flush=True)
+    good=(scores.max(1)>1e-5)&(area>1e-10)
+    owner=scores.argmax(1); neighbors=adjacency(tri)
+    unary=-np.log(np.maximum(scores,1e-20)/np.maximum(scores.max(1)[:,None],1e-20))
+    # Checkerboard updates reduce oscillation; pair costs penalize visible seams.
+    ids=np.arange(len(tri))
+    for _ in range(8):
+        for parity in [0,1]:
+            costs=unary.copy()
+            for i in range(len(C)):
+                for k in range(3):
+                    other=owner[neighbors[:,k]]
+                    difference=np.linalg.norm(colors[:,i]-colors[ids,other],axis=1)
+                    costs[:,i]+=(other!=i)*(.45+np.minimum(difference,.5)*3)
+            take=(ids%2==parity)&good; owner[take]=costs[take].argmin(1)
+    if hints is not None:
+        # A verified planar patch uses one appearance source, avoiding mixtures
+        # of reflections. The patch still needs visibility from that source.
+        use=(hints>=0)&(hints<len(C)); selected=np.flatnonzero(use)
+        selected=selected[scores[selected,hints[selected]]>1e-6]
+        owner[selected]=hints[selected]
+    return owner,good,scores,colors
+
+
+def boundary_weights(tri,owner,count,vertices):
+    weights=np.zeros((vertices,count),'f')
+    for k in range(3): np.add.at(weights,(tri[:,k],owner),1)
+    weights/=np.maximum(weights.sum(1)[:,None],1)
+    return weights
+
+
+def blend_linear(base,other,weight):
+    def linear(x): return np.where(x<=.04045,x/12.92,((x+.055)/1.055)**2.4)
+    color=linear(base)*(1-weight[:,None])+linear(other)*weight[:,None]
+    return np.where(color<=.0031308,color*12.92,1.055*np.maximum(color,0)**(1/2.4)-.055)
+
+
+def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False):
+    if not 512<=texture_width<=8192 or texture_width%2 or not 0<=smoothing<=1:
+        raise ValueError('Texture width must be even, 512–8192; smoothing must be 0–1')
+    out.mkdir(parents=True,exist_ok=True); meta=load(source)
+    for item in meta['stations']:
+        if hashlib.sha256(Path(item['photo']).read_bytes()).hexdigest()!=item['photo_sha256']:
+            raise ValueError('Panorama changed after camera calibration: '+item['label'])
+    cameras=np.load(source/'aligned-cameras.npz'); C,Q=cameras['C'],cameras['Q']
+    data=np.load(geometry); p=data['p'].astype('f'); tri=data['tri'].astype('i')
+    area=np.linalg.norm(np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]]),axis=1)
+    nondegenerate=area>1e-10; degenerate_removed=int((~nondegenerate).sum())
+    hints=data['owner_hint'][nondegenerate] if 'owner_hint' in data else None; tri=tri[nondegenerate]
+    edges=np.linalg.norm(p[tri[:,1]]-p[tri[:,0]],axis=1)
+    spacing=float(np.median(edges)); p,smooth_report=smooth_mesh(p,tri,spacing*smoothing)
+    print('Mesh smoothing',smooth_report,flush=True)
+    views=fields(source,warped)
+    images=[cv.resize(cv.imdecode(np.fromfile(s['photo'],np.uint8),1),(2048,1024)) for s in meta['stations']]
+    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints)
+    rejected=int((~good).sum()); tri=tri[good]; owner=owner[good]; scores=scores[good]
+    np.savez_compressed(out/'surface-owned.npz',p=p,tri=tri,owner=owner,scores=scores)
+    weights=boundary_weights(tri,owner,len(C),len(p))
+    rows=[]; groups=[]; offset=0; blended=[]
+    H,W=texture_width//2,texture_width
+    for i,item in enumerate(meta['stations']):
+        ids=np.flatnonzero(owner==i)
+        if not len(ids): continue
+        uv=unwrap_triangle_uv(erp_uv(p[tri[ids]].reshape(-1,3),C[i],Q[i]).reshape(-1,3,2))
+        xyz=p[tri[ids]]; index=np.arange(len(ids)*3,dtype='i').reshape(-1,3)
+        image=cv.resize(cv.imdecode(np.fromfile(item['photo'],np.uint8),1),(W,H),interpolation=cv.INTER_AREA)
+        original=image.copy()
+        # Rasterize only boundary faces to bake a narrow one-ring feather band.
+        seam=np.any(weights[tri[ids],i]<.999,axis=1)
+        seam_ids=np.flatnonzero(seam)
+        blend_count=0
+        if len(seam_ids):
+            vertices=xyz[seam_ids].reshape(-1,3)
+            tx=uv[seam_ids].reshape(-1,2)*[W,H]-.5
+            # ERP wrap duplicates are clipped into the same texture, not stretched.
+            ix=np.arange(len(vertices),dtype='i').reshape(-1,3)
+            z=np.linalg.norm(vertices-C[i],axis=1).astype('f')
+            for shift in [0,-W]:
+                _,face,bary=raster((tx+[shift,0]).astype('f'),z,ix,H,W,False)
+                yy,xx=np.nonzero(face>=0)
+                for start in range(0,len(yy),24000):
+                    y,x=yy[start:start+24000],xx[start:start+24000]
+                    f=seam_ids[face[y,x]]; b=np.c_[bary[y,x],1-bary[y,x].sum(1)]
+                    pos=np.einsum('nk,nkj->nj',b,xyz[f])
+                    w=np.einsum('nk,nkj->nj',b,weights[tri[ids[f]]]); w[:,i]=0
+                    secondary=w.argmax(1); amount=np.minimum(.5,w.max(1))
+                    base=original[y,x,::-1].astype('f')/255; result=base.copy()
+                    for j in np.unique(secondary):
+                        chosen=np.flatnonzero((secondary==j)&(amount>1e-5))
+                        if not len(chosen): continue
+                        rgb=sample_photo(images[j],pos[chosen],C[j],Q[j])
+                        # Never smear an occlusion edge or a differently reflected object.
+                        difference=np.linalg.norm(rgb-base[chosen],axis=1)
+                        gate=np.clip((.14-difference)/.08,0,1)
+                        delta,conf,dist=views[j].sample(pos[chosen])
+                        gate*=((abs(delta)<.10+.03*dist)&(conf>.15)&(scores[ids[f[chosen]],j]>1e-6))
+                        a=amount[chosen]*gate
+                        result[chosen]=blend_linear(base[chosen],rgb,a)
+                        blend_count+=int((a>.01).sum())
+                    image[y,x]=np.uint8(np.clip(result[:,::-1]*255,0,255))
+        name=f'texture-{i+1}.jpg'; cv.imwrite(str(out/name),image,[cv.IMWRITE_JPEG_QUALITY,96])
+        rows.append(np.c_[xyz.reshape(-1,3),uv.reshape(-1,2)].astype('<f4'))
+        groups.append(dict(source=i,label=item['label'],start=offset,count=len(ids)*3,texture=name)); offset+=len(ids)*3
+        blended.append(blend_count); print('Baked source',i+1,'triangles',len(ids),'feather pixels',blend_count,flush=True)
+    rows=np.concatenate(rows); rows.tofile(out/'mesh.bin')
+    # View poses come from this scene, never from a different reconstruction.
+    dataset=json.loads((source/'data-512/dataset.json').read_text(encoding='utf8'))
+    up=Q[:,:,2].mean(0); up/=np.linalg.norm(up)
+    result=dict(triangles=len(tri),vertices=len(p),groups=groups,centers=C.tolist(),up=up.tolist(),
+                stations=[s['label'] for s in meta['stations']],views=dataset['views'],midpoint_edges=dataset['midpoint_edges'],
+                method='One reconstructed triangle surface; visible coherent photo ownership; gated one-ring linear-light seam feather',
+                input_surface=str(geometry),surface_sha256=hashlib.sha256(geometry.read_bytes()).hexdigest(),
+                camera_sha256=hashlib.sha256((source/'aligned-cameras.npz').read_bytes()).hexdigest(),
+                warped_depth=warped,smoothing=smooth_report,degenerate_faces_removed=degenerate_removed,unobserved_faces_removed=rejected,
+                texture_size=[W,H],feather_pixels=blended,experimental=True)
+    write_json(out/'mesh.json',result)
+    with (out/'room.obj').open('w',encoding='utf8') as f:
+        f.write('mtllib room.mtl\n'); np.savetxt(f,rows[:,:3],fmt='v %.6f %.6f %.6f')
+        np.savetxt(f,np.c_[rows[:,3],1-rows[:,4]],fmt='vt %.7f %.7f')
+        for i,g in enumerate(groups):
+            f.write(f'usemtl photo{i}\n'); idx=np.arange(g['start']+1,g['start']+g['count']+1).reshape(-1,3)
+            np.savetxt(f,np.repeat(idx,2,axis=1),fmt='f %d/%d %d/%d %d/%d')
+    (out/'room.mtl').write_text(''.join(f'newmtl photo{i}\nKa 1 1 1\nKd 1 1 1\nillum 1\nmap_Kd {g["texture"]}\n\n' for i,g in enumerate(groups)),encoding='utf8')
+    with zipfile.ZipFile(out/'textured-room.zip','w',zipfile.ZIP_DEFLATED) as archive:
+        for name in ['room.obj','room.mtl','mesh.json']+[g['texture'] for g in groups]: archive.write(out/name,name)
+    print('Completed',len(tri),'triangles',flush=True)
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(); parser.add_argument('--source',type=Path,required=True)
+    parser.add_argument('--geometry',type=Path,required=True); parser.add_argument('--out',type=Path,required=True)
+    parser.add_argument('--texture-width',type=int,default=4096); parser.add_argument('--smoothing',type=float,default=.6)
+    parser.add_argument('--warped',action='store_true')
+    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped)

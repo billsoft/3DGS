@@ -1,0 +1,124 @@
+{
+  "artifact_checks_passed": true,
+  "triangles": 685947,
+  "sources": 6,
+  "texture_size": [
+    4096,
+    2048
+  ],
+  "obj_counts": {
+    "v": 2057841,
+    "vt": 2057841,
+    "f": 685947,
+    "usemtl": 6
+  },
+  "bundle_bytes": 35500256,
+  "bundle_sha256": "acb7f5b38ba6b05cf7553b3b8f8461591ceaf6f4fc974b8251e27e4539d29f9a",
+  "smoothing": {
+    "max_displacement": 0.02522181160748005,
+    "locked_vertices": 28651,
+    "invalid_faces": 0
+  },
+  "feather_pixels": [
+    200167,
+    204009,
+    165498,
+    183182,
+    198779,
+    132687
+  ],
+  "browser": {
+    "passed": true,
+    "triangles": 685947,
+    "sources": 6,
+    "views": [
+      {
+        "source": 0,
+        "face": 3
+      },
+      {
+        "source": 0,
+        "face": 4
+      },
+      {
+        "source": 0,
+        "face": 5
+      },
+      {
+        "source": 1,
+        "face": 3
+      },
+      {
+        "source": 1,
+        "face": 4
+      },
+      {
+        "source": 1,
+        "face": 5
+      },
+      {
+        "source": 2,
+        "face": 3
+      },
+      {
+        "source": 2,
+        "face": 4
+      },
+      {
+        "source": 2,
+        "face": 5
+      },
+      {
+        "source": 3,
+        "face": 3
+      },
+      {
+        "source": 3,
+        "face": 4
+      },
+      {
+        "source": 3,
+        "face": 5
+      },
+      {
+        "source": 4,
+        "face": 3
+      },
+      {
+        "source": 4,
+        "face": 4
+      },
+      {
+        "source": 4,
+        "face": 5
+      },
+      {
+        "source": 5,
+        "face": 3
+      },
+      {
+        "source": 5,
+        "face": 4
+      },
+      {
+        "source": 5,
+        "face": 5
+      }
+    ],
+    "midpoints": 6,
+    "errors": []
+  },
+  "quality_status": "experimental_only",
+  "visual_findings": {
+    "improved": [
+      "wall and floor photo appearance",
+      "bounded plane interior and silhouette relative to first mesh trial"
+    ],
+    "unresolved": [
+      "lamp edge holes and misprojection",
+      "table edge and chair fragmentation",
+      "occluded support geometry",
+      "static reflection appearance"
+    ]
+  }
+}
