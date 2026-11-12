@@ -21,6 +21,8 @@ try{
  await ev('window.meshViewer.inspect(0,3)');
  for(const [a,b] of meta.midpoint_edges){const p=meta.centers[a].map((v,k)=>(v+meta.centers[b][k])/2);await ev(`(()=>{const v=window.meshViewer,old=v.camera.position.clone();v.camera.position.fromArray(${JSON.stringify(p)});v.controls.target.add(v.camera.position.clone().sub(old));v.controls.update();v.render()})()`);await shot(`midpoint-${a+1}-${b+1}`)}
  await ev('window.meshViewer.inspect(0,3)');await ev('window.meshViewer.mode("solid")');await shot('geometry');await ev('window.meshViewer.mode("owner")');await shot('ownership');await ev('window.meshViewer.mode("photo")');
+ for(let i=0;i<(meta.repaired_surfaces||[]).length;i++){await ev(`window.meshViewer.focusSurface(${i})`);await shot('repaired-surface-'+(i+1));await ev('window.meshViewer.mode("solid")');await shot('repaired-surface-'+(i+1)+'-geometry');await ev('window.meshViewer.mode("photo")')}
+ for(let i=0;i<(meta.repaired_surfaces||[]).length;i++)for(let source=0;source<meta.centers.length;source++){await ev(`window.meshViewer.focusSurface(${i},${source})`);await shot(`repaired-surface-${i+1}-source-${source+1}`)}
  assert.equal(errors.length,0,JSON.stringify(errors));
  await writeFile(root+'/check.json',JSON.stringify({passed:true,triangles:meta.triangles,sources:meta.stations.length,views:records,midpoints:meta.midpoint_edges.length,errors},null,2));console.log('Mesh browser checks passed');
 }finally{for(const p of pending.values())clearTimeout(p.timer);ws.close()}

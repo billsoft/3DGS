@@ -13,6 +13,7 @@ from scipy.sparse import coo_matrix
 from core import load, prep, write_json
 from surface_export import adjacency, sample_photo
 from surface_volume import fields
+from mesh_cleanup import remove_unsupported_islands
 
 
 @njit(cache=True)
@@ -63,12 +64,13 @@ def unwrap_triangle_uv(uv):
     return result
 
 
-def smooth_mesh(p, tri, limit, iterations=5):
+def smooth_mesh(p, tri, limit, iterations=5, protected=None):
     original = p.copy()
     original_normal = np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
     edge, count = np.unique(np.sort(np.concatenate([tri[:,[0,1]],tri[:,[1,2]],tri[:,[2,0]]]),axis=1),axis=0,return_counts=True)
     a,b = edge.T
     fixed = np.zeros(len(p),bool); fixed[np.unique(edge[count!=2])]=True
+    if protected is not None: fixed|=protected
     normal = np.zeros_like(p)
     for k in range(3): np.add.at(normal,tri[:,k],original_normal)
     normal /= np.maximum(np.linalg.norm(normal,axis=1)[:,None],1e-10)
@@ -95,10 +97,15 @@ def smooth_mesh(p, tri, limit, iterations=5):
                    locked_vertices=int(fixed.sum()),invalid_faces=int(bad.sum()))
 
 
-def mesh_visibility(p,tri,C,Q,size,tolerance):
-    centers=p[tri].mean(1); q=(centers-C)@Q
+def face_probes(p,tri):
+    center=p[tri].mean(1)
+    return np.concatenate([center[:,None],p[tri]*.8+center[:,None]*.2],axis=1)
+
+
+def mesh_visibility(p,tri,C,Q,size,tolerance,footprint=False):
+    centers=face_probes(p,tri).reshape(-1,3) if footprint else p[tri].mean(1); q=(centers-C)@Q
     faceid=np.argmax(np.stack([q@b[:,2] for b in prep.FACES]),axis=0)
-    visible=np.zeros(len(tri),bool)
+    visible=np.zeros(len(centers),bool)
     for k,b in enumerate(prep.FACES):
         v=(p-C)@Q@b; xy=(v[:,:2]/np.maximum(v[:,2,None],1e-7)+1)*size/2-.5
         depth,_,_=raster(xy.astype('f'),v[:,2].astype('f'),tri,size,size)
@@ -106,22 +113,34 @@ def mesh_visibility(p,tri,C,Q,size,tolerance):
         uv=np.rint((v[:,:2]/np.maximum(v[:,2,None],1e-7)+1)*size/2-.5).astype(int).clip(0,size-1)
         observed=depth[uv[:,1],uv[:,0]]
         visible[ids]=np.isfinite(observed)&(v[:,2]>.01)&(v[:,2]<=observed+tolerance)
+    if footprint:
+        samples=visible.reshape(-1,4)
+        return samples[:,0],samples.mean(1)
     return visible
 
 
-def choose_owners(p,tri,C,Q,views,images,spacing,hints=None):
+def choose_owners(p,tri,C,Q,views,images,spacing,hints=None,footprint=False):
     center=p[tri].mean(1); normal=np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
     area=np.linalg.norm(normal,axis=1); normal/=np.maximum(area[:,None],1e-10)
     scores=np.zeros((len(tri),len(C)),'f'); colors=np.zeros((len(tri),len(C),3),'f')
+    eligible=np.zeros(len(tri),bool)
     for i,view in enumerate(views):
-        visible=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7)
+        if footprint:visible,coverage=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7,True)
+        else:visible=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7);coverage=np.ones(len(tri))
         delta,confidence,dist=view.sample(center)
         angle=np.abs(np.sum((C[i]-center)*normal,axis=1))/np.maximum(dist,1e-5)
         depth_support=np.exp(-np.abs(delta)/(.18+.04*dist))
         scores[:,i]=visible*(.1+.9*angle)**1.5/np.maximum(dist,.4)**1.6*(.2+.8*confidence)*depth_support
+        eligible|=scores[:,i]>1e-5
+        if footprint:
+            delta_probe,confidence_probe,dist_probe=view.sample(face_probes(p,tri).reshape(-1,3))
+            support=((abs(delta_probe)<.10+.03*dist_probe)&(confidence_probe>.15)).reshape(-1,4).mean(1)
+            scores[:,i]*=np.maximum(.03,coverage**4)*(.1+.9*support**2)
         colors[:,i]=sample_photo(images[i],center,C[i],Q[i])
         print('Visibility/texture evidence',i+1,int(visible.sum()),flush=True)
-    good=(scores.max(1)>1e-5)&(area>1e-10)
+    # Footprint penalties select a safer photo; they must not delete geometry
+    # merely because the numerical scoring scale changed.
+    good=eligible&(area>1e-10)
     owner=scores.argmax(1); neighbors=adjacency(tri)
     unary=-np.log(np.maximum(scores,1e-20)/np.maximum(scores.max(1)[:,None],1e-20))
     # Checkerboard updates reduce oscillation; pair costs penalize visible seams.
@@ -157,7 +176,7 @@ def blend_linear(base,other,weight):
     return np.where(color<=.0031308,color*12.92,1.055*np.maximum(color,0)**(1/2.4)-.055)
 
 
-def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False):
+def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False):
     if not 512<=texture_width<=8192 or texture_width%2 or not 0<=smoothing<=1:
         raise ValueError('Texture width must be even, 512–8192; smoothing must be 0–1')
     out.mkdir(parents=True,exist_ok=True); meta=load(source)
@@ -169,14 +188,24 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False):
     area=np.linalg.norm(np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]]),axis=1)
     nondegenerate=area>1e-10; degenerate_removed=int((~nondegenerate).sum())
     hints=data['owner_hint'][nondegenerate] if 'owner_hint' in data else None; tri=tri[nondegenerate]
+    required=data['geometry_required'][nondegenerate] if 'geometry_required' in data else np.zeros(len(tri),bool)
+    protected=np.zeros(len(p),bool);protected[np.unique(tri[required])]=True
     edges=np.linalg.norm(p[tri[:,1]]-p[tri[:,0]],axis=1)
-    spacing=float(np.median(edges)); p,smooth_report=smooth_mesh(p,tri,spacing*smoothing)
+    spacing=float(np.median(edges)); p,smooth_report=smooth_mesh(p,tri,spacing*smoothing,protected=protected)
     print('Mesh smoothing',smooth_report,flush=True)
     views=fields(source,warped)
     images=[cv.resize(cv.imdecode(np.fromfile(s['photo'],np.uint8),1),(2048,1024)) for s in meta['stations']]
-    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints)
-    rejected=int((~good).sum()); tri=tri[good]; owner=owner[good]; scores=scores[good]
-    np.savez_compressed(out/'surface-owned.npz',p=p,tri=tri,owner=owner,scores=scores)
+    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints,footprint)
+    cleanup_report=None
+    if clean_fragments:
+        selected=np.flatnonzero(good|required)
+        keep,cleanup_report=remove_unsupported_islands(p,tri[selected],views,spacing,required[selected])
+        good[selected[~keep]]=False
+        write_json(out/'fragment-cleanup.json',cleanup_report)
+        print('Fragment cleanup',cleanup_report['removed_faces'],'faces',flush=True)
+    unknown_tri=tri[required&~good];required_count=int(required.sum());known_required=required[good]
+    rejected=int((~good&~required).sum()); tri=tri[good]; owner=owner[good]; scores=scores[good]
+    np.savez_compressed(out/'surface-owned.npz',p=p,tri=np.vstack([tri,unknown_tri]),owner=np.r_[owner,np.full(len(unknown_tri),-1)],scores=np.vstack([scores,np.zeros((len(unknown_tri),len(C)))]),geometry_required=np.r_[known_required,np.ones(len(unknown_tri),bool)])
     weights=boundary_weights(tri,owner,len(C),len(p))
     rows=[]; groups=[]; offset=0; blended=[]
     H,W=texture_width//2,texture_width
@@ -224,17 +253,30 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False):
         rows.append(np.c_[xyz.reshape(-1,3),uv.reshape(-1,2)].astype('<f4'))
         groups.append(dict(source=i,label=item['label'],start=offset,count=len(ids)*3,texture=name)); offset+=len(ids)*3
         blended.append(blend_count); print('Baked source',i+1,'triangles',len(ids),'feather pixels',blend_count,flush=True)
+    if len(unknown_tri):
+        # Missing photo support must not cut a validated closed surface open.
+        # Unobserved texture is explicitly neutral, never sampled through an occluder.
+        name='unobserved.jpg';cv.imwrite(str(out/name),np.full((8,8,3),127,'u1'))
+        unknown=p[unknown_tri].reshape(-1,3);rows.append(np.c_[unknown,np.full((len(unknown),2),.5)].astype('<f4'))
+        groups.append(dict(source=-1,label='未观测表面',start=offset,count=len(unknown),texture=name))
     rows=np.concatenate(rows); rows.tofile(out/'mesh.bin')
     # View poses come from this scene, never from a different reconstruction.
     dataset=json.loads((source/'data-512/dataset.json').read_text(encoding='utf8'))
     up=Q[:,:,2].mean(0); up/=np.linalg.norm(up)
-    result=dict(triangles=len(tri),vertices=len(p),groups=groups,centers=C.tolist(),up=up.tolist(),
+    result=dict(triangles=len(tri)+len(unknown_tri),vertices=len(p),groups=groups,centers=C.tolist(),up=up.tolist(),
                 stations=[s['label'] for s in meta['stations']],views=dataset['views'],midpoint_edges=dataset['midpoint_edges'],
                 method='One reconstructed triangle surface; visible coherent photo ownership; gated one-ring linear-light seam feather',
                 input_surface=str(geometry),surface_sha256=hashlib.sha256(geometry.read_bytes()).hexdigest(),
                 camera_sha256=hashlib.sha256((source/'aligned-cameras.npz').read_bytes()).hexdigest(),
                 warped_depth=warped,smoothing=smooth_report,degenerate_faces_removed=degenerate_removed,unobserved_faces_removed=rejected,
+                protected_geometry_faces=required_count,protected_untextured_faces=len(unknown_tri),
+                footprint_visibility=footprint,
+                fragment_cleanup=None if cleanup_report is None else {k:v for k,v in cleanup_report.items() if k!='candidates'},
                 texture_size=[W,H],feather_pixels=blended,experimental=True)
+    repair_path=geometry.parent/'sphere-repair.json'
+    if repair_path.exists():
+        repair=json.loads(repair_path.read_text(encoding='utf8'))
+        result['repaired_surfaces']=[dict(center=s['center'],radius=s['radius'],type='sphere',supporting_cameras=s['validation']['supporting_cameras']) for s in repair['candidates'] if s['validation']['accepted']]
     write_json(out/'mesh.json',result)
     with (out/'room.obj').open('w',encoding='utf8') as f:
         f.write('mtllib room.mtl\n'); np.savetxt(f,rows[:,:3],fmt='v %.6f %.6f %.6f')
@@ -245,7 +287,7 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False):
     (out/'room.mtl').write_text(''.join(f'newmtl photo{i}\nKa 1 1 1\nKd 1 1 1\nillum 1\nmap_Kd {g["texture"]}\n\n' for i,g in enumerate(groups)),encoding='utf8')
     with zipfile.ZipFile(out/'textured-room.zip','w',zipfile.ZIP_DEFLATED) as archive:
         for name in ['room.obj','room.mtl','mesh.json']+[g['texture'] for g in groups]: archive.write(out/name,name)
-    print('Completed',len(tri),'triangles',flush=True)
+    print('Completed',len(tri)+len(unknown_tri),'triangles',flush=True)
 
 
 if __name__=='__main__':
@@ -253,4 +295,6 @@ if __name__=='__main__':
     parser.add_argument('--geometry',type=Path,required=True); parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--texture-width',type=int,default=4096); parser.add_argument('--smoothing',type=float,default=.6)
     parser.add_argument('--warped',action='store_true')
-    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped)
+    parser.add_argument('--footprint',action='store_true')
+    parser.add_argument('--clean-fragments',action='store_true')
+    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments)

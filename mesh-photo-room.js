@@ -32,15 +32,18 @@ try{
  installRoomLook({camera,controls,element:renderer.domElement,render,onStart:cancel});installRoomNavigation({camera,controls,render,onMove:cancel});
  const nearest=()=>meta.centers.map((p,i)=>({i,d:camera.position.distanceTo(new T.Vector3(...p))})).sort((a,b)=>a.d-b.d)[0].i;
  const look=face=>{const v=view(nearest(),face);setRoomLook(camera,controls,new T.Vector3(...v.basis.map(r=>r[2])));render()};
- const inspect=(source,face=3)=>{cancel();camera.position.fromArray(meta.centers[source]);const v=view(source,face);setRoomLook(camera,controls,new T.Vector3(...v.basis.map(r=>r[2])));render();return camera.position.toArray()};
- function button(container,label,point){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{moving={from:camera.position.clone(),to:new T.Vector3(...point),start:performance.now()}};document.querySelector(container).append(b)}
+ const inspect=(source,face=3)=>{cancel();camera.fov=75;camera.updateProjectionMatrix();camera.position.fromArray(meta.centers[source]);const v=view(source,face);setRoomLook(camera,controls,new T.Vector3(...v.basis.map(r=>r[2])));render();return camera.position.toArray()};
+ const focusSurface=(index,sourceIndex=null)=>{const shape=meta.repaired_surfaces?.[index];if(!shape)return;cancel();const target=new T.Vector3(...shape.center),sources=meta.centers.map((p,i)=>({i,d:target.distanceTo(new T.Vector3(...p))})),source=sourceIndex===null?sources.sort((a,b)=>a.d-b.d)[0]:sources[sourceIndex];if(!source)return;inspect(source.i);setRoomLook(camera,controls,target.clone().sub(camera.position));camera.fov=Math.max(12,Math.min(75,2*Math.atan(shape.radius*1.7/source.d)*180/Math.PI));camera.updateProjectionMatrix();render()};
+ function button(container,label,point){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{camera.fov=75;camera.updateProjectionMatrix();moving={from:camera.position.clone(),to:new T.Vector3(...point),start:performance.now()}};document.querySelector(container).append(b)}
  meta.centers.forEach((p,i)=>button('#stations',meta.stations[i]+'号机位',p));
  meta.midpoint_edges.forEach(([a,b])=>button('#midpoints',meta.stations[a]+'–'+meta.stations[b]+' 中点',meta.centers[a].map((v,k)=>(v+meta.centers[b][k])/2)));
+ (meta.repaired_surfaces||[]).forEach((_,i)=>{const b=document.createElement('button');b.textContent='检查拟合曲面 '+(i+1);b.onclick=()=>focusSurface(i);document.querySelector('#shapes').append(b)});
  document.querySelector('#up').onclick=()=>look(4);document.querySelector('#down').onclick=()=>look(5);document.querySelector('#front').onclick=()=>look(3);
  function mode(value){mesh.material=value==='photo'?materials:value==='owner'?ownerMaterials:value==='solid'?normalMaterial:wireMaterial;render()}
  document.querySelector('#mode').onchange=e=>{mode(e.target.value);e.target.blur()};document.querySelector('#download').href=base+'textured-room.zip';
  addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);render()});
  function frame(now){if(moving){const t=Math.min(1,(now-moving.start)/1000),e=t*t*(3-2*t),p=moving.from.clone().lerp(moving.to,e),delta=p.clone().sub(camera.position);camera.position.copy(p);controls.target.add(delta);controls.update();render();if(t===1)moving=null}requestAnimationFrame(frame)}requestAnimationFrame(frame);
  inspect(0);status.textContent='已加载 · '+meta.stations.length+' 张原片 · '+meta.triangles.toLocaleString()+' 个三角面';
- window.meshViewer={camera,controls,renderer,scene,mesh,meta,inspect,mode,render};window.meshReady=true;
+ window.meshViewer={camera,controls,renderer,scene,mesh,meta,inspect,mode,render,focusSurface};
+ const surface=new URLSearchParams(location.search).get('surface');if(surface!==null)focusSurface(Number(surface));window.meshReady=true;
 }catch(error){status.textContent='加载失败：'+error.message;console.error(error)}
