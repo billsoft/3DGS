@@ -1,0 +1,127 @@
+{
+  "scene": "single-gs-photo-mesh-six-v6",
+  "reference": "single-gs-photo-mesh-six-v2",
+  "metrics": {
+    "before": {
+      "faces": 1437972,
+      "components": 13086,
+      "tiny_components": 12890,
+      "tiny_faces": 37591,
+      "boundary_edges": 120600,
+      "nonmanifold_edges": 2,
+      "missed_rays_18_views": 43212,
+      "source1_down_misses": 5401
+    },
+    "after": {
+      "faces": 1419128,
+      "components": 1209,
+      "tiny_components": 1005,
+      "tiny_faces": 6131,
+      "boundary_edges": 69586,
+      "nonmanifold_edges": 0,
+      "missed_rays_18_views": 33603,
+      "source1_down_misses": 4770
+    },
+    "source_directions_improved": 18,
+    "mesh_repair": {
+      "components": 12830,
+      "removed_components": 12297,
+      "removed_faces": 36880,
+      "added_faces": 9473,
+      "rejected_nonmanifold_caps": 585,
+      "rejected_large_curved_caps": 3594,
+      "spacing": 0.0265046413987875,
+      "max_fragment_diameter": 0.1325232069939375,
+      "max_hole_radius": 0.31805569678545,
+      "original_vertices_unchanged": true,
+      "method": "Open3D connected components and bounded VTK boundary-loop triangulation",
+      "faces": 1572593
+    },
+    "tests": {
+      "mesh_repair": 5,
+      "textured_mesh": 9,
+      "browser": {
+        "passed": true,
+        "triangles": 1419128,
+        "sources": 6,
+        "views": [
+          {
+            "source": 0,
+            "face": 3
+          },
+          {
+            "source": 0,
+            "face": 4
+          },
+          {
+            "source": 0,
+            "face": 5
+          },
+          {
+            "source": 1,
+            "face": 3
+          },
+          {
+            "source": 1,
+            "face": 4
+          },
+          {
+            "source": 1,
+            "face": 5
+          },
+          {
+            "source": 2,
+            "face": 3
+          },
+          {
+            "source": 2,
+            "face": 4
+          },
+          {
+            "source": 2,
+            "face": 5
+          },
+          {
+            "source": 3,
+            "face": 3
+          },
+          {
+            "source": 3,
+            "face": 4
+          },
+          {
+            "source": 3,
+            "face": 5
+          },
+          {
+            "source": 4,
+            "face": 3
+          },
+          {
+            "source": 4,
+            "face": 4
+          },
+          {
+            "source": 4,
+            "face": 5
+          },
+          {
+            "source": 5,
+            "face": 3
+          },
+          {
+            "source": 5,
+            "face": 4
+          },
+          {
+            "source": 5,
+            "face": 5
+          }
+        ],
+        "midpoints": 6,
+        "errors": []
+      }
+    },
+    "limitations": "Missed rays include large unobserved gaps, not only pinholes; generated geometry and original-photo fitting do not prove unseen-view accuracy. Small genuine isolated details may be removed. Chair backs, undersides and lamp boundaries remain defective."
+  }
+}

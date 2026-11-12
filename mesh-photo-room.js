@@ -10,6 +10,7 @@ try{
  const [meta,buffer]=await Promise.all([get('mesh.json').then(r=>r.json()),get('mesh.bin').then(r=>r.arrayBuffer())]);
  if(meta.preview_title)document.querySelector('h1').textContent=meta.preview_title;
  if(meta.preview_note)document.querySelector('#note').textContent=meta.preview_note;
+ if(meta.surface_repair){const link=document.createElement('a');link.href='/mesh-repair-report.html?scene='+id;link.textContent='清理前后同视点对照';document.querySelector('#tools').appendChild(link)}
  if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){
   const link=document.createElement('a');link.href='/scene-room.html?scene='+meta.reference_scene+'&inspect=3';link.textContent='重建前的单一 PLY';document.querySelector('#tools').appendChild(link);
  }

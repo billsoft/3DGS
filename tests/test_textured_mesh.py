@@ -4,10 +4,15 @@ from pathlib import Path
 import unittest
 import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scene_fusion'))
-from textured_mesh import raster,unwrap_triangle_uv,boundary_weights,blend_linear,smooth_mesh
+from textured_mesh import raster,unwrap_triangle_uv,boundary_weights,blend_linear,smooth_mesh,mesh_visibility
 from mesh_regularize import close_small_holes
 
 class MeshTests(unittest.TestCase):
+    def test_partially_visible_face_survives_centroid_occlusion(self):
+        p=np.array([[-.2,-.2,2],[.2,-.2,2],[0,.2,2],[-2,-1,4],[2,-1,4],[0,2,4]],'f')
+        seen,coverage=mesh_visibility(p,np.array([[0,1,2],[3,4,5]],'i'),np.zeros(3),np.eye(3),128,.001,True)
+        self.assertTrue(seen[1]);self.assertGreater(coverage[1],0);self.assertLess(coverage[1],1)
+
     def test_near_surface_occludes_far_surface(self):
         xy=np.array([[1,1],[8,1],[1,8]]*2,dtype='f')
         z=np.array([4,4,4,2,2,2],dtype='f');tri=np.arange(6,dtype='i').reshape(2,3)

@@ -115,17 +115,22 @@ def mesh_visibility(p,tri,C,Q,size,tolerance,footprint=False):
         visible[ids]=np.isfinite(observed)&(v[:,2]>.01)&(v[:,2]<=observed+tolerance)
     if footprint:
         samples=visible.reshape(-1,4)
-        return samples[:,0],samples.mean(1)
+        return samples.any(1),samples.mean(1)
     return visible
 
 
-def choose_owners(p,tri,C,Q,views,images,spacing,hints=None,footprint=False):
+def choose_owners(p,tri,C,Q,views,images,spacing,hints=None,footprint=False,cached_visibility=None):
     center=p[tri].mean(1); normal=np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
     area=np.linalg.norm(normal,axis=1); normal/=np.maximum(area[:,None],1e-10)
     scores=np.zeros((len(tri),len(C)),'f'); colors=np.zeros((len(tri),len(C),3),'f')
     eligible=np.zeros(len(tri),bool)
     for i,view in enumerate(views):
-        if footprint:visible,coverage=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7,True)
+        if cached_visibility is not None:
+            coverage=cached_visibility[1][:,i]
+            # Geometry survives if any footprint sample is seen; an occluded
+            # centroid must not delete a triangle with visible corners.
+            visible=cached_visibility[0][:,i]|(coverage>0)
+        elif footprint:visible,coverage=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7,True)
         else:visible=mesh_visibility(p,tri,C[i],Q[i],768,spacing*.7);coverage=np.ones(len(tri))
         delta,confidence,dist=view.sample(center)
         angle=np.abs(np.sum((C[i]-center)*normal,axis=1))/np.maximum(dist,1e-5)
@@ -176,7 +181,7 @@ def blend_linear(base,other,weight):
     return np.where(color<=.0031308,color*12.92,1.055*np.maximum(color,0)**(1/2.4)-.055)
 
 
-def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False):
+def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False,visibility_cache=None):
     if not 512<=texture_width<=8192 or texture_width%2 or not 0<=smoothing<=1:
         raise ValueError('Texture width must be even, 512–8192; smoothing must be 0–1')
     out.mkdir(parents=True,exist_ok=True); meta=load(source)
@@ -185,8 +190,17 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
             raise ValueError('Panorama changed after camera calibration: '+item['label'])
     cameras=np.load(source/'aligned-cameras.npz'); C,Q=cameras['C'],cameras['Q']
     data=np.load(geometry); p=data['p'].astype('f'); tri=data['tri'].astype('i')
+    cached=None
+    if visibility_cache:
+        if smoothing!=0:raise ValueError('Cached ray visibility requires unchanged geometry (smoothing=0)')
+        cache=np.load(visibility_cache)
+        if str(cache['geometry_sha256'])!=hashlib.sha256(geometry.read_bytes()).hexdigest() or str(cache['camera_sha256'])!=hashlib.sha256((source/'aligned-cameras.npz').read_bytes()).hexdigest():
+            raise ValueError('Ray visibility cache belongs to different geometry or cameras')
+        cached=(cache['visible'],cache['coverage'])
+        if any(v.shape!=(len(tri),len(C)) for v in cached):raise ValueError('Invalid visibility cache dimensions')
     area=np.linalg.norm(np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]]),axis=1)
     nondegenerate=area>1e-10; degenerate_removed=int((~nondegenerate).sum())
+    if cached is not None:cached=tuple(v[nondegenerate] for v in cached)
     hints=data['owner_hint'][nondegenerate] if 'owner_hint' in data else None; tri=tri[nondegenerate]
     required=data['geometry_required'][nondegenerate] if 'geometry_required' in data else np.zeros(len(tri),bool)
     protected=np.zeros(len(p),bool);protected[np.unique(tri[required])]=True
@@ -195,7 +209,7 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
     print('Mesh smoothing',smooth_report,flush=True)
     views=fields(source,warped)
     images=[cv.resize(cv.imdecode(np.fromfile(s['photo'],np.uint8),1),(2048,1024)) for s in meta['stations']]
-    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints,footprint)
+    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints,footprint,cached)
     cleanup_report=None
     if clean_fragments:
         selected=np.flatnonzero(good|required)
@@ -270,7 +284,7 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
                 camera_sha256=hashlib.sha256((source/'aligned-cameras.npz').read_bytes()).hexdigest(),
                 warped_depth=warped,smoothing=smooth_report,degenerate_faces_removed=degenerate_removed,unobserved_faces_removed=rejected,
                 protected_geometry_faces=required_count,protected_untextured_faces=len(unknown_tri),
-                footprint_visibility=footprint,
+                footprint_visibility=footprint,visibility_method='raycast' if cached is not None else 'raster',
                 fragment_cleanup=None if cleanup_report is None else {k:v for k,v in cleanup_report.items() if k!='candidates'},
                 texture_size=[W,H],feather_pixels=blended,experimental=True)
     capture_path=source/'capture.json'
@@ -280,6 +294,11 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
             reference_scene=Path(capture['model']).parent.name,
             preview_title='单一 PLY 重建 · 高清原片贴图',
             preview_note='从已融合单一高斯的渲染深度提取网格，再按可见性投影原始全景。细结构可能变形或缺失，不能视作无损转换。')
+    repair_report=geometry.parent/'repair.json'
+    if repair_report.exists():
+        result['surface_repair']=json.loads(repair_report.read_text('utf8'))
+        result['preview_title']='单一 PLY 网格 · 碎片清理与局部补洞'
+        result['preview_note']='使用连通片清理、有限尺寸补洞和射线可见性贴图。小碎片和孔洞减少；椅子等复杂遮挡处仍可能缺损，小孤立真实细节也可能被清理。'
     repair_path=geometry.parent/'sphere-repair.json'
     if repair_path.exists():
         repair=json.loads(repair_path.read_text(encoding='utf8'))
@@ -304,4 +323,5 @@ if __name__=='__main__':
     parser.add_argument('--warped',action='store_true')
     parser.add_argument('--footprint',action='store_true')
     parser.add_argument('--clean-fragments',action='store_true')
-    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments)
+    parser.add_argument('--visibility-cache',type=Path)
+    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments,a.visibility_cache)

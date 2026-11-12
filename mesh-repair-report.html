@@ -1,0 +1,14 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>网格清理同视点对照</title>
+<style>body{font:16px/1.7 system-ui;background:#18222d;color:#eee;max-width:1500px;margin:auto;padding:20px}a{color:#9cdeff}select{font:inherit;padding:8px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}img{width:100%}pre{white-space:pre-wrap}@media(max-width:700px){.pair{grid-template-columns:1fr}}</style>
+<h1>网格清理：相同机位与视向</h1><p id="note"></p><p><a id="preview">打开新预览</a> · <a id="old">打开旧版</a></p><label>检查视点 <select id="view"></select></label><div class="pair"><section><h2>清理前</h2><a id="before-link"><img id="before"></a></section><section><h2>清理后</h2><a id="after-link"><img id="after"></a></section></div><details><summary>验证数据及限制</summary><pre id="metrics"></pre></details>
+<script type="module">
+const id=new URLSearchParams(location.search).get('scene')||'single-gs-photo-mesh-six-v6';
+if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');
+const root='/four-room/scenes/'+id,r=await(await fetch(root+'/repair-comparison.json')).json();
+if(!/^[a-zA-Z0-9_-]+$/.test(r.reference_scene))throw Error('Invalid reference');
+document.querySelector('#note').textContent=r.note;document.querySelector('#metrics').textContent=JSON.stringify(r.metrics,null,2);
+document.querySelector('#preview').href='/mesh-photo-room.html?scene='+id;document.querySelector('#old').href='/mesh-photo-room.html?scene='+r.reference_scene;
+const sel=document.querySelector('#view');for(const name of r.views){const o=document.createElement('option');o.value=name;const s=name.match(/^source-(\d+)-face-([345])$/),m=name.match(/^midpoint-(\d+)-(\d+)$/);o.textContent=s?s[1]+'号机位 · '+({'3':'水平','4':'向上','5':'向下'}[s[2]]):m?m[1]+'–'+m[2]+' 中点':name;sel.appendChild(o)}
+function show(){for(const [key,scene] of [['before',r.reference_scene],['after',id]]){const url='/four-room/scenes/'+scene+'/browser/'+sel.value+'.png';document.querySelector('#'+key).src=url;document.querySelector('#'+key+'-link').href=url}}
+sel.value=r.views.includes('source-1-face-5')?'source-1-face-5':r.views[0];sel.onchange=show;show();
+</script></html>
