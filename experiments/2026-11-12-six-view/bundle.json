@@ -1,0 +1,44 @@
+{
+  "tracks": 959,
+  "train_tracks": 768,
+  "held_tracks": 191,
+  "gauge": "first camera fixed; first baseline length fixed; scale is arbitrary",
+  "optimizer_success": true,
+  "optimizer_message": "`ftol` termination condition is satisfied.",
+  "before_train": {
+    "median_equivalent_px": 1.1289332165608206,
+    "p90_equivalent_px": 4.488384401444822,
+    "observations": 1713
+  },
+  "before_held": {
+    "median_equivalent_px": 1.1596968724723977,
+    "p90_equivalent_px": 4.93994889082794,
+    "observations": 423
+  },
+  "after_train": {
+    "median_equivalent_px": 0.5874756799518022,
+    "p90_equivalent_px": 3.687837964538084,
+    "observations": 1713
+  },
+  "after_held": {
+    "median_equivalent_px": 0.6589358119553774,
+    "p90_equivalent_px": 3.862991251794571,
+    "observations": 423
+  },
+  "camera_translation_change_model_units": [
+    0.0,
+    0.011968526150447597,
+    0.07165895253047679,
+    0.027718096336999707,
+    0.05313480498956002,
+    0.047515983163559795
+  ],
+  "camera_rotation_change_deg": [
+    0.0,
+    0.146409064985132,
+    0.3444664696230402,
+    0.05236258245822961,
+    0.19492373659091558,
+    0.3285419624406018
+  ]
+}

@@ -41,6 +41,8 @@ def run():
     parser.add_argument('--scale-lr', type=float, default=.001)
     parser.add_argument('--shape-free', action='store_true',
         help='Also fit Gaussian rotation and opacity after color warmup (joint mode only)')
+    parser.add_argument('--opacity-min', type=float, default=-2.)
+    parser.add_argument('--opacity-max', type=float, default=8.)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     torch.manual_seed(1729); np.random.seed(1729)
@@ -114,7 +116,7 @@ def run():
                                 torch.minimum(initial['logs']+np.log(1.25), scene['logs'])))
             if args.shape_free and args.mode!='color' and step>=args.warmup:
                 scene['quats'].copy_(F.normalize(scene['quats'],dim=1))
-                scene['opacity'].clamp_(-2.,8.)
+                scene['opacity'].clamp_(args.opacity_min,args.opacity_max)
         if step%50==0 or step==args.steps-1:
             record = dict(step=step+1, loss=float(loss.detach()), coverage_loss=float(coverage.detach()),
                 seconds=time.monotonic()-started, peak_gpu_gb=torch.cuda.max_memory_allocated()/1e9)

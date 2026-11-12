@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多机位场景融合试验</title><style>body{margin:0;background:#111;color:white;font:14px system-ui}#tools{position:absolute;z-index:100;top:12px;left:12px;padding:14px;border-radius:10px;background:#18212eef;max-width:390px}h1{font-size:17px}button{margin:3px;padding:6px}a{color:#9cdeff;margin-right:10px}p{margin:8px 0}</style>
+<div id="tools"><h1 id="title">多机位场景</h1><p><a id="current">优化版</a><a id="initial">初始融合</a><a id="report">验证报告</a></p><div id="positions"></div><p>W/S 前后 · A/D 平移 · Q 上升 / E 下降</p><p id="status" role="status">加载中…</p><p>实验模型；局部重影与未观测区域仍可能有缺损。</p><a id="download" download>下载 PLY</a></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script><script type="module">
+import * as THREE from 'three';import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';import {installRoomNavigation} from './room-navigation.js';
+const query=new URLSearchParams(location.search),scene=query.get('scene')||'six-20261112';
+if(!/^[a-zA-Z0-9_-]+$/.test(scene))throw Error('Invalid scene ID');
+const root='/four-room/scenes/'+scene,initial=query.get('version')==='initial';
+document.querySelector('#initial').href='?scene='+scene+'&version=initial';document.querySelector('#current').href='?scene='+scene;document.querySelector('#report').href='/scene-report.html?scene='+scene;
+try{
+ const meta=await(await fetch(root+'/fusion.json')).json(),data=await(await fetch(root+'/data-512/dataset.json')).json();
+ const optimized=!initial&&meta.optimized===true,base=optimized?root+'/'+meta.model_folder:root;
+ const filename=optimized?'fused':'initial';document.querySelector('#download').href=base+'/'+filename+'.ply';
+ document.querySelector('#title').textContent=meta.stations.length+'机位 · 场景融合试验';
+ const centers=meta.centers.map(p=>new THREE.Vector3(...p)),up=new THREE.Vector3(...meta.up),target=centers.reduce((s,c)=>s.add(c),new THREE.Vector3()).multiplyScalar(1/centers.length).addScaledVector(up,-.5);
+ const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].toArray(),initialCameraLookAt:target.toArray(),sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
+ await viewer.addSplatScenes([{path:base+'/'+filename+'.splat',splatAlphaRemovalThreshold:3}],true);viewer.start();
+ let movement=0;const panel=document.querySelector('#positions');const button=(label,action)=>{const b=document.createElement('button');b.textContent=label;b.onclick=action;panel.appendChild(b)};
+ const go=point=>{const token=++movement,from=viewer.camera.position.clone(),start=performance.now();const tick=()=>{if(token!==movement)return;const t=Math.min(1,(performance.now()-start)/1100),e=t*t*t*(10-15*t+6*t*t),next=from.clone().lerp(point,e),delta=next.clone().sub(viewer.camera.position);viewer.camera.position.copy(next);viewer.controls.target.add(delta);viewer.controls.update();viewer.forceRenderNextFrame();if(t<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};
+ centers.forEach((c,i)=>button(meta.stations[i]+'号机位',()=>go(c)));
+ panel.appendChild(document.createElement('br'));data.midpoint_edges.forEach(([i,j])=>button(meta.stations[i]+'–'+meta.stations[j]+'中点',()=>go(centers[i].clone().lerp(centers[j],.5))));
+ const inspect=i=>{const v=data.views[i];movement++;viewer.camera.position.fromArray(v.center);viewer.controls.target.fromArray(v.center.map((x,k)=>x+v.basis[k][2]));viewer.controls.update();viewer.forceRenderNextFrame()};
+ panel.appendChild(document.createElement('br'));button('向下检查',()=>inspect(5));button('向上检查',()=>inspect(4));button('水平视向',()=>inspect(3));
+ installRoomNavigation({camera:viewer.camera,controls:viewer.controls,onMove:()=>movement++,render:()=>viewer.forceRenderNextFrame()});
+ viewer.controls.addEventListener('start',()=>movement++);window.roomViewer=viewer;window.inspectRoom=inspect;window.sceneMeta=meta;
+ document.querySelector('#status').textContent='已加载 · '+meta.stations.length+'机位 · '+(optimized?'联合优化':'初始融合');
+ if(query.has('inspect'))inspect(Number(query.get('inspect')));
+}catch(e){document.querySelector('#status').textContent='加载失败：'+e.message;console.error(e)}
+</script></html>

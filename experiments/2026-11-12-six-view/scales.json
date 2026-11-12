@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "samples": 175,
+    "initial_scale": 1.0,
+    "scale": 0.9947276454791633,
+    "relative_spread": 0.0807538818222393
+  },
+  {
+    "id": "2",
+    "samples": 271,
+    "initial_scale": 0.8769641127080354,
+    "scale": 0.8775664255140945,
+    "relative_spread": 0.10263084001173639
+  },
+  {
+    "id": "3",
+    "samples": 236,
+    "initial_scale": 0.9479438030098519,
+    "scale": 0.9459479575172116,
+    "relative_spread": 0.1504920724223669
+  },
+  {
+    "id": "4",
+    "samples": 289,
+    "initial_scale": 1.0112231807822578,
+    "scale": 1.011604433018482,
+    "relative_spread": 0.1319802523769903
+  },
+  {
+    "id": "5",
+    "samples": 329,
+    "initial_scale": 1.0388857902912914,
+    "scale": 1.0413703411758122,
+    "relative_spread": 0.1215365681649835
+  },
+  {
+    "id": "6",
+    "samples": 165,
+    "initial_scale": 1.1621082455562366,
+    "scale": 1.1529095294958722,
+    "relative_spread": 0.10683963921472081
+  }
+]

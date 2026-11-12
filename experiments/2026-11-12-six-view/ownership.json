@@ -1,0 +1,43 @@
+{
+  "mode": "visible-domains",
+  "stations": 6,
+  "sources": [
+    {
+      "id": "1",
+      "input": 410490,
+      "retained": 168158,
+      "multiple_free_space_conflicts": 25428
+    },
+    {
+      "id": "2",
+      "input": 460342,
+      "retained": 132004,
+      "multiple_free_space_conflicts": 14093
+    },
+    {
+      "id": "3",
+      "input": 459715,
+      "retained": 226305,
+      "multiple_free_space_conflicts": 8587
+    },
+    {
+      "id": "4",
+      "input": 429151,
+      "retained": 198016,
+      "multiple_free_space_conflicts": 7437
+    },
+    {
+      "id": "5",
+      "input": 446068,
+      "retained": 127230,
+      "multiple_free_space_conflicts": 10720
+    },
+    {
+      "id": "6",
+      "input": 421434,
+      "retained": 191660,
+      "multiple_free_space_conflicts": 23772
+    }
+  ],
+  "retained": 1043373
+}

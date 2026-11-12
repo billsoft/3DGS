@@ -26,6 +26,7 @@ def run():
     parser.add_argument('--candidate',type=Path,required=True)
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--baseline',type=Path)
+    parser.add_argument('--baseline-label',default='baseline')
     args=parser.parse_args();args.out.mkdir(parents=True,exist_ok=True)
     meta, targets=load_dataset(args.data);size=meta['size']
     images={};alphas={}
@@ -46,8 +47,8 @@ def run():
         if v['source'] is not None:
             ref=targets[i]/255
             rec['baseline']=metrics(before,ref,ba,ba);rec['candidate']=metrics(after,ref,aa,ba)
-            cols=[('original photo',ref),('accepted baseline',before),('joint refit',after)]
-        else: cols=[('accepted baseline',before),('joint refit',after)]
+            cols=[('original photo',ref),(args.baseline_label,before),('joint refit',after)]
+        else: cols=[(args.baseline_label,before),('joint refit',after)]
         sheet=Image.new('RGB',(size*len(cols),size+30),(20,24,30));draw=ImageDraw.Draw(sheet)
         for col,(label,im) in enumerate(cols):
             sheet.paste(Image.fromarray((im*255).astype('u1')),(col*size,30))

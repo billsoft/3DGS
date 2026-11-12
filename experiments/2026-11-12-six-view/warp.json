@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "anchors": 167,
+    "bandwidth": 1.1607080294027812,
+    "max_shift": 0.2505151331424713,
+    "active": 312708,
+    "source_ray_preserved": true,
+    "covariance_transport": "J covariance J-transpose"
+  },
+  {
+    "id": "2",
+    "anchors": 254,
+    "bandwidth": 1.172755982693187,
+    "max_shift": 0.5022048950195312,
+    "active": 358873,
+    "source_ray_preserved": true,
+    "covariance_transport": "J covariance J-transpose"
+  },
+  {
+    "id": "3",
+    "anchors": 228,
+    "bandwidth": 0.8363711357231394,
+    "max_shift": 1.2478976249694824,
+    "active": 363552,
+    "source_ray_preserved": true,
+    "covariance_transport": "J covariance J-transpose"
+  },
+  {
+    "id": "4",
+    "anchors": 283,
+    "bandwidth": 0.8719099417973993,
+    "max_shift": 1.176315426826477,
+    "active": 374035,
+    "source_ray_preserved": true,
+    "covariance_transport": "J covariance J-transpose"
+  },
+  {
+    "id": "5",
+    "anchors": 309,
+    "bandwidth": 0.9967322158615756,
+    "max_shift": 0.3863235414028168,
+    "active": 372333,
+    "source_ray_preserved": true,
+    "covariance_transport": "J covariance J-transpose"
+  },
+  {
+    "id": "6",
+    "anchors": 155,
+    "bandwidth": 1.122942541100143,
+    "max_shift": 0.25428250432014465,
+    "active": 300557,
+    "source_ray_preserved": true,
+    "covariance_transport": "J covariance J-transpose"
+  }
+]
