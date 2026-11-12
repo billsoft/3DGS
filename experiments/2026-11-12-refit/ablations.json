@@ -1,0 +1,133 @@
+{
+  "variants": [
+    {
+      "variant": "refit-color",
+      "resolution": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.2685802537771414,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.20840888979467606,
+        "improved_ssim_views": 0,
+        "worst_ssim_delta": -0.7601679038298439,
+        "new_holes": 0
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-color-l1",
+      "resolution": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.8679608168621229,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.0248521211033173,
+        "improved_ssim_views": 17,
+        "worst_ssim_delta": -0.08389370171388322,
+        "new_holes": 0
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-joint",
+      "resolution": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.8487811102455016,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.02425070396469203,
+        "improved_ssim_views": 12,
+        "worst_ssim_delta": -0.10109027044314378,
+        "new_holes": 0
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-color-stable",
+      "resolution": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.8693524573952097,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.024037859458658314,
+        "improved_ssim_views": 20,
+        "worst_ssim_delta": -0.08117421526307311,
+        "new_holes": 0
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-joint-stable",
+      "resolution": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.8772418145030751,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.02155236998896752,
+        "improved_ssim_views": 16,
+        "worst_ssim_delta": -0.10565035390599553,
+        "new_holes": 0
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-coherent",
+      "resolution": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.936600177085437,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.017326885465605516,
+        "improved_ssim_views": 26,
+        "worst_ssim_delta": 0.003921501501256253,
+        "new_holes": 10
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-coherent-hd",
+      "resolution": 1024,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8682471929916502,
+        "candidate_mean_ssim": 0.941435817278921,
+        "baseline_mean_mae": 0.031541536871606025,
+        "candidate_mean_mae": 0.01711450546630723,
+        "improved_ssim_views": 26,
+        "worst_ssim_delta": 0.01714575645755889,
+        "new_holes": 3
+      },
+      "selected": false
+    },
+    {
+      "variant": "refit-surface-guard",
+      "resolution": 1024,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8682471929916502,
+        "candidate_mean_ssim": 0.9181543262022814,
+        "baseline_mean_mae": 0.031541536871606025,
+        "candidate_mean_mae": 0.019672373019932597,
+        "improved_ssim_views": 26,
+        "worst_ssim_delta": 0.004962030602865264,
+        "new_holes": 249
+      },
+      "selected": true
+    }
+  ],
+  "note": "Source photographs were also used in fitting. Failed numeric-layout trial is retained to document an implementation error."
+}

@@ -1,0 +1,7 @@
+# Install CUDA PyTorch separately using the official cu128 wheel index.
+gsplat==1.5.3
+numpy==1.26.4
+scipy==1.15.3
+scikit-image==0.24.0
+Pillow==12.3.0
+ninja==1.13.2

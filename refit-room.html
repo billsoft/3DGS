@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会议室 · 多视图联合优化</title><style>body{margin:0;background:#111;color:white;font:14px system-ui}#tools{position:absolute;z-index:100;top:12px;left:12px;padding:14px;border-radius:10px;background:#18212eef;max-width:350px}h1{font-size:17px}button{margin:3px;padding:6px}a{color:#9cdeff;margin-right:10px}p{margin:8px 0}</style>
+<div id="tools"><h1>会议室 · 多视图联合优化</h1><p><a href="?version=new">稳形候选</a><a href="?version=detail">清晰对照</a><a href="?version=baseline">已接受基线</a><a href="/refit-report.html">同视点对照</a></p><div id="positions"></div><p>W/S 前后 · A/D 左右平移 · Q 上升 / E 下降</p><p id="status" role="status">加载中…</p><p>单个静态融合模型。未知背面和部分细杆仍有缺损；没有使用灯具模板或照片覆盖层。</p><a id="download" download>下载融合 PLY</a></div>
+<script type="importmap">{"imports":{"three":"/three.js"}}</script><script type="module">
+import {installRoomNavigation} from './room-navigation.js';
+import * as THREE from 'three';
+import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';
+const query=new URLSearchParams(location.search),previous=query.get('version')==='baseline';
+const detail=query.get('version')==='detail';
+const base=previous?'/four-room/baselines/2026-11-11-coverage-guard':detail?'/four-room/refit-coherent-hd':'/four-room/refit-surface-guard';
+document.querySelector('#download').href=base+'/fused.ply';
+try {
+const meta=await (await fetch('/four-room/refit-surface-guard/fusion.json')).json();
+const centers=meta.centers.map(p=>new THREE.Vector3(...p));
+const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].clone().lerp(centers[1],.5).toArray(),initialCameraLookAt:[4,0,-.6],sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
+await viewer.addSplatScenes([{path:base+'/fused.splat',splatAlphaRemovalThreshold:3}],true);viewer.start();
+let movement=0;const panel=document.querySelector('#positions');
+const button=(name,action)=>{const b=document.createElement('button');b.textContent=name;b.onclick=action;panel.appendChild(b)};
+const go=point=>{const token=++movement,from=viewer.camera.position.clone(),start=performance.now();const tick=()=>{if(token!==movement)return;const t=Math.min(1,(performance.now()-start)/1100),e=t*t*t*(10-15*t+6*t*t);const next=from.clone().lerp(point,e),delta=next.clone().sub(viewer.camera.position);viewer.camera.position.copy(next);viewer.controls.target.add(delta);viewer.controls.update();viewer.forceRenderNextFrame();if(t<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};
+centers.forEach((c,i)=>button(meta.stations[i]+'号机位',()=>go(c)));
+panel.appendChild(document.createElement('br'));centers.forEach((c,i)=>button(meta.stations[i]+'–'+meta.stations[(i+1)%4]+'中点',()=>go(c.clone().lerp(centers[(i+1)%4],.5))));
+const inspection=await (await fetch('/four-room/refit-surface-guard/inspection-views.json')).json();
+const inspect=i=>{const v=inspection[i];movement++;viewer.camera.position.fromArray(v.position);viewer.controls.target.fromArray(v.target);viewer.controls.update();viewer.forceRenderNextFrame()};
+inspection.forEach((v,i)=>button('检查 '+v.name,()=>inspect(i)));
+if(query.has('inspect'))inspect(Number(query.get('inspect')));
+installRoomNavigation({camera:viewer.camera,controls:viewer.controls,onMove:()=>{movement++},render:()=>viewer.forceRenderNextFrame()});
+viewer.controls.addEventListener('start',()=>{movement++});window.roomViewer=viewer;window.inspectRoom=inspect;
+document.querySelector('#status').textContent='已加载 · '+(previous?'已接受基线':detail?'清晰对照版':'稳形联合优化候选');
+} catch(e){document.querySelector('#status').textContent='加载失败：'+e.message;console.error(e)}
+</script></html>

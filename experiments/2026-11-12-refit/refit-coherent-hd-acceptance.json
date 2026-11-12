@@ -1,0 +1,43 @@
+{
+  "numeric_checks_passed": true,
+  "visual_review_required": true,
+  "evaluated_array_sha256": "e9acfaa973cfd1b8014ee618ca8ae9b75274b630e1d53b6e4d693797e2da58eb",
+  "ply_sha256": "793325366991b0bc0fdac2c9cfc85e759b248771e8ce32bb105fa4849737df11",
+  "splat_sha256": "05fe4269ac2a8dd89b39f5644459bbad71cd522519a1cc910461a545afc34a78",
+  "max_movement": 0.045000314712524414,
+  "scale_ratio_range": [
+    0.7999999523162842,
+    1.2500001192092896
+  ],
+  "resolutions": [
+    {
+      "size": 1024,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8682471929916502,
+        "candidate_mean_ssim": 0.941435817278921,
+        "baseline_mean_mae": 0.031541536871606025,
+        "candidate_mean_mae": 0.01711450546630723,
+        "improved_ssim_views": 26,
+        "worst_ssim_delta": 0.01714575645755889,
+        "new_holes": 3
+      }
+    },
+    {
+      "size": 512,
+      "summary": {
+        "source_views": 26,
+        "novel_views": 12,
+        "baseline_mean_ssim": 0.8423306912537126,
+        "candidate_mean_ssim": 0.9166415162758733,
+        "baseline_mean_mae": 0.03147020216021416,
+        "candidate_mean_mae": 0.018958018719407728,
+        "improved_ssim_views": 26,
+        "worst_ssim_delta": 0.014788033175033632,
+        "new_holes": 0
+      }
+    }
+  ],
+  "note": "Fits reuse source images; no independent novel-view ground truth."
+}
