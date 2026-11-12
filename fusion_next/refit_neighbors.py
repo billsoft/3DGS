@@ -3,12 +3,13 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial import cKDTree
 from scipy.spatial.transform import Rotation
+from gaussian_geometry import shortest_axis_normals
 import argparse
 
 parser=argparse.ArgumentParser();parser.add_argument('--data',type=Path,default=Path('four-room/refit-data'))
 folder=parser.parse_args().data;a=np.load(folder/'initial.npy')
 tree=cKDTree(a[:,:3]);rgb=np.clip(.5+.2820947918*a[:,3:6],0,1)
-norm=Rotation.from_quat(a[:,[11,12,13,10]]).as_matrix()[:,:,0]
+norm=shortest_axis_normals(a)
 chunks=[]
 for start in range(0,len(a),100000):
     ids=np.arange(start,min(start+100000,len(a)))

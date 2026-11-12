@@ -35,6 +35,7 @@ def run():
     parser.add_argument('--move-limit', type=float, default=.045)
     parser.add_argument('--ssim-weight', type=float, default=.2)
     parser.add_argument('--graph-weight', type=float, default=0.)
+    parser.add_argument('--preserve-color-differences', action='store_true',help='Regularize changes to neighboring colors instead of flattening their original contrast')
     parser.add_argument('--edge-weight', type=float, default=.08)
     parser.add_argument('--color-lr', type=float, default=.008)
     parser.add_argument('--position-lr', type=float, default=.00016)
@@ -96,7 +97,10 @@ def run():
             chosen=torch.randint(len(graph['src']),(131072,),device='cuda')
             src,dst=graph['src'][chosen].long(),graph['dst'][chosen].long()
             weights=graph['weight'][chosen]
-            color_cost=(scene['colors'][src]-scene['colors'][dst]).square().mean(1)
+            color_delta=scene['colors'][src]-scene['colors'][dst]
+            if args.preserve_color_differences:
+                color_delta=color_delta-(initial['colors'][src]-initial['colors'][dst])
+            color_cost=color_delta.square().mean(1)
             shift_src=scene['means'][src]-initial['means'][src]
             shift_dst=scene['means'][dst]-initial['means'][dst]
             deformation_cost=((shift_src-shift_dst)/args.move_limit).square().mean(1)

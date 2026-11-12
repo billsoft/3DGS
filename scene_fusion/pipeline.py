@@ -26,7 +26,7 @@ def main():
     if not shell or not a.gpu_python.is_file():raise ValueError('PowerShell or GPU Python environment is missing')
     if a.serve_root and a.out!=(a.serve_root.resolve()/'four-room/scenes'/a.out.name).resolve():raise ValueError('Published output must be under serve-root/four-room/scenes')
     scene=initialize(a.inputs,a.out,a.stations)
-    code=list((ROOT/'scene_fusion').glob('*.py'))+list((ROOT/'fusion_next').glob('refit*.py'))+[ROOT/f for f in ['four-prepare.py','four-fuse.py','visibility-test.py','calibration-render.py','scene-room.html','scene-report.html','room-navigation.js','run-refit-gpu.ps1']]
+    code=list((ROOT/'scene_fusion').glob('*.py'))+list((ROOT/'fusion_next').glob('refit*.py'))+[ROOT/f for f in ['four-prepare.py','four-fuse.py','visibility-test.py','calibration-render.py','scene-room.html','scene-report.html','room-navigation.js','run-refit-gpu.ps1','fusion_next/gaussian_geometry.py']]
     code_hash=hashlib.sha256(''.join(digest(f) for f in sorted(code)).encode()).hexdigest()
     state=RunState(a.out,code_hash,a.resume);logs=a.out/'logs';logs.mkdir(exist_ok=True)
     def execute(name,script,*args,outputs,gpu=False):

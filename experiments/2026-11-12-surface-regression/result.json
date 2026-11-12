@@ -1,0 +1,47 @@
+{
+  "accepted": false,
+  "published": false,
+  "unit_tests": 24,
+  "automatic_quality": {
+    "passed": false,
+    "reasons": [
+      "Mean source fidelity fell by more than 0.02 SSIM",
+      "A source direction lost more than 0.08 SSIM"
+    ],
+    "native_coverage_loss_fraction": 0.0,
+    "limitations": "Automatic regression checks only; unseen regions, reflections and intermediate-view geometry still require visual review.",
+    "candidate_sha256": "b93f8d73099517c33edac309d9401304fe2e4c5b0a0327cdef935d07b9326450"
+  },
+  "native_hd": {
+    "views": 36,
+    "native_ssim": 0.9517263477536014,
+    "fused_ssim": 0.9196667507268752,
+    "newly_low_alpha_pixels": 0,
+    "native_high_alpha_pixels": 37264106
+  },
+  "fit_hd": {
+    "source_views": 36,
+    "novel_views": 18,
+    "baseline_mean_ssim": 0.8750215700421542,
+    "candidate_mean_ssim": 0.9167100627590847,
+    "baseline_mean_mae": 0.032364027935741196,
+    "candidate_mean_mae": 0.01727733199345885,
+    "improved_ssim_views": 36,
+    "worst_ssim_delta": 0.0032441652118510023,
+    "new_holes": 0
+  },
+  "visual_review": {
+    "passed": false,
+    "reason": "Television remains layered and smeared at intermediate views; unacceptable compared with the older room-specific four-view baseline."
+  },
+  "camera_alignment_for_comparison": [
+    {
+      "variant": "four subset same photos",
+      "camera_alignment_rms": 0.021069828187984366
+    },
+    {
+      "variant": "previous six warped",
+      "camera_alignment_rms": 0.0026501176903482105
+    }
+  ]
+}
