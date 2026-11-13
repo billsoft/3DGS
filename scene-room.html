@@ -7,6 +7,10 @@ import {installRoomLook,setRoomLook} from './room-look.js';
 const query=new URLSearchParams(location.search),scene=query.get('scene')||'six-20261112';
 if(!/^[a-zA-Z0-9_-]+$/.test(scene))throw Error('Invalid scene ID');
 const root='/four-room/scenes/'+scene,initial=query.get('version')==='initial';
+const standardDisplay=query.get('quality')==='standard';
+const qualityControl=document.createElement('p');
+for(const [value,label] of [['hd','高清显示'],['standard','标准显示']]){const a=document.createElement('a'),url=new URL(location.href);url.searchParams.set('quality',value);a.href=url.href;a.textContent=label+((value==='standard')===standardDisplay?' ✓':'');qualityControl.appendChild(a)}
+document.querySelector('#tools').appendChild(qualityControl);
 document.querySelector('#initial').href='?scene='+scene+'&version=initial';document.querySelector('#current').href='?scene='+scene;document.querySelector('#report').href='/scene-report.html?scene='+scene;
 try{
  const meta=await(await fetch(root+'/fusion.json')).json(),data=await(await fetch(root+'/data-512/dataset.json')).json();
@@ -20,7 +24,7 @@ try{
  const centers=meta.centers.map(p=>new THREE.Vector3(...p)),up=new THREE.Vector3(...meta.up),target=centers.reduce((s,c)=>s.add(c),new THREE.Vector3()).multiplyScalar(1/centers.length).addScaledVector(up,-.5);
  const shDegree=optimized?(meta.sh_degree||0):0;
  if(![0,1,2].includes(shDegree))throw Error('当前播放器仅支持到二阶球谐颜色');
- const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].toArray(),initialCameraLookAt:target.toArray(),sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:true,enableOptionalEffects:true,sphericalHarmonicsDegree:shDegree,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
+ const viewer=new Viewer({cameraUp:meta.up,initialCameraPosition:centers[0].toArray(),initialCameraLookAt:target.toArray(),sharedMemoryForWorkers:false,integerBasedSort:true,gpuAcceleratedSort:false,ignoreDevicePixelRatio:standardDisplay,enableOptionalEffects:true,sphericalHarmonicsDegree:shDegree,renderMode:RenderMode.OnChange,sceneRevealMode:SceneRevealMode.Instant});
  const alphaThreshold=Number.isInteger(meta.splat_alpha_threshold)&&meta.splat_alpha_threshold>=0&&meta.splat_alpha_threshold<=255?meta.splat_alpha_threshold:3;
  await viewer.addSplatScenes([{path:base+'/'+filename+(shDegree?'.ply':'.splat'),splatAlphaRemovalThreshold:alphaThreshold}],true);viewer.start();
  const sortRefresh=installRoomSortRefresh(viewer);window.roomSortRefresh=sortRefresh;

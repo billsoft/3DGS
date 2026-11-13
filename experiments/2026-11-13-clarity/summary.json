@@ -1,0 +1,73 @@
+{
+  "points": 1367420,
+  "synthetic_supervision": true,
+  "evaluations": [
+    {
+      "summary": {
+        "anchors": {
+          "initial": {
+            "mae": 0.00819935468542907,
+            "ssim": 0.9817906772751708,
+            "holes": 0.2222222222222222
+          },
+          "student": {
+            "mae": 0.007271530106663704,
+            "ssim": 0.983973743114276,
+            "holes": 0.1111111111111111
+          },
+          "views": 36
+        },
+        "heldout": {
+          "initial": {
+            "mae": 0.014600382720924576,
+            "ssim": 0.9525753748154631,
+            "holes": 22.231060606060606
+          },
+          "student": {
+            "mae": 0.014258625179839631,
+            "ssim": 0.9533174806594972,
+            "holes": 21.757575757575758
+          },
+          "views": 264
+        }
+      },
+      "size": 640,
+      "anchor_fidelity_passed": false
+    },
+    {
+      "summary": {
+        "anchors": {
+          "initial": {
+            "mae": 0.008610360220902495,
+            "ssim": 0.9786108527457996,
+            "holes": 2.0833333333333335
+          },
+          "student": {
+            "mae": 0.007417264058151179,
+            "ssim": 0.9824550858567395,
+            "holes": 1.8611111111111112
+          },
+          "views": 36
+        },
+        "heldout": {
+          "initial": {
+            "mae": 0.014705867697061463,
+            "ssim": 0.9546528234983668,
+            "holes": 61.053030303030305
+          },
+          "student": {
+            "mae": 0.0141411616862046,
+            "ssim": 0.9570492525669825,
+            "holes": 59.416666666666664
+          },
+          "views": 264
+        }
+      },
+      "size": 1024,
+      "anchor_fidelity_passed": false
+    }
+  ],
+  "source": "tour-distilled-six-v3",
+  "geometry_unchanged": true,
+  "candidate": "tour-appearance-six-v1"
+}

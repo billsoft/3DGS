@@ -50,6 +50,8 @@ def run(a):
     def setup(base,coeff):
         m={k:torch.nn.Parameter(torch.tensor(v.copy(),device='cuda')) for k,v in dict(means=base[:,:3],logs=base[:,7:10],quats=base[:,10:14],opacity=base[:,6],dc=coeff[:,:1],rest=coeff[:,1:]).items()}
         rates=dict(means=.00005,logs=.0004,quats=.0001,opacity=.003,dc=.003,rest=.001)
+        if a.appearance_only:
+            for k in ('means','logs','quats'):m[k].requires_grad_(False);rates.pop(k)
         opt=torch.optim.Adam([dict(params=[m[k]],lr=lr) for k,lr in rates.items()],eps=1e-8)
         return m,opt,torch.tensor(base[:,:3].copy(),device='cuda'),torch.tensor(base[:,7:10].copy(),device='cuda')
     model,optim,initial,logs0=setup(base,coeff)
@@ -71,7 +73,8 @@ def run(a):
                     im,aa,_=render(teachers[i],v,size,True);truth+=w*im[:,:,:3];ta+=w*aa
                     if w>.999:td=im[:,:,3]
         optim.zero_grad(set_to_none=True);model['sh']=torch.cat([model['dc'],model['rest']],1);model['colors']=(model['dc'][:,0]*SH0+.5).clamp(0,1)
-        im,aa,info=render(model,v,size,True);rgb=im[:,:,:3];info['means2d'].retain_grad()
+        im,aa,info=render(model,v,size,True);rgb=im[:,:,:3]
+        if not a.appearance_only:info['means2d'].retain_grad()
         loss=.8*(rgb-truth).abs().mean()+.2*structure_loss(rgb,truth)+.08*(aa-ta).abs().mean()+.0002*model['rest'].square().mean()
         loss+=.12*((rgb[:,1:]-rgb[:,:-1]-truth[:,1:]+truth[:,:-1]).abs().mean()+(rgb[1:]-rgb[:-1]-truth[1:]+truth[:-1]).abs().mean())
         valid=(td>.1)&(td<30)&(ta>.98)
@@ -79,13 +82,15 @@ def run(a):
         if not torch.isfinite(loss):raise ValueError('Nonfinite refined PLY loss')
         loss.backward()
         with torch.no_grad():
-            ii=info['gaussian_ids'];grad=info['means2d'].grad.norm(dim=-1);rr=info['radii'].float()
-            if rr.ndim>1:rr=rr.max(dim=-1).values
-            score.index_add_(0,ii,grad);count.index_add_(0,ii,torch.ones_like(grad));radius.scatter_reduce_(0,ii,rr,reduce='amax',include_self=True)
+            if not a.appearance_only:
+                ii=info['gaussian_ids'];grad=info['means2d'].grad.norm(dim=-1);rr=info['radii'].float()
+                if rr.ndim>1:rr=rr.max(dim=-1).values
+                score.index_add_(0,ii,grad);count.index_add_(0,ii,torch.ones_like(grad));radius.scatter_reduce_(0,ii,rr,reduce='amax',include_self=True)
         optim.step()
         with torch.no_grad():
             model['means'].copy_(initial+(model['means']-initial).clamp(-.06,.06));model['logs'].copy_(torch.maximum(torch.minimum(model['logs'],logs0+.35),logs0-.5))
-            model['quats'].copy_(F.normalize(model['quats'],dim=1));model['opacity'].clamp_(-8,10);model['dc'].clamp_(-.5/SH0,.5/SH0);model['rest'].clamp_(-2,2)
+            if not a.appearance_only:model['quats'].copy_(F.normalize(model['quats'],dim=1))
+            model['opacity'].clamp_(-8,10);model['dc'].clamp_(-.5/SH0,.5/SH0);model['rest'].clamp_(-2,2)
         if not a.no_split and step+1 in [500,1300,2100] and len(initial)<a.max_points:
             quality=score/count.clamp(min=1)*radius.sqrt();quality[(count<5)|(radius<3)]=0
             n=min(a.split_count,a.max_points-len(initial),int((quality>0).sum()))
@@ -98,7 +103,7 @@ def run(a):
             rec=dict(step=step+1,loss=float(loss.detach()),points=len(initial),seconds=time.monotonic()-start,gpu_gb=torch.cuda.max_memory_allocated()/1e9);history.append(rec);print(rec,flush=True)
         if (step+1)%500==0 or step==a.steps-1:
             b,s=arrays();np.savez(a.out/'optimized.npz',base=b,sh=s)
-            write_json(a.out/'training.json',dict(steps=step+1,size=size,training_sizes=a.sizes or [a.size],points=len(b),core=a.core,history=history,splits=splits,synthetic_supervision=True,teacher_temporal_state=False,
+            write_json(a.out/'training.json',dict(steps=step+1,size=size,training_sizes=a.sizes or [a.size],points=len(b),core=a.core,history=history,splits=splits,appearance_only=a.appearance_only,synthetic_supervision=True,teacher_temporal_state=False,
                 reference_model_sha256=hashlib.sha256((a.reference/'optimized.npz').read_bytes()).hexdigest()))
 
 
@@ -107,4 +112,7 @@ if __name__=='__main__':
     p.add_argument('--core',type=float,default=.49);p.add_argument('--size',type=int,default=1024);p.add_argument('--steps',type=int,default=4000)
     p.add_argument('--max-points',type=int,default=1400000);p.add_argument('--split-count',type=int,default=150000)
     p.add_argument('--resume',type=Path);p.add_argument('--no-split',action='store_true');p.add_argument('--sizes',type=int,nargs='+')
-    a=p.parse_args();run(a)
+    p.add_argument('--appearance-only',action='store_true',help='Freeze positions, sizes and rotations; fit color and opacity only')
+    a=p.parse_args()
+    if a.appearance_only:a.no_split=True
+    run(a)

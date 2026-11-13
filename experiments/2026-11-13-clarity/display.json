@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "quality": "standard",
+      "w": 800,
+      "h": 600,
+      "dpr": 2
+    },
+    {
+      "quality": "hd",
+      "w": 1600,
+      "h": 1200,
+      "dpr": 2
+    }
+  ]
+}
