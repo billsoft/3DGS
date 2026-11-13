@@ -155,6 +155,10 @@ $env:GS_INPUT_DIR = 'D:\your-room-input'
 见 [基线记录](experiments/2026-11-13-geometry-guide/accepted-baseline.json)，
 标签 `baseline-mesh-guide-20261113`。单一高斯与原始漫游的基线不变。
 
+[曲面低频重建与照片分区试验](docs/mesh-lowpass-and-patches.md) 提供独立的
+自适应 / 平滑优先分支、数值顶点焊接，以及未被选用的分区优化对照。
+它们有意取舍几何细节，尚不替换上述已接受基线。
+
 ## 第三方组件与许可
 
 - `three.js`：Three.js r160 / 0.160.0，MIT。

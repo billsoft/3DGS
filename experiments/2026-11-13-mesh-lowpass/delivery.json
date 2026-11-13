@@ -1,0 +1,77 @@
+{
+  "status": "optional-tradeoff-candidates-not-new-baseline",
+  "baseline": "geometry-smooth-guide-photo-six-v1",
+  "baseline_artifact_hashes_verified": 14,
+  "candidates": [
+    {
+      "scene": "mesh-adaptive-photo-six-v2",
+      "geometry": "mesh-adaptive-geometry-six-v2",
+      "preview": "/mesh-photo-room.html?scene=mesh-adaptive-photo-six-v2",
+      "artifacts": [
+        {
+          "path": "mesh-adaptive-photo-six-v2/mesh.bin",
+          "bytes": 42144720,
+          "sha256": "3f7951f827effba9bcb7aa19c313745ccac75fa55adae07004412d66f58c52be"
+        },
+        {
+          "path": "mesh-adaptive-photo-six-v2/mesh.json",
+          "bytes": 178884,
+          "sha256": "ae67c38816daa70152e8038aead83d11537da8e7cd460bffdcc90a3d50acc928"
+        },
+        {
+          "path": "mesh-adaptive-photo-six-v2/textured-room.zip",
+          "bytes": 53863189,
+          "sha256": "03f22ec3ecaa3d559c8a831395e773a68db3cf99595fac728d71177af0cab2e9"
+        },
+        {
+          "path": "mesh-adaptive-geometry-six-v2/surface.npz",
+          "bytes": 6511308,
+          "sha256": "3e78c7e64a24453e0a77d271e15981b72a6ede7e87d8bea0fb8e47d75bce6aa3"
+        },
+        {
+          "path": "mesh-adaptive-geometry-six-v2/geometry-guide.ply",
+          "bytes": 10030670,
+          "sha256": "c5aac7f1bd531e48e8f3cb43b856bdf49d2e431c4bcac3effbd0f3d851679a02"
+        }
+      ]
+    },
+    {
+      "scene": "mesh-lowpass-photo-six-v4",
+      "geometry": "mesh-lowpass-geometry-six-v3",
+      "preview": "/mesh-photo-room.html?scene=mesh-lowpass-photo-six-v4",
+      "artifacts": [
+        {
+          "path": "mesh-lowpass-photo-six-v4/mesh.bin",
+          "bytes": 20303400,
+          "sha256": "a7587f79dce6c6e0e7ce629ebab4eb8e95643dcad7e69414527ecec018fd0b35"
+        },
+        {
+          "path": "mesh-lowpass-photo-six-v4/mesh.json",
+          "bytes": 178660,
+          "sha256": "890531ef8e9da2e21f9d8a147e495183a9c53d387ff08e88a1239bb05450530d"
+        },
+        {
+          "path": "mesh-lowpass-photo-six-v4/textured-room.zip",
+          "bytes": 39877094,
+          "sha256": "99ba5d6205195d7ccbfe526afbe1780fbda28a16134ca4a6cbb756987a00a045"
+        },
+        {
+          "path": "mesh-lowpass-geometry-six-v3/surface.npz",
+          "bytes": 3143217,
+          "sha256": "bf68002d91db21b5a1184ab5d207b049e5ded90d282900305bbf1043c80f5759"
+        },
+        {
+          "path": "mesh-lowpass-geometry-six-v3/geometry-guide.ply",
+          "bytes": 6901598,
+          "sha256": "aeabe9cc9b32db6afce465415b40391dab2bf343854ff054c30e6948fba53e17"
+        }
+      ]
+    }
+  ],
+  "comparison": "/mesh-smooth-compare.html",
+  "limitations": [
+    "Residual bent edges, lamp contamination and thin-structure loss",
+    "Original-camera ceiling photometric MAE worsens despite smoother surfaces",
+    "Zero open edges and ray misses do not prove correct geometry"
+  ]
+}

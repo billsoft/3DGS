@@ -1,0 +1,11 @@
+{
+  "tolerance": 3.3272340893745424e-05,
+  "input_faces": 703504,
+  "faces": 702412,
+  "input_vertices": 351726,
+  "vertices": 351180,
+  "tiny_faces": 0,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 28,
+  "input_sha256": "e599c145da4ed7ef41a8176c6569d448ad615e6089b9c80c7a4b3269eee9076b"
+}

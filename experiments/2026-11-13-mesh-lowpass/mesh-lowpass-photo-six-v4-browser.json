@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "triangles": 338390,
+  "sources": 6,
+  "views": [
+    {
+      "source": 0,
+      "face": 3
+    },
+    {
+      "source": 0,
+      "face": 4
+    },
+    {
+      "source": 0,
+      "face": 5
+    },
+    {
+      "source": 1,
+      "face": 3
+    },
+    {
+      "source": 1,
+      "face": 4
+    },
+    {
+      "source": 1,
+      "face": 5
+    },
+    {
+      "source": 2,
+      "face": 3
+    },
+    {
+      "source": 2,
+      "face": 4
+    },
+    {
+      "source": 2,
+      "face": 5
+    },
+    {
+      "source": 3,
+      "face": 3
+    },
+    {
+      "source": 3,
+      "face": 4
+    },
+    {
+      "source": 3,
+      "face": 5
+    },
+    {
+      "source": 4,
+      "face": 3
+    },
+    {
+      "source": 4,
+      "face": 4
+    },
+    {
+      "source": 4,
+      "face": 5
+    },
+    {
+      "source": 5,
+      "face": 3
+    },
+    {
+      "source": 5,
+      "face": 4
+    },
+    {
+      "source": 5,
+      "face": 5
+    }
+  ],
+  "midpoints": 6,
+  "errors": []
+}

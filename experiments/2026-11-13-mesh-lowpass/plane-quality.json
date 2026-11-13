@@ -1,0 +1,231 @@
+{
+  "records": [
+    {
+      "mesh": "four-room\\scenes\\geometry-smooth-guide-photo-six-v1\\surface-owned.npz",
+      "planes": [
+        {
+          "plane": 0,
+          "area": 93.30194091796875,
+          "faces": 205537,
+          "distance_rms": 0.03605773423337652,
+          "normal_rms_degrees": 10.542133361950405
+        },
+        {
+          "plane": 1,
+          "area": 72.59664154052734,
+          "faces": 162624,
+          "distance_rms": 0.03282302733169326,
+          "normal_rms_degrees": 11.999343270599127
+        },
+        {
+          "plane": 2,
+          "area": 77.96492004394531,
+          "faces": 160446,
+          "distance_rms": 0.028024999766774795,
+          "normal_rms_degrees": 6.840251365044844
+        },
+        {
+          "plane": 3,
+          "area": 70.35936737060547,
+          "faces": 142492,
+          "distance_rms": 0.03180978154029852,
+          "normal_rms_degrees": 6.631176965687202
+        },
+        {
+          "plane": 4,
+          "area": 22.759380340576172,
+          "faces": 48616,
+          "distance_rms": 0.02331764176705712,
+          "normal_rms_degrees": 9.311723134210752
+        },
+        {
+          "plane": 5,
+          "area": 62.34032440185547,
+          "faces": 139232,
+          "distance_rms": 0.061185632855847966,
+          "normal_rms_degrees": 12.862113498875674
+        },
+        {
+          "plane": 6,
+          "area": 24.737369537353516,
+          "faces": 51974,
+          "distance_rms": 0.042203688085207795,
+          "normal_rms_degrees": 8.887292751561084
+        },
+        {
+          "plane": 7,
+          "area": 18.121973037719727,
+          "faces": 38772,
+          "distance_rms": 0.02714149127482507,
+          "normal_rms_degrees": 11.122339059830725
+        },
+        {
+          "plane": 8,
+          "area": 15.498919486999512,
+          "faces": 34694,
+          "distance_rms": 0.05111413057323144,
+          "normal_rms_degrees": 13.842831522247222
+        },
+        {
+          "plane": 9,
+          "area": 8.743976593017578,
+          "faces": 19284,
+          "distance_rms": 0.028008714326123545,
+          "normal_rms_degrees": 13.231142984650498
+        }
+      ]
+    },
+    {
+      "mesh": "four-room\\scenes\\mesh-adaptive-photo-six-v2\\surface-owned.npz",
+      "planes": [
+        {
+          "plane": 0,
+          "area": 90.19970703125,
+          "faces": 87478,
+          "distance_rms": 0.03549490787227628,
+          "normal_rms_degrees": 8.626019641029366
+        },
+        {
+          "plane": 1,
+          "area": 71.2771987915039,
+          "faces": 66027,
+          "distance_rms": 0.03248661704912668,
+          "normal_rms_degrees": 10.44442096158349
+        },
+        {
+          "plane": 2,
+          "area": 77.6375961303711,
+          "faces": 89277,
+          "distance_rms": 0.027676784190282102,
+          "normal_rms_degrees": 6.6366123455741235
+        },
+        {
+          "plane": 3,
+          "area": 70.12141418457031,
+          "faces": 76002,
+          "distance_rms": 0.03176229158283903,
+          "normal_rms_degrees": 6.521677822985917
+        },
+        {
+          "plane": 4,
+          "area": 22.760374069213867,
+          "faces": 35416,
+          "distance_rms": 0.023381238151035526,
+          "normal_rms_degrees": 9.239356302277573
+        },
+        {
+          "plane": 5,
+          "area": 61.857948303222656,
+          "faces": 56525,
+          "distance_rms": 0.06142564563633229,
+          "normal_rms_degrees": 11.569070890643346
+        },
+        {
+          "plane": 6,
+          "area": 24.697113037109375,
+          "faces": 35441,
+          "distance_rms": 0.041894573659310506,
+          "normal_rms_degrees": 8.86546759771259
+        },
+        {
+          "plane": 7,
+          "area": 18.0996150970459,
+          "faces": 24621,
+          "distance_rms": 0.027237972982718028,
+          "normal_rms_degrees": 11.257706999956696
+        },
+        {
+          "plane": 8,
+          "area": 15.189549446105957,
+          "faces": 17750,
+          "distance_rms": 0.051761176579162224,
+          "normal_rms_degrees": 12.830322724665212
+        },
+        {
+          "plane": 9,
+          "area": 8.709811210632324,
+          "faces": 10927,
+          "distance_rms": 0.028221637738484177,
+          "normal_rms_degrees": 13.28558378722987
+        }
+      ]
+    },
+    {
+      "mesh": "four-room\\scenes\\mesh-lowpass-photo-six-v4\\surface-owned.npz",
+      "planes": [
+        {
+          "plane": 0,
+          "area": 89.72750854492188,
+          "faces": 54908,
+          "distance_rms": 0.03531873450864642,
+          "normal_rms_degrees": 8.407038661815529
+        },
+        {
+          "plane": 1,
+          "area": 71.3615951538086,
+          "faces": 43319,
+          "distance_rms": 0.03253408988405924,
+          "normal_rms_degrees": 10.512444079518675
+        },
+        {
+          "plane": 2,
+          "area": 77.47624206542969,
+          "faces": 48866,
+          "distance_rms": 0.02756427522515104,
+          "normal_rms_degrees": 6.5227735353845
+        },
+        {
+          "plane": 3,
+          "area": 69.86947631835938,
+          "faces": 43372,
+          "distance_rms": 0.03172037851144761,
+          "normal_rms_degrees": 6.672258489795252
+        },
+        {
+          "plane": 4,
+          "area": 22.65373992919922,
+          "faces": 13699,
+          "distance_rms": 0.022753899035147556,
+          "normal_rms_degrees": 9.271309505815958
+        },
+        {
+          "plane": 5,
+          "area": 62.526512145996094,
+          "faces": 37904,
+          "distance_rms": 0.06126346370373866,
+          "normal_rms_degrees": 11.70926045240324
+        },
+        {
+          "plane": 6,
+          "area": 24.526214599609375,
+          "faces": 15303,
+          "distance_rms": 0.042120827360967714,
+          "normal_rms_degrees": 8.94146073263454
+        },
+        {
+          "plane": 7,
+          "area": 17.983211517333984,
+          "faces": 11185,
+          "distance_rms": 0.02722798375870858,
+          "normal_rms_degrees": 11.15532703494119
+        },
+        {
+          "plane": 8,
+          "area": 15.144051551818848,
+          "faces": 9400,
+          "distance_rms": 0.05161835077987986,
+          "normal_rms_degrees": 11.958037331358067
+        },
+        {
+          "plane": 9,
+          "area": 8.591924667358398,
+          "faces": 5458,
+          "distance_rms": 0.028137841822452242,
+          "normal_rms_degrees": 12.874325849094562
+        }
+      ]
+    }
+  ],
+  "tolerance": 0.09343763607740403,
+  "warning": "Estimated planes are priors, not ground truth; compare area/support as well as residuals."
+}

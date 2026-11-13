@@ -119,11 +119,12 @@ def mesh_visibility(p,tri,C,Q,size,tolerance,footprint=False):
     return visible
 
 
-def choose_owners(p,tri,C,Q,views,images,spacing,hints=None,footprint=False,cached_visibility=None):
+def choose_owners(p,tri,C,Q,views,images,spacing,hints=None,footprint=False,cached_visibility=None,photometric_report=None):
     center=p[tri].mean(1); normal=np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]])
     area=np.linalg.norm(normal,axis=1); normal/=np.maximum(area[:,None],1e-10)
     scores=np.zeros((len(tri),len(C)),'f'); colors=np.zeros((len(tri),len(C),3),'f')
     eligible=np.zeros(len(tri),bool)
+    coverages=np.ones((len(tri),len(C)),'f')
     for i,view in enumerate(views):
         if cached_visibility is not None:
             coverage=cached_visibility[1][:,i]
@@ -142,10 +143,15 @@ def choose_owners(p,tri,C,Q,views,images,spacing,hints=None,footprint=False,cach
             support=((abs(delta_probe)<.10+.03*dist_probe)&(confidence_probe>.15)).reshape(-1,4).mean(1)
             scores[:,i]*=np.maximum(.03,coverage**4)*(.1+.9*support**2)
         colors[:,i]=sample_photo(images[i],center,C[i],Q[i])
+        coverages[:,i]=coverage
         print('Visibility/texture evidence',i+1,int(visible.sum()),flush=True)
     # Footprint penalties select a safer photo; they must not delete geometry
     # merely because the numerical scoring scale changed.
-    good=eligible&(area>1e-10)
+    if photometric_report is not None:
+        from texture_patch_consensus import reject_photo_outliers
+        scores,report=reject_photo_outliers(scores,colors,coverages)
+        photometric_report.update(report);print('Photo consensus',report,flush=True)
+    good=eligible&(area>1e-10)&(scores.max(1)>0)
     owner=scores.argmax(1); neighbors=adjacency(tri)
     unary=-np.log(np.maximum(scores,1e-20)/np.maximum(scores.max(1)[:,None],1e-20))
     # Checkerboard updates reduce oscillation; pair costs penalize visible seams.
@@ -181,7 +187,7 @@ def blend_linear(base,other,weight):
     return np.where(color<=.0031308,color*12.92,1.055*np.maximum(color,0)**(1/2.4)-.055)
 
 
-def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False,visibility_cache=None):
+def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False,visibility_cache=None,coherent=False,graphcut=False,photo_consensus=False):
     if not 512<=texture_width<=8192 or texture_width%2 or not 0<=smoothing<=1:
         raise ValueError('Texture width must be even, 512–8192; smoothing must be 0–1')
     out.mkdir(parents=True,exist_ok=True); meta=load(source)
@@ -209,7 +215,18 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
     print('Mesh smoothing',smooth_report,flush=True)
     views=fields(source,warped)
     images=[cv.resize(cv.imdecode(np.fromfile(s['photo'],np.uint8),1),(2048,1024)) for s in meta['stations']]
-    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints,footprint,cached)
+    color_report={} if photo_consensus else None
+    owner,good,scores,colors=choose_owners(p,tri,C,Q,views,images,spacing,hints,footprint,cached,color_report)
+    patch_report=None
+    if graphcut:
+        from texture_graphcut import assign
+        owner,patch_report=assign(p,tri,scores,good,owner,spacing)
+        write_json(out/'texture-graphcut.json',patch_report);print(patch_report,flush=True)
+    if coherent:
+        from texture_patch_consensus import coherent_patches
+        patch_area=np.linalg.norm(np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]]),axis=1)*.5
+        owner,patch_report=coherent_patches(tri,owner,scores,colors,good,adjacency(tri),patch_area,spacing)
+        write_json(out/'texture-patches.json',patch_report);print(patch_report,flush=True)
     cleanup_report=None
     if clean_fragments:
         selected=np.flatnonzero(good|required)
@@ -287,6 +304,8 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
                 footprint_visibility=footprint,visibility_method='raycast' if cached is not None else 'raster',
                 fragment_cleanup=None if cleanup_report is None else {k:v for k,v in cleanup_report.items() if k!='candidates'},
                 texture_size=[W,H],feather_pixels=blended,experimental=True)
+    result['texture_patch_consensus']=patch_report
+    result['photo_outlier_rejection']=color_report
     capture_path=source/'capture.json'
     if capture_path.exists():
         capture=json.loads(capture_path.read_text('utf8'))
@@ -311,7 +330,24 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
         if result['poisson_reconstruction'].get('point_smoothing'):
             result.update(preview_title='三维几何磨皮 · 高清原片贴图',geometry_guide_scene=geometry.parent.name,
                 preview_note='先平滑重建引导点的位置与法线，再进行连续曲面重建和原片贴图。保留原始高斯；补面包含推断，细结构和部分边缘仍可能变形。')
+        if result['poisson_reconstruction'].get('intentional_detail_loss'):
+            result.update(preview_title='低频曲面重建 · 光滑优先',geometry_guide_scene=geometry.parent.name,
+                preview_note='主动减少几何采样并平滑曲面，再贴高清原片。轮廓更圆滑，但细杆、缝隙及薄物体可能变钝或消失；不是精确结构拟合。')
+            if result['poisson_reconstruction'].get('adaptive_edges'):
+                result.update(preview_title='自适应几何平滑 · 高清原片贴图',
+                    preview_note='低频曲面重建，并在多张照片支持的边缘保留较密采样。大面更平顺；电视、灯等边缘仍可能弯曲或串色，原基线保留。')
+        if result['poisson_reconstruction'].get('planar_guide'):
+            result.update(preview_title='局部平面约束 · 高清原片贴图',geometry_guide_scene=geometry.parent.name,
+                preview_note='仅在多机位支持的局部平坦区域整理几何引导点，再重建并贴原片。仍包含形状推断，边缘与薄物体可能有误差。')
     repair_path=geometry.parent/'sphere-repair.json'
+    weld_path=geometry.parent/'numeric-weld.json'
+    if weld_path.exists():result['numeric_weld']=json.loads(weld_path.read_text('utf8'))
+    denoise_path=geometry.parent/'mesh-denoise.json'
+    if denoise_path.exists():
+        from oblique_views import make_views
+        result.update(mesh_denoise=json.loads(denoise_path.read_text('utf8')),geometry_guide_scene=geometry.parent.name,
+            inspection_views=make_views(C,Q,dataset['midpoint_edges']),preview_title='曲面保边降噪 · 连贯原片贴图',
+            preview_note='对面法线滤波并限制顶点移动，再按遮挡证据整理小块照片分区。保持网格连接关系；细结构与反射接缝仍可能有误差。')
     if repair_path.exists():
         repair=json.loads(repair_path.read_text(encoding='utf8'))
         result['repaired_surfaces']=[dict(center=s['center'],radius=s['radius'],type='sphere',supporting_cameras=s['validation']['supporting_cameras']) for s in repair['candidates'] if s['validation']['accepted']]
@@ -336,4 +372,7 @@ if __name__=='__main__':
     parser.add_argument('--footprint',action='store_true')
     parser.add_argument('--clean-fragments',action='store_true')
     parser.add_argument('--visibility-cache',type=Path)
-    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments,a.visibility_cache)
+    parser.add_argument('--coherent-patches',action='store_true')
+    parser.add_argument('--graphcut',action='store_true',help='Optional PyMaxflow mesh photo assignment')
+    parser.add_argument('--photo-consensus',action='store_true')
+    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments,a.visibility_cache,a.coherent_patches,a.graphcut,a.photo_consensus)

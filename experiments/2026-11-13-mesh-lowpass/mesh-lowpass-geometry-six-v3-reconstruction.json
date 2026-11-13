@@ -1,0 +1,15 @@
+{
+  "method": "Voxel guide resampling, coarse Screened Poisson, Taubin surface fairing",
+  "original_samples": 499223,
+  "samples": 143779,
+  "relative_voxel": 0.004,
+  "voxel": 0.06028594889368402,
+  "depth": 8,
+  "taubin_iterations": 12,
+  "max_fairing_displacement": 0.0980012152680044,
+  "faces": 342326,
+  "input_sha256": "7e64ba027d27361968b4b835184d60341ec6ab4b512d28ae7ca174f091f31f51",
+  "inferred_geometry": true,
+  "intentional_detail_loss": true,
+  "warning": "Not straight-line or primitive fitting; thin structure can shrink or disappear."
+}

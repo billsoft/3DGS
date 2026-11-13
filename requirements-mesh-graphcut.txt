@@ -1,0 +1,3 @@
+# Optional photo-patch optimization; installed separately from the mesh runtime.
+# PyMaxflow is GPL-licensed; not vendored in this repository.
+PyMaxflow==1.3.2

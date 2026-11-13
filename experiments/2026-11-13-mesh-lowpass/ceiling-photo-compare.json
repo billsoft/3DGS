@@ -1,0 +1,24 @@
+{
+  "station": 1,
+  "records": [
+    {
+      "path": "four-room\\scenes\\geometry-smooth-guide-photo-six-v1\\browser\\source-2-face-4.png",
+      "mae": 0.014341075481118393,
+      "p95_channel_error": 0.0392156862745098,
+      "pixels_error_over_0_15": 9846
+    },
+    {
+      "path": "four-room\\scenes\\mesh-adaptive-photo-six-v2\\browser\\source-2-face-4.png",
+      "mae": 0.015059034586056648,
+      "p95_channel_error": 0.0392156862745098,
+      "pixels_error_over_0_15": 11372
+    },
+    {
+      "path": "four-room\\scenes\\mesh-lowpass-photo-six-v4\\browser\\source-2-face-4.png",
+      "mae": 0.015909274010530123,
+      "p95_channel_error": 0.0392156862745098,
+      "pixels_error_over_0_15": 13275
+    }
+  ],
+  "warning": "Original-photo appearance discrepancy, including residual calibration and view-dependent appearance; not measured geometric accuracy."
+}
