@@ -18,6 +18,12 @@ export function tourPolicy(position,centers,core=.38){
 export function layerOpacities(weights){
     let total=0;return weights.map(w=>{total+=w;return w>0?w/total:0});
 }
+export function bridgeWeights(weights,available,settled=false){
+    const result=[...weights,0];
+    if(!available||settled)return result;
+    const ordered=[...weights].sort((a,b)=>b-a),blend=4*(ordered[0]||0)*(ordered[1]||0);
+    return [...weights.map(w=>w*(1-blend)),blend];
+}
 export function stationRoute(start,end,centers,edges){
     const cost=centers.map(()=>Infinity),previous=centers.map(()=>-1),visited=new Set();cost[start]=0;
     const neighbors=centers.map(()=>[]);

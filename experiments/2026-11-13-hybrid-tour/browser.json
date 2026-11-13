@@ -1,0 +1,437 @@
+{
+  "passed": true,
+  "states": [
+    {
+      "ready": true,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source": 0,
+      "active": [
+        0
+      ],
+      "core": 0.49,
+      "settled": true,
+      "restClarity": true,
+      "worldPosition": [
+        -0.7250989309374053,
+        0.8871083973118394,
+        0.5350209017245628
+      ],
+      "policy": {
+        "source": 0,
+        "neighbor": 1,
+        "weights": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distances": [
+          0,
+          2.358063071635529,
+          5.443105207900878,
+          6.586172482351943,
+          4.696011192758053,
+          3.558449988937524
+        ],
+        "core": 0.49,
+        "spacing": 2.358063071635529
+      },
+      "loaded": [
+        0,
+        6
+      ],
+      "travel": null,
+      "usesFusedModel": false,
+      "fusedScene": "tour-appearance-six-v1"
+    },
+    {
+      "ready": true,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source": 0,
+      "active": [
+        0
+      ],
+      "core": 0.49,
+      "settled": true,
+      "restClarity": true,
+      "worldPosition": [
+        -0.7250989309374053,
+        0.8871083973118394,
+        0.5350209017245628
+      ],
+      "policy": {
+        "source": 0,
+        "neighbor": 1,
+        "weights": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distances": [
+          0,
+          2.358063071635529,
+          5.443105207900878,
+          6.586172482351943,
+          4.696011192758053,
+          3.558449988937524
+        ],
+        "core": 0.49,
+        "spacing": 2.358063071635529
+      },
+      "loaded": [
+        0,
+        6,
+        1
+      ],
+      "travel": null,
+      "usesFusedModel": false,
+      "fusedScene": "tour-appearance-six-v1"
+    },
+    {
+      "ready": true,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source": 0,
+      "active": [
+        0
+      ],
+      "core": 0.49,
+      "settled": true,
+      "restClarity": true,
+      "worldPosition": [
+        -0.7250989309374053,
+        0.8871083973118394,
+        0.5350209017245628
+      ],
+      "policy": {
+        "source": 0,
+        "neighbor": 1,
+        "weights": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distances": [
+          0,
+          2.358063071635529,
+          5.443105207900878,
+          6.586172482351943,
+          4.696011192758053,
+          3.558449988937524
+        ],
+        "core": 0.49,
+        "spacing": 2.358063071635529
+      },
+      "loaded": [
+        0,
+        6,
+        1
+      ],
+      "travel": null,
+      "usesFusedModel": false,
+      "fusedScene": "tour-appearance-six-v1"
+    },
+    {
+      "ready": true,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source": 0,
+      "active": [
+        0
+      ],
+      "core": 0.49,
+      "settled": false,
+      "restClarity": false,
+      "worldPosition": [
+        0.39495046761123304,
+        1.0494826597652114,
+        0.5190753148726033
+      ],
+      "policy": {
+        "source": 0,
+        "neighbor": 1,
+        "weights": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distances": [
+          1.1318702743850537,
+          1.2261927972504751,
+          4.3112721546266,
+          5.6654353770806525,
+          4.037682607051766,
+          3.6936101684867046
+        ],
+        "core": 0.49,
+        "spacing": 2.358063071635529
+      },
+      "loaded": [
+        0,
+        6,
+        1
+      ],
+      "travel": null,
+      "usesFusedModel": false,
+      "fusedScene": "tour-appearance-six-v1"
+    },
+    {
+      "ready": true,
+      "weights": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "source": 0,
+      "active": [
+        6
+      ],
+      "core": 0.49,
+      "settled": false,
+      "restClarity": false,
+      "worldPosition": [
+        0.44161919255075976,
+        1.0562482540341018,
+        0.5184109154204383
+      ],
+      "policy": {
+        "source": 0,
+        "neighbor": 1,
+        "weights": [
+          0.5,
+          0.5,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distances": [
+          1.1790315358177643,
+          1.1790315358177645,
+          4.264112872886263,
+          5.628742433104654,
+          4.0148371205424525,
+          3.706642946245828
+        ],
+        "core": 0.49,
+        "spacing": 2.358063071635529
+      },
+      "loaded": [
+        0,
+        6,
+        1
+      ],
+      "travel": null,
+      "usesFusedModel": true,
+      "fusedScene": "tour-appearance-six-v1"
+    },
+    {
+      "ready": true,
+      "weights": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source": 1,
+      "active": [
+        1
+      ],
+      "core": 0.49,
+      "settled": false,
+      "restClarity": false,
+      "worldPosition": [
+        0.4882879174902805,
+        1.0630138483029838,
+        0.5177465159682733
+      ],
+      "policy": {
+        "source": 1,
+        "neighbor": 0,
+        "weights": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "distances": [
+          1.2261927972504676,
+          1.1318702743850608,
+          4.216953635425685,
+          5.592206462010202,
+          3.992418032075635,
+          3.7202279707457846
+        ],
+        "core": 0.49,
+        "spacing": 2.358063071635529
+      },
+      "loaded": [
+        0,
+        6,
+        1
+      ],
+      "travel": null,
+      "usesFusedModel": false,
+      "fusedScene": "tour-appearance-six-v1"
+    }
+  ],
+  "settled": {
+    "ready": true,
+    "weights": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "source": 1,
+    "active": [
+      1
+    ],
+    "core": 0.49,
+    "settled": true,
+    "restClarity": true,
+    "worldPosition": [
+      0.4882879174902805,
+      1.0630138483029838,
+      0.5177465159682733
+    ],
+    "policy": {
+      "source": 1,
+      "neighbor": 0,
+      "weights": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "distances": [
+        1.2261927972504676,
+        1.1318702743850608,
+        4.216953635425685,
+        5.592206462010202,
+        3.992418032075635,
+        3.7202279707457846
+      ],
+      "core": 0.49,
+      "spacing": 2.358063071635529
+    },
+    "loaded": [
+      0,
+      6,
+      1
+    ],
+    "travel": null,
+    "usesFusedModel": false,
+    "fusedScene": "tour-appearance-six-v1"
+  },
+  "arrival": {
+    "ready": true,
+    "weights": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "source": 1,
+    "active": [
+      1
+    ],
+    "core": 0.49,
+    "settled": false,
+    "restClarity": true,
+    "worldPosition": [
+      1.6083373160389252,
+      1.2253881107563642,
+      0.5018009291163132
+    ],
+    "policy": {
+      "source": 1,
+      "neighbor": 0,
+      "weights": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "distances": [
+        2.358063071635529,
+        4.965068306494546e-16,
+        3.085150499741726,
+        4.77158731598631,
+        3.6007698914770843,
+        4.194766770995025
+      ],
+      "core": 0.49,
+      "spacing": 2.358063071635529
+    },
+    "loaded": [
+      0,
+      6,
+      1
+    ],
+    "travel": null,
+    "usesFusedModel": false,
+    "fusedScene": "tour-appearance-six-v1"
+  },
+  "errors": []
+}
