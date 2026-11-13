@@ -1,0 +1,90 @@
+{
+  "variants": [
+    {
+      "scene": "tour-bilateral-six-v2",
+      "filter": {
+        "points": 1367420,
+        "supported": 80683,
+        "denoise": 0.25,
+        "sharpen": 0.5,
+        "max_rgb_change": 0.022742822766304016,
+        "radius_cap": 0.17335148403937917,
+        "geometry_opacity_and_directional_SH_unchanged": true
+      },
+      "model_sha256": "5a74ab49fa952ff2fbdf2a73cdcda597d31acf99218b0b92d65b84978c7b265a",
+      "size": 640,
+      "summary": {
+        "anchors": {
+          "initial": {
+            "mae": 0.007271530106663704,
+            "ssim": 0.983973743114276,
+            "holes": 0.1111111111111111
+          },
+          "student": {
+            "mae": 0.007271657173987478,
+            "ssim": 0.9839680398115913,
+            "holes": 0.1111111111111111
+          },
+          "views": 36
+        },
+        "heldout": {
+          "initial": {
+            "mae": 0.014258625179839631,
+            "ssim": 0.9533174806594972,
+            "holes": 21.757575757575758
+          },
+          "student": {
+            "mae": 0.014258921894273071,
+            "ssim": 0.9533119373604066,
+            "holes": 21.757575757575758
+          },
+          "views": 264
+        }
+      }
+    },
+    {
+      "scene": "tour-bilateral-denoise-six-v2",
+      "filter": {
+        "points": 1367420,
+        "supported": 80683,
+        "denoise": 0.25,
+        "sharpen": 0.0,
+        "max_rgb_change": 0.013790056109428406,
+        "radius_cap": 0.17335148403937917,
+        "geometry_opacity_and_directional_SH_unchanged": true
+      },
+      "model_sha256": "6c8186cd8a5d39378c643d73c0109ce267664893b993c94ca186635872ae2bc7",
+      "size": 640,
+      "summary": {
+        "anchors": {
+          "initial": {
+            "mae": 0.007271530106663704,
+            "ssim": 0.983973743114276,
+            "holes": 0.1111111111111111
+          },
+          "student": {
+            "mae": 0.007269305345188413,
+            "ssim": 0.9839724765182637,
+            "holes": 0.1111111111111111
+          },
+          "views": 36
+        },
+        "heldout": {
+          "initial": {
+            "mae": 0.014258625179839631,
+            "ssim": 0.9533174806594972,
+            "holes": 21.757575757575758
+          },
+          "student": {
+            "mae": 0.014257117428562859,
+            "ssim": 0.9533174290533407,
+            "holes": 21.757575757575758
+          },
+          "views": 264
+        }
+      }
+    }
+  ],
+  "geometry_opacity_directional_SH_unchanged": true,
+  "default_replaced": false
+}

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "views": [
+    "source-1-3",
+    "source-1-4",
+    "source-1-5",
+    "source-4-3",
+    "source-4-4",
+    "source-4-5",
+    "test-edge-1-2-0.47-3"
+  ],
+  "plyRequests": [
+    "http://127.0.0.1:7870/four-room/scenes/tour-bilateral-six-v2/final/fused.ply"
+  ],
+  "errors": []
+}
