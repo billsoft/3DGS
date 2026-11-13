@@ -13,8 +13,21 @@ if(meta.evaluations?.length>1){document.querySelector('#resolution-row').hidden=
 document.querySelector('#legend').textContent=`左：${Math.round((r.core??.44)*100)}% 空间规则的原始模型渲染　中：${r.comparison_model?'上一版独立 PLY':'训练前静态模型'}　右：本次独立 PLY`;
 const table=document.createElement('table');table.innerHTML='<tr><th>视图</th><th>数量</th><th>对照 / 本次 SSIM</th><th>对照 / 本次平均颜色误差</th></tr>';
 if(meta.native_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.native_scene))document.querySelector('#native').href='/native-tour-room.html?scene='+meta.native_scene;
+if([.30,.38,.44,.49].includes(meta.tour_core)&&meta.native_scene)document.querySelector('#native').href+='&range='+meta.tour_core;
+if(meta.comparison_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.comparison_scene)){const a=document.createElement('a');a.href='/scene-room.html?scene='+meta.comparison_scene+'&inspect=3&quality=hd';a.textContent='旧单一 PLY 对照';document.querySelector('#download').after(a)}
 for(const [key,title] of [['anchors','原机位'],['heldout','未训练视点或方向']]){const s=r.summary[key];const row=table.insertRow();for(const value of [title,s.views,s.initial.ssim.toFixed(4)+' / '+s.student.ssim.toFixed(4),s.initial.mae.toFixed(4)+' / '+s.student.mae.toFixed(4)])row.insertCell().textContent=value}document.querySelector('#summary').append(table);
 const select=document.querySelector('#views');for(const v of r.views.filter(v=>['anchor','oblique'].includes(v.kind)||/-(3|4|5)$/.test(v.view))){const option=document.createElement('option');option.value=v.view;option.textContent=v.view+(v.role==='test'?'（未训练视点或方向）':'（原机位）');select.append(option)}
 select.value='source-1-3';const show=()=>document.querySelector('#comparison').src=root+'/'+folder+'/'+select.value+'.jpg';select.onchange=show;show();
+if(meta.local_quality_folder){
+ const lr=await fetch(root+'/'+folder+'/local-quality.json');
+ if(lr.ok){const local=await lr.json(),panel=document.createElement('div');
+  const note=document.createElement('p');note.className='note';note.textContent='局部检查：平均改善不代表每处改善。下面列出仍退步的图块方向，请优先查看。';panel.append(note);
+  const table=document.createElement('table');table.innerHTML='<tr><th>局部指标</th><th>旧版</th><th>本次</th></tr>';
+  const number=x=>Number.isFinite(x)?x.toFixed(5):'无有效覆盖';
+  for(const [key,title] of [['chroma_mae','局部色差'],['patch_p95','较差图块误差（P95 均值）'],['patch_max','每幅图最差图块的平均误差']]){const row=table.insertRow();for(const text of [title,number(local.summary.initial[key]),number(local.summary.student[key])])row.insertCell().textContent=text}panel.append(table);
+  for(const item of local.worst_regressions.filter(x=>x.after.patch_p95>x.before.patch_p95).slice(0,8)){const button=document.createElement('button');button.textContent=item.view;button.style.margin='6px';button.disabled=![...select.options].some(x=>x.value===item.view);button.onclick=()=>{select.value=item.view;show()};panel.append(button)}
+  document.querySelector('#summary').append(panel);
+ }
+}
 }catch(e){document.querySelector('#status').textContent='报告读取失败：'+e.message}
 </script></html>

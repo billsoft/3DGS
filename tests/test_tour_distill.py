@@ -3,8 +3,19 @@ from pathlib import Path
 import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scene_fusion'))
 from tour_distill import tour_weights,sample_views
+from tour_detail_views import transition_views
 
 class TourDistillationTests(unittest.TestCase):
+    def test_boundary_sampling_preserves_metadata_and_held_positions(self):
+        for n in (2,4,6,9):
+            centers=np.c_[np.arange(n)*3,np.zeros((n,2))].tolist();basis=np.eye(3).tolist()
+            meta=dict(centers=centers,core=.49,midpoint_edges=[[i,i+1] for i in range(n-1)],views=[dict(source=i,name=f'source-{i}-{k}',basis=basis) for i in range(n) for k in range(6)])
+            meta['views']=sample_views(meta,.49);before=json.dumps(meta)
+            new=transition_views(meta);self.assertEqual(len(new),48*(n-1));self.assertEqual(before,json.dumps(meta))
+            train={tuple(v['center']) for v in new if v['role']=='train'}
+            test={tuple(v['center']) for v in meta['views']+new if v['role']=='test'}
+            self.assertFalse(train&test)
+            for v in new:np.testing.assert_allclose(np.array(v['viewmat'])@np.r_[v['center'],1],[0,0,0,1],atol=1e-8)
     def test_camera_centers_and_transition(self):
         c=np.array([[0,0,0],[10,0,0]],float)
         for n in [1,2,6,9]:

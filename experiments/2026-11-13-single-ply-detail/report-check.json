@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "status": "尚未达到原机位无明显退化门槛：这是可下载的单模型试验，不替换原始漫游。",
+  "tables": 2,
+  "buttons": 8,
+  "loaded": true,
+  "links": [
+    "http://127.0.0.1:7870/scene-room.html?scene=tour-detail-single-six-v2&inspect=3",
+    "http://127.0.0.1:7870/native-tour-room.html?scene=native-source-six-v1&range=0.49",
+    "http://127.0.0.1:7870/four-room/scenes/tour-detail-single-six-v2/final/fused.ply",
+    "http://127.0.0.1:7870/scene-room.html?scene=tour-appearance-six-v1&inspect=3&quality=hd"
+  ],
+  "selectedRegression": "test-edge-1-6-0.53-3"
+}

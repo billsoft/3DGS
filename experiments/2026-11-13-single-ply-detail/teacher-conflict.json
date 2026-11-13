@@ -1,0 +1,13 @@
+{
+  "view": "test-edge-1-6-0.53-3",
+  "sources": [
+    5,
+    0
+  ],
+  "size": 640,
+  "valid_pixels": 391435,
+  "relative_depth_median": 0.050746552646160126,
+  "relative_depth_p90": 1.1067214965820316,
+  "fraction_above_5_percent": 0.5020935787550934,
+  "warning": "Both depths are synthetic Gaussian expected-depth renders, not measured ground truth. Same-camera disagreement identifies inconsistent supervision, not which source is correct."
+}

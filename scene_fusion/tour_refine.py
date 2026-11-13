@@ -52,7 +52,7 @@ def run(a):
         rates=dict(means=.00005,logs=.0004,quats=.0001,opacity=.003,dc=.003,rest=.001)
         if a.appearance_only:
             for k in ('means','logs','quats'):m[k].requires_grad_(False);rates.pop(k)
-        opt=torch.optim.Adam([dict(params=[m[k]],lr=lr) for k,lr in rates.items()],eps=1e-8)
+        opt=torch.optim.Adam([dict(params=[m[k]],lr=lr*a.lr_scale,base_lr=lr*a.lr_scale) for k,lr in rates.items()],eps=1e-8)
         return m,opt,torch.tensor(base[:,:3].copy(),device='cuda'),torch.tensor(base[:,7:10].copy(),device='cuda')
     model,optim,initial,logs0=setup(base,coeff)
     def arrays():
@@ -63,6 +63,7 @@ def run(a):
     ids=[i for i,v in enumerate(meta['views']) if v['role']=='train'];anchors=[i for i in ids if meta['views'][i]['kind']=='anchor']
     order=[];history=[];splits=[];start=time.monotonic();size=a.size
     for step in range(a.steps):
+        for group in optim.param_groups:group['lr']=group['base_lr']*a.final_lr_ratio**(step/max(1,a.steps-1))
         size=a.sizes[step%len(a.sizes)] if a.sizes else a.size
         if not order:order=list(rng.permutation(ids))
         j=int(rng.choice(anchors)) if step%3==0 else int(order.pop());v=meta['views'][j]
@@ -77,6 +78,15 @@ def run(a):
         if not a.appearance_only:info['means2d'].retain_grad()
         loss=.8*(rgb-truth).abs().mean()+.2*structure_loss(rgb,truth)+.08*(aa-ta).abs().mean()+.0002*model['rest'].square().mean()
         loss+=.12*((rgb[:,1:]-rgb[:,:-1]-truth[:,1:]+truth[:,:-1]).abs().mean()+(rgb[1:]-rgb[:-1]-truth[1:]+truth[:-1]).abs().mean())
+        if a.patch_weight:
+            # Give difficult regions their own budget instead of letting large
+            # uniform surfaces dominate the whole-frame average. All channels
+            # are supervised; a grayscale score cannot excuse a colored halo.
+            error=rgb-truth
+            chroma=error-error.mean(-1,keepdim=True)
+            local=(error.abs().mean(-1)+chroma.abs().mean(-1))[None,None]
+            patches=F.avg_pool2d(local,32,32).flatten()
+            loss+=a.patch_weight*patches.topk(max(1,len(patches)//4)).values.mean()
         valid=(td>.1)&(td<30)&(ta>.98)
         if valid.any():loss+=.008*((im[:,:,3]-td).abs()/td.clamp(min=.5)).clamp(max=1)[valid].mean()
         if not torch.isfinite(loss):raise ValueError('Nonfinite refined PLY loss')
@@ -91,7 +101,7 @@ def run(a):
             model['means'].copy_(initial+(model['means']-initial).clamp(-.06,.06));model['logs'].copy_(torch.maximum(torch.minimum(model['logs'],logs0+.35),logs0-.5))
             if not a.appearance_only:model['quats'].copy_(F.normalize(model['quats'],dim=1))
             model['opacity'].clamp_(-8,10);model['dc'].clamp_(-.5/SH0,.5/SH0);model['rest'].clamp_(-2,2)
-        if not a.no_split and step+1 in [500,1300,2100] and len(initial)<a.max_points:
+        if not a.no_split and step+1 in a.split_steps and len(initial)<a.max_points:
             quality=score/count.clamp(min=1)*radius.sqrt();quality[(count<5)|(radius<3)]=0
             n=min(a.split_count,a.max_points-len(initial),int((quality>0).sum()))
             if n:
@@ -104,6 +114,7 @@ def run(a):
         if (step+1)%500==0 or step==a.steps-1:
             b,s=arrays();np.savez(a.out/'optimized.npz',base=b,sh=s)
             write_json(a.out/'training.json',dict(steps=step+1,size=size,training_sizes=a.sizes or [a.size],points=len(b),core=a.core,history=history,splits=splits,appearance_only=a.appearance_only,synthetic_supervision=True,teacher_temporal_state=False,
+                lr_scale=a.lr_scale,final_lr_ratio=a.final_lr_ratio,patch_weight=a.patch_weight,split_steps=a.split_steps,
                 reference_model_sha256=hashlib.sha256((a.reference/'optimized.npz').read_bytes()).hexdigest()))
 
 
@@ -113,6 +124,9 @@ if __name__=='__main__':
     p.add_argument('--max-points',type=int,default=1400000);p.add_argument('--split-count',type=int,default=150000)
     p.add_argument('--resume',type=Path);p.add_argument('--no-split',action='store_true');p.add_argument('--sizes',type=int,nargs='+')
     p.add_argument('--appearance-only',action='store_true',help='Freeze positions, sizes and rotations; fit color and opacity only')
+    p.add_argument('--lr-scale',type=float,default=1.);p.add_argument('--final-lr-ratio',type=float,default=1.)
+    p.add_argument('--patch-weight',type=float,default=0.);p.add_argument('--split-steps',type=int,nargs='+',default=[500,1300,2100])
     a=p.parse_args()
+    if not 0<a.lr_scale or not 0<a.final_lr_ratio<=1 or a.patch_weight<0:p.error('Invalid refinement rates/weight')
     if a.appearance_only:a.no_split=True
     run(a)

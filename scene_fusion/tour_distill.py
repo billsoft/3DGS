@@ -175,6 +175,9 @@ def evaluate(a):
             im,alpha,_=render(model,v,size);before,ba,_=render(initial,v,size)
             im=im.cpu().numpy().clip(0,1);alpha=alpha.cpu().numpy();before=before.cpu().numpy().clip(0,1)
             records.append(dict(view=v['name'],kind=v['kind'],role=v['role'],initial=metrics(before,truth,ba.cpu().numpy(),teacher_alpha),student=metrics(im,truth,alpha,teacher_alpha)))
+            if a.local_checks:
+                from local_quality import local_metrics
+                records[-1]['local']=dict(initial=local_metrics(before,truth,teacher_alpha),student=local_metrics(im,truth,teacher_alpha))
             if len(records)%30==0:print('Evaluated views',len(records),'size',size,flush=True)
             if v['kind'] in ['anchor','oblique'] or v['name'].endswith(('-3','-4','-5')):
                 sheet=Image.new('RGB',(size*3,size+26));draw=ImageDraw.Draw(sheet)
@@ -187,6 +190,13 @@ def evaluate(a):
         summary[name]['views']=len(subset)
     # Fidelity to teacher is necessary, but not proof of correctness or visual acceptance.
     gate=all(r['student']['ssim']>=.97 and r['student']['mae']<=.01 and r['student']['holes']==0 for r in records if r['kind']=='anchor')
+    if a.local_checks:
+        def local_mean(label,key):
+            values=[r['local'][label][key] for r in records if r['local'][label][key] is not None]
+            return float(np.mean(values)) if values else None
+        local_summary={label:{key:local_mean(label,key) for key in ('chroma_mae','patch_p95','patch_max')} for label in ('initial','student')}
+        regressions=sorted([dict(view=r['view'],before=r['local']['initial'],after=r['local']['student']) for r in records if r['local']['student']['patch_p95'] is not None and r['local']['initial']['patch_p95'] is not None],key=lambda r:r['after']['patch_p95']-r['before']['patch_p95'],reverse=True)
+        write_json(out/'local-quality.json',dict(summary=local_summary,worst_regressions=regressions[:20],note='Local diagnostics, not a guarantee that every pixel or unseen view is preserved.'))
     write_json(out/'evaluation.json',dict(summary=summary,anchor_fidelity_passed=gate,views=records,synthetic_reference=True,size=size,comparison_model=meta.get('comparison_model'),core=meta['core'],
         model_sha256=hashlib.sha256((a.out/'optimized.npz').read_bytes()).hexdigest()))
     print(json.dumps(summary),flush=True);print('Anchor fidelity gate',gate,flush=True)
@@ -206,7 +216,7 @@ def export(a):
             if candidate.get('model_sha256')==ev['model_sha256']:evaluations.append(dict(folder=folder.name,size=candidate['size'],anchor_fidelity_passed=candidate['anchor_fidelity_passed']))
     (a.out/'data-512').mkdir(exist_ok=True);write_json(a.out/'data-512/dataset.json',meta)
     write_json(a.out/'fusion.json',dict(optimized=True,model_folder='final',sh_degree=2,splat_alpha_threshold=0,stations=meta['stations'],centers=meta['centers'],up=meta['up'],
-        native_scene=a.native.name if a.native else meta.get('native_scene'),report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,evaluations=evaluations,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
+        native_scene=a.native.name if a.native else meta.get('native_scene'),tour_core=meta['core'],comparison_scene=Path(meta['comparison_model']).parent.name if meta.get('comparison_model') else None,report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,evaluations=evaluations,local_quality_folder=a.evaluation_folder if (a.out/a.evaluation_folder/'local-quality.json').exists() else None,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
         preview_note='由原始模型漫游渲染监督训练。不是无损烘焙；机位保真门槛'+('通过' if ev['anchor_fidelity_passed'] else '尚未通过')+'，请与原始漫游对照。'))
     write_json(final/'validation.json',dict(points=len(base),degree=2,roundtrip_exact=True,independent_ply=True,teacher_models_required_at_playback=False,
         sha256=hashlib.sha256((final/'fused.ply').read_bytes()).hexdigest(),anchor_fidelity_passed=ev['anchor_fidelity_passed']))
@@ -217,6 +227,7 @@ if __name__=='__main__':
     p.add_argument('--size',type=int,default=384);p.add_argument('--core',type=float,default=.44);p.add_argument('--steps',type=int,default=1800);p.add_argument('--resume',type=Path)
     p.add_argument('--eval-size',type=int);p.add_argument('--evaluation-folder',default='evaluation')
     p.add_argument('--train-size',type=int);p.add_argument('--lr-scale',type=float,default=1.)
+    p.add_argument('--local-checks',action='store_true')
     a=p.parse_args()
     if a.stage=='prepare' and a.native is None:p.error('prepare requires --native')
     globals()[a.stage](a)

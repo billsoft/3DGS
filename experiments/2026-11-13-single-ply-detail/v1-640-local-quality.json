@@ -1,0 +1,317 @@
+{
+  "summary": {
+    "initial": {
+      "chroma_mae": 0.0029747176897716616,
+      "patch_p95": 0.040992170375744395,
+      "patch_max": 0.12588294411954634
+    },
+    "student": {
+      "chroma_mae": 0.0020054625648281573,
+      "patch_p95": 0.039386143292572576,
+      "patch_max": 0.12464005350707072
+    }
+  },
+  "worst_regressions": [
+    {
+      "view": "test-edge-1-6-0.53-3",
+      "before": {
+        "chroma_mae": 0.00412790896371007,
+        "patch_p95": 0.16250495612621293,
+        "patch_max": 0.3987919092178345,
+        "valid_patches": 394
+      },
+      "after": {
+        "chroma_mae": 0.0041578784584999084,
+        "patch_p95": 0.17550868391990657,
+        "patch_max": 0.3991582989692688,
+        "valid_patches": 394
+      }
+    },
+    {
+      "view": "test-edge-1-2-0.81-4",
+      "before": {
+        "chroma_mae": 0.0020324999932199717,
+        "patch_p95": 0.01319297924637792,
+        "patch_max": 0.04164813831448555,
+        "valid_patches": 399
+      },
+      "after": {
+        "chroma_mae": 0.0011990348575636744,
+        "patch_p95": 0.02049846146255731,
+        "patch_max": 0.050283391028642654,
+        "valid_patches": 399
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.47-5",
+      "before": {
+        "chroma_mae": 0.004928959533572197,
+        "patch_p95": 0.08868169598281377,
+        "patch_max": 0.2288607656955719,
+        "valid_patches": 398
+      },
+      "after": {
+        "chroma_mae": 0.004157299175858498,
+        "patch_p95": 0.09487092904746532,
+        "patch_max": 0.23075810074806213,
+        "valid_patches": 398
+      }
+    },
+    {
+      "view": "test-edge-1-2-0.47-3",
+      "before": {
+        "chroma_mae": 0.003350686514750123,
+        "patch_p95": 0.05143466033041477,
+        "patch_max": 0.10977873206138611,
+        "valid_patches": 391
+      },
+      "after": {
+        "chroma_mae": 0.002572776284068823,
+        "patch_p95": 0.05755631811916828,
+        "patch_max": 0.11128917336463928,
+        "valid_patches": 391
+      }
+    },
+    {
+      "view": "test-edge-1-2-0.53-4",
+      "before": {
+        "chroma_mae": 0.0028493793215602636,
+        "patch_p95": 0.03133209533989424,
+        "patch_max": 0.0788385272026062,
+        "valid_patches": 395
+      },
+      "after": {
+        "chroma_mae": 0.0024691945873200893,
+        "patch_p95": 0.037204370647668836,
+        "patch_max": 0.09219640493392944,
+        "valid_patches": 395
+      }
+    },
+    {
+      "view": "held-near-2-1-2",
+      "before": {
+        "chroma_mae": 0.0036195337306708097,
+        "patch_p95": 0.08192504271864888,
+        "patch_max": 0.2583078145980835,
+        "valid_patches": 398
+      },
+      "after": {
+        "chroma_mae": 0.002909478498622775,
+        "patch_p95": 0.08775241672992706,
+        "patch_max": 0.2572331428527832,
+        "valid_patches": 398
+      }
+    },
+    {
+      "view": "test-edge-1-6-0.53-5",
+      "before": {
+        "chroma_mae": 0.005305005237460136,
+        "patch_p95": 0.11040051802992813,
+        "patch_max": 0.1902029812335968,
+        "valid_patches": 398
+      },
+      "after": {
+        "chroma_mae": 0.004714606329798698,
+        "patch_p95": 0.11612585857510566,
+        "patch_max": 0.19002294540405273,
+        "valid_patches": 398
+      }
+    },
+    {
+      "view": "test-edge-5-6-0.53-0",
+      "before": {
+        "chroma_mae": 0.0027972497045993805,
+        "patch_p95": 0.0505926392972469,
+        "patch_max": 0.10111653804779053,
+        "valid_patches": 392
+      },
+      "after": {
+        "chroma_mae": 0.0021534860134124756,
+        "patch_p95": 0.05628984905779354,
+        "patch_max": 0.10311713814735413,
+        "valid_patches": 392
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.19-1",
+      "before": {
+        "chroma_mae": 0.002739834366366267,
+        "patch_p95": 0.029261016007512727,
+        "patch_max": 0.07224828004837036,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.0016516391187906265,
+        "patch_p95": 0.034434744715690545,
+        "patch_max": 0.07585321366786957,
+        "valid_patches": 400
+      }
+    },
+    {
+      "view": "test-edge-5-6-0.53-1",
+      "before": {
+        "chroma_mae": 0.006723025348037481,
+        "patch_p95": 0.1098623551428316,
+        "patch_max": 0.538539707660675,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.006111804395914078,
+        "patch_p95": 0.114955348521471,
+        "patch_max": 0.5414556860923767,
+        "valid_patches": 400
+      }
+    },
+    {
+      "view": "held-near-3--1-1",
+      "before": {
+        "chroma_mae": 0.0025246324948966503,
+        "patch_p95": 0.021089658234268418,
+        "patch_max": 0.0867425873875618,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.0013374661793932319,
+        "patch_p95": 0.025800439249724146,
+        "patch_max": 0.09517895430326462,
+        "valid_patches": 400
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.47-0",
+      "before": {
+        "chroma_mae": 0.003650481579825282,
+        "patch_p95": 0.036356657743453945,
+        "patch_max": 0.08122362196445465,
+        "valid_patches": 389
+      },
+      "after": {
+        "chroma_mae": 0.002297407714650035,
+        "patch_p95": 0.040847578644752455,
+        "patch_max": 0.08877342194318771,
+        "valid_patches": 389
+      }
+    },
+    {
+      "view": "test-edge-4-5-0.47-3",
+      "before": {
+        "chroma_mae": 0.005833874922245741,
+        "patch_p95": 0.08079147562384592,
+        "patch_max": 0.17774538695812225,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.005583277903497219,
+        "patch_p95": 0.08519664406776412,
+        "patch_max": 0.17697980999946594,
+        "valid_patches": 400
+      }
+    },
+    {
+      "view": "test-edge-5-6-0.81-1",
+      "before": {
+        "chroma_mae": 0.004172848537564278,
+        "patch_p95": 0.06723823323845851,
+        "patch_max": 0.30932968854904175,
+        "valid_patches": 399
+      },
+      "after": {
+        "chroma_mae": 0.0031178880017250776,
+        "patch_p95": 0.07147188559174536,
+        "patch_max": 0.31696081161499023,
+        "valid_patches": 399
+      }
+    },
+    {
+      "view": "test-edge-4-5-0.53-5",
+      "before": {
+        "chroma_mae": 0.003367045195773244,
+        "patch_p95": 0.040103632211685114,
+        "patch_max": 0.09562491625547409,
+        "valid_patches": 389
+      },
+      "after": {
+        "chroma_mae": 0.003221159800887108,
+        "patch_p95": 0.04405889287590961,
+        "patch_max": 0.10205294191837311,
+        "valid_patches": 389
+      }
+    },
+    {
+      "view": "test-edge-1-6-0.19-2",
+      "before": {
+        "chroma_mae": 0.003924255724996328,
+        "patch_p95": 0.08609690144658089,
+        "patch_max": 0.23626801371574402,
+        "valid_patches": 396
+      },
+      "after": {
+        "chroma_mae": 0.0033140117302536964,
+        "patch_p95": 0.09004302881658077,
+        "patch_max": 0.23594537377357483,
+        "valid_patches": 396
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.53-5",
+      "before": {
+        "chroma_mae": 0.006143758073449135,
+        "patch_p95": 0.15143031328916548,
+        "patch_max": 0.2818790674209595,
+        "valid_patches": 399
+      },
+      "after": {
+        "chroma_mae": 0.005318071227520704,
+        "patch_p95": 0.15529032498598097,
+        "patch_max": 0.2834576964378357,
+        "valid_patches": 399
+      }
+    },
+    {
+      "view": "held-near-4--1-3",
+      "before": {
+        "chroma_mae": 0.0037443062756210566,
+        "patch_p95": 0.049825994856655564,
+        "patch_max": 0.12039528787136078,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.0028009142260998487,
+        "patch_p95": 0.05356982760131359,
+        "patch_max": 0.12134677171707153,
+        "valid_patches": 400
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.81-3",
+      "before": {
+        "chroma_mae": 0.004202693235129118,
+        "patch_p95": 0.0627483773976564,
+        "patch_max": 0.11772987246513367,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.0034170604776591063,
+        "patch_p95": 0.06627037450671192,
+        "patch_max": 0.11849181354045868,
+        "valid_patches": 400
+      }
+    },
+    {
+      "view": "held-near-5-1-3",
+      "before": {
+        "chroma_mae": 0.003188023343682289,
+        "patch_p95": 0.05333559885621067,
+        "patch_max": 0.1758543998003006,
+        "valid_patches": 400
+      },
+      "after": {
+        "chroma_mae": 0.002799490001052618,
+        "patch_p95": 0.0567736230790615,
+        "patch_max": 0.17422060668468475,
+        "valid_patches": 400
+      }
+    }
+  ],
+  "note": "Local diagnostics, not a guarantee that every pixel or unseen view is preserved."
+}

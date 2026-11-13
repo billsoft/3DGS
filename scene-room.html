@@ -21,6 +21,8 @@ try{
  if(meta.report_page==='tour-distill-report.html')document.querySelector('#report').href='/tour-distill-report.html?scene='+scene;
  if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){document.querySelector('#initial').href='?scene='+meta.reference_scene+'&inspect=3';document.querySelector('#initial').textContent=meta.reference_label||'修复前对照'}
  if(meta.native_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.native_scene)){document.querySelector('#initial').href='/native-tour-room.html?scene='+meta.native_scene;document.querySelector('#initial').textContent='原始漫游对照'}
+ if([.30,.38,.44,.49].includes(meta.tour_core)&&meta.native_scene)document.querySelector('#initial').href+='&range='+meta.tour_core;
+ if(meta.comparison_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.comparison_scene)){const a=document.createElement('a');a.href='?scene='+meta.comparison_scene+'&inspect=3&quality=hd';a.textContent='旧单一 PLY 对照';document.querySelector('#report').after(a)}
  const centers=meta.centers.map(p=>new THREE.Vector3(...p)),up=new THREE.Vector3(...meta.up),target=centers.reduce((s,c)=>s.add(c),new THREE.Vector3()).multiplyScalar(1/centers.length).addScaledVector(up,-.5);
  const shDegree=optimized?(meta.sh_degree||0):0;
  if(![0,1,2].includes(shDegree))throw Error('当前播放器仅支持到二阶球谐颜色');

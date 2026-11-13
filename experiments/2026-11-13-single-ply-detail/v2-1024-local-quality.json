@@ -1,0 +1,317 @@
+{
+  "summary": {
+    "initial": {
+      "chroma_mae": 0.0033263633096425296,
+      "patch_p95": 0.05160525679930813,
+      "patch_max": 0.19609068344563138
+    },
+    "student": {
+      "chroma_mae": 0.0024309526337331763,
+      "patch_p95": 0.04978220456073026,
+      "patch_max": 0.19352470468826746
+    }
+  },
+  "worst_regressions": [
+    {
+      "view": "test-edge-1-6-0.53-3",
+      "before": {
+        "chroma_mae": 0.004103515762835741,
+        "patch_p95": 0.21736525967717155,
+        "patch_max": 0.4119407534599304,
+        "valid_patches": 984
+      },
+      "after": {
+        "chroma_mae": 0.004119017627090216,
+        "patch_p95": 0.23058917894959394,
+        "patch_max": 0.41544270515441895,
+        "valid_patches": 984
+      }
+    },
+    {
+      "view": "boundary-1-6-0.513-2",
+      "before": {
+        "chroma_mae": 0.010166579857468605,
+        "patch_p95": 0.2175045937299727,
+        "patch_max": 0.538287878036499,
+        "valid_patches": 1019
+      },
+      "after": {
+        "chroma_mae": 0.00954245775938034,
+        "patch_p95": 0.22912933081388462,
+        "patch_max": 0.5469391345977783,
+        "valid_patches": 1019
+      }
+    },
+    {
+      "view": "boundary-1-6-0.525-3",
+      "before": {
+        "chroma_mae": 0.004156538285315037,
+        "patch_p95": 0.2106702573597428,
+        "patch_max": 0.4108366072177887,
+        "valid_patches": 982
+      },
+      "after": {
+        "chroma_mae": 0.00417429069057107,
+        "patch_p95": 0.21875725910067537,
+        "patch_max": 0.41365471482276917,
+        "valid_patches": 982
+      }
+    },
+    {
+      "view": "boundary-1-2-0.525-4",
+      "before": {
+        "chroma_mae": 0.002857408719137311,
+        "patch_p95": 0.03545096050947904,
+        "patch_max": 0.14492113888263702,
+        "valid_patches": 1008
+      },
+      "after": {
+        "chroma_mae": 0.002518238965421915,
+        "patch_p95": 0.04333876352757214,
+        "patch_max": 0.15327289700508118,
+        "valid_patches": 1008
+      }
+    },
+    {
+      "view": "test-edge-1-2-0.53-4",
+      "before": {
+        "chroma_mae": 0.0028365019243210554,
+        "patch_p95": 0.033113856427371496,
+        "patch_max": 0.14557312428951263,
+        "valid_patches": 1008
+      },
+      "after": {
+        "chroma_mae": 0.0024908038321882486,
+        "patch_p95": 0.04043912068009374,
+        "patch_max": 0.15331271290779114,
+        "valid_patches": 1008
+      }
+    },
+    {
+      "view": "boundary-3-4-0.475-0",
+      "before": {
+        "chroma_mae": 0.003655410138890147,
+        "patch_p95": 0.035390943661332025,
+        "patch_max": 0.10304296761751175,
+        "valid_patches": 999
+      },
+      "after": {
+        "chroma_mae": 0.002196981804445386,
+        "patch_p95": 0.04259728901088236,
+        "patch_max": 0.10757368803024292,
+        "valid_patches": 999
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.53-5",
+      "before": {
+        "chroma_mae": 0.006140612997114658,
+        "patch_p95": 0.15877825170755305,
+        "patch_max": 0.45103907585144043,
+        "valid_patches": 1019
+      },
+      "after": {
+        "chroma_mae": 0.005228460766375065,
+        "patch_p95": 0.16583359390497207,
+        "patch_max": 0.4542544186115265,
+        "valid_patches": 1019
+      }
+    },
+    {
+      "view": "boundary-5-6-0.525-0",
+      "before": {
+        "chroma_mae": 0.0027917332481592894,
+        "patch_p95": 0.03438768908381462,
+        "patch_max": 0.1330101490020752,
+        "valid_patches": 991
+      },
+      "after": {
+        "chroma_mae": 0.002066899323835969,
+        "patch_p95": 0.04110473580658436,
+        "patch_max": 0.13672147691249847,
+        "valid_patches": 991
+      }
+    },
+    {
+      "view": "test-edge-3-4-0.47-0",
+      "before": {
+        "chroma_mae": 0.0036450549960136414,
+        "patch_p95": 0.0346368875354528,
+        "patch_max": 0.10301335901021957,
+        "valid_patches": 999
+      },
+      "after": {
+        "chroma_mae": 0.002185194520279765,
+        "patch_p95": 0.04125773720443248,
+        "patch_max": 0.1077212244272232,
+        "valid_patches": 999
+      }
+    },
+    {
+      "view": "boundary-1-2-0.513-4",
+      "before": {
+        "chroma_mae": 0.002908005379140377,
+        "patch_p95": 0.035724595189094516,
+        "patch_max": 0.13699261844158173,
+        "valid_patches": 1008
+      },
+      "after": {
+        "chroma_mae": 0.002584190107882023,
+        "patch_p95": 0.042200953885912884,
+        "patch_max": 0.14646302163600922,
+        "valid_patches": 1008
+      }
+    },
+    {
+      "view": "test-edge-1-6-0.53-2",
+      "before": {
+        "chroma_mae": 0.009792374446988106,
+        "patch_p95": 0.1985027939081192,
+        "patch_max": 0.5097638368606567,
+        "valid_patches": 1021
+      },
+      "after": {
+        "chroma_mae": 0.0091587845236063,
+        "patch_p95": 0.20449700951576233,
+        "patch_max": 0.5206088423728943,
+        "valid_patches": 1021
+      }
+    },
+    {
+      "view": "boundary-1-6-0.525-2",
+      "before": {
+        "chroma_mae": 0.009898191317915916,
+        "patch_p95": 0.20398545265197754,
+        "patch_max": 0.5057686567306519,
+        "valid_patches": 1021
+      },
+      "after": {
+        "chroma_mae": 0.009266996756196022,
+        "patch_p95": 0.20982778072357178,
+        "patch_max": 0.5176440477371216,
+        "valid_patches": 1021
+      }
+    },
+    {
+      "view": "test-edge-5-6-0.53-0",
+      "before": {
+        "chroma_mae": 0.0027731945738196373,
+        "patch_p95": 0.03645007088780401,
+        "patch_max": 0.14476780593395233,
+        "valid_patches": 993
+      },
+      "after": {
+        "chroma_mae": 0.002039214363321662,
+        "patch_p95": 0.04191622287034984,
+        "patch_max": 0.14806178212165833,
+        "valid_patches": 993
+      }
+    },
+    {
+      "view": "test-edge-1-2-0.47-3",
+      "before": {
+        "chroma_mae": 0.0033333732280880213,
+        "patch_p95": 0.04999085366725916,
+        "patch_max": 0.24969780445098877,
+        "valid_patches": 977
+      },
+      "after": {
+        "chroma_mae": 0.002433088840916753,
+        "patch_p95": 0.05528178960084911,
+        "patch_max": 0.24890005588531494,
+        "valid_patches": 977
+      }
+    },
+    {
+      "view": "boundary-3-4-0.487-0",
+      "before": {
+        "chroma_mae": 0.003664611605927348,
+        "patch_p95": 0.03885710164904595,
+        "patch_max": 0.10118068009614944,
+        "valid_patches": 997
+      },
+      "after": {
+        "chroma_mae": 0.0022103325463831425,
+        "patch_p95": 0.04411557912826534,
+        "patch_max": 0.10598929971456528,
+        "valid_patches": 997
+      }
+    },
+    {
+      "view": "test-edge-1-2-0.81-4",
+      "before": {
+        "chroma_mae": 0.00203138031065464,
+        "patch_p95": 0.012311267806217057,
+        "patch_max": 0.0684962123632431,
+        "valid_patches": 1004
+      },
+      "after": {
+        "chroma_mae": 0.0011679314775392413,
+        "patch_p95": 0.017534799687564363,
+        "patch_max": 0.06898453831672668,
+        "valid_patches": 1004
+      }
+    },
+    {
+      "view": "boundary-1-2-0.475-3",
+      "before": {
+        "chroma_mae": 0.003354968735948205,
+        "patch_p95": 0.05002799630165092,
+        "patch_max": 0.23708702623844147,
+        "valid_patches": 977
+      },
+      "after": {
+        "chroma_mae": 0.0024582163896411657,
+        "patch_p95": 0.05509066134691236,
+        "patch_max": 0.23624403774738312,
+        "valid_patches": 977
+      }
+    },
+    {
+      "view": "boundary-2-3-0.487-4",
+      "before": {
+        "chroma_mae": 0.003447075141593814,
+        "patch_p95": 0.0818470623344183,
+        "patch_max": 0.13254007697105408,
+        "valid_patches": 986
+      },
+      "after": {
+        "chroma_mae": 0.0030777552165091038,
+        "patch_p95": 0.08658114820718765,
+        "patch_max": 0.145595520734787,
+        "valid_patches": 986
+      }
+    },
+    {
+      "view": "boundary-4-5-0.525-5",
+      "before": {
+        "chroma_mae": 0.003399898298084736,
+        "patch_p95": 0.039547492563724515,
+        "patch_max": 0.13950812816619873,
+        "valid_patches": 985
+      },
+      "after": {
+        "chroma_mae": 0.0033360375091433525,
+        "patch_p95": 0.04400260746479034,
+        "patch_max": 0.14853453636169434,
+        "valid_patches": 985
+      }
+    },
+    {
+      "view": "boundary-1-6-0.513-5",
+      "before": {
+        "chroma_mae": 0.006156458985060453,
+        "patch_p95": 0.1477401137351989,
+        "patch_max": 0.31930291652679443,
+        "valid_patches": 1013
+      },
+      "after": {
+        "chroma_mae": 0.005493293981999159,
+        "patch_p95": 0.1520825982093811,
+        "patch_max": 0.32780516147613525,
+        "valid_patches": 1013
+      }
+    }
+  ],
+  "note": "Local diagnostics, not a guarantee that every pixel or unseen view is preserved."
+}

@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "anchors": {
+      "initial": {
+        "mae": 0.007417264058151179,
+        "ssim": 0.9824550858567395,
+        "holes": 1.8611111111111112
+      },
+      "student": {
+        "mae": 0.004412659385707229,
+        "ssim": 0.9848654023030795,
+        "holes": 1.4444444444444444
+      },
+      "views": 36
+    },
+    "heldout": {
+      "initial": {
+        "mae": 0.015182605894488218,
+        "ssim": 0.9538327726238247,
+        "holes": 46.58914728682171
+      },
+      "student": {
+        "mae": 0.013596288360905285,
+        "ssim": 0.9550384150248499,
+        "holes": 46.87596899224806
+      },
+      "views": 516
+    }
+  },
+  "anchor_fidelity_passed": false,
+  "synthetic_reference": true,
+  "size": 1024,
+  "comparison_model": "four-room\\scenes\\tour-appearance-six-v1\\optimized.npz",
+  "core": 0.49,
+  "model_sha256": "e16e289c4f3d8051eb1cc90b346ad1d43197c5cd8c03916b4e98e6fe535f1070"
+}

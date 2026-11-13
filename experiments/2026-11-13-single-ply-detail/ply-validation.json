@@ -1,0 +1,9 @@
+{
+  "points": 1967420,
+  "degree": 2,
+  "roundtrip_exact": true,
+  "independent_ply": true,
+  "teacher_models_required_at_playback": false,
+  "sha256": "a887572fe9c9a31bb799c0a313c0eeab341a9d3cd884c8fca16c8212927ad9bd",
+  "anchor_fidelity_passed": false
+}
