@@ -12,15 +12,24 @@ const root='/four-room/scenes/'+id,status=document.querySelector('#status'),deta
 try{
  const response=await fetch(root+'/native.json');if(!response.ok)throw Error('场景信息无法读取');const meta=await response.json();
  const fusedId=query.get('fused'),hybrid=!!fusedId,FUSED=meta.stations.length;
+ const sourceName=meta.photo_recolored?'原片附色':'原始';
+ if(meta.photo_recolored){
+  document.querySelector('h1').textContent='逐机位原片附色 · 连续漫游';
+  document.querySelector('#intro').textContent='每份 PLY 只用对应全景图附色；几何与透明度保持不变。';
+  document.querySelector('#single').textContent='下载当前机位 PLY';document.querySelector('#single').setAttribute('download','');
+  document.querySelector('#range').parentElement.firstChild.textContent='机位范围 ';
+  document.querySelector('#explanation').textContent='每个机位使用各自的模型，未通过附色验证的机位保留原始 PLY。移动中可能有双影。';
+  const report=document.createElement('a');report.href=root+'/index.html';report.textContent='原片与附色对照';report.target='_blank';document.querySelector('#single').parentNode.append(report);
+ }
  let fusedMeta=null,fusedPath=null;
  if(hybrid){
   if(!/^[a-zA-Z0-9_-]+$/.test(fusedId))throw Error('Invalid fused scene');
   const r=await fetch('/four-room/scenes/'+fusedId+'/fusion.json');if(!r.ok)throw Error('融合模型信息无法读取');fusedMeta=await r.json();
   if(fusedMeta.centers?.length!==meta.centers.length||meta.centers.some((c,i)=>Math.hypot(...c.map((v,k)=>v-fusedMeta.centers[i][k]))>1e-4))throw Error('原始与融合模型坐标不一致，不能直接切换');
   fusedPath='/four-room/scenes/'+fusedId+'/'+fusedMeta.model_folder+'/fused.ply';
-  document.querySelector('h1').textContent='原始机位保真 · 融合模型过渡';
-  document.querySelector('#intro').textContent='拍摄点附近使用原始 PLY；跨机位的短暂过渡使用融合 PLY。';
-  document.querySelector('#explanation').textContent='移动到交接中心时使用融合模型；两侧渐入渐出。勾选清晰优先后，停下恢复附近原始模型。';
+  document.querySelector('h1').textContent=sourceName+'机位保真 · 融合模型过渡';
+  document.querySelector('#intro').textContent='拍摄点附近使用对应机位 PLY；跨机位的短暂过渡使用融合 PLY。';
+  document.querySelector('#explanation').textContent='移动到交接中心时使用融合模型；两侧渐入渐出。勾选清晰优先后，停下恢复附近机位的模型。';
  }
  const first=Math.max(0,Math.min(meta.stations.length-1,Number(query.get('source'))||0));
  const centers=meta.centers.map(c=>new THREE.Vector3(...c)),transforms=meta.stations.map(s=>nativeTransform(s.world_from_raw));
@@ -31,7 +40,7 @@ try{
  const control=new Viewer({...options,rootElement:document.querySelector('#control')});
  const slots=new Map(),weights=Array(meta.stations.length+(hybrid?1:0)).fill(0),buttons=[];
  let ready=false,alive=true,serial=Promise.resolve(),core=.38,revision=0,travel=null,lastTime=performance.now(),lastTrim=0,restClarity=true,lastTranslation=0;
- if(hybrid){core=.49;document.querySelector('#range').value=String(core)}
+ if(hybrid||meta.photo_recolored){core=.49;document.querySelector('#range').value=String(core)}
  const lastPosition=control.camera.position.clone();
  const force=()=>{for(const slot of slots.values())if(slot.ready)slot.viewer.forceRenderNextFrame()};
  const cancel=()=>{revision++;travel=null};
@@ -91,11 +100,12 @@ try{
    if(weights[s]>0){slot.used=performance.now();active.push(s)}
   }
   const dominant=weights.slice(0,FUSED).some(w=>w>0)?weights.slice(0,FUSED).indexOf(Math.max(...weights.slice(0,FUSED))):p.source;
-  status.textContent=active.length===1&&active[0]!==FUSED?'原始 '+meta.stations[dominant].label+' 号机位 · 纯原始模型':'过渡 · '+active.map(s=>(s===FUSED?'融合模型':meta.stations[s].label+'号')+' '+Math.round(weights[s]*100)+'%').join(' / ');
+  const selectedName=meta.stations[dominant].photo_refit_passed===false?'原始（附色未通过）':sourceName;
+  status.textContent=active.length===1&&active[0]!==FUSED?selectedName+' '+meta.stations[dominant].label+' 号机位 · 单份模型':'过渡 · '+active.map(s=>(s===FUSED?'融合模型':meta.stations[s].label+'号')+' '+Math.round(weights[s]*100)+'%').join(' / ');
   const failed=slots.get(p.source)?.error||slots.get(p.neighbor)?.error||(hybrid&&slots.get(FUSED)?.error);
   detail.textContent=failed?'机位加载失败，保留已加载模型：'+failed.message:travel?'沿机位路线移动，拖动或按移动键可停止。':!slots.get(p.neighbor)?.ready&&p.neighbor!==null?'正在预载相邻机位…':'小范围自由移动；点击机位可体验看房式过渡。';
   buttons.forEach((b,i)=>b.classList.toggle('active',i===dominant));
-  document.querySelector('#single').href='/native-scene-room.html?scene='+id+'&standalone=1&source='+dominant;
+  document.querySelector('#single').href=meta.photo_recolored?root+'/'+meta.stations[dominant].file:'/native-scene-room.html?scene='+id+'&standalone=1&source='+dominant;
   window.tourState={ready,weights:[...weights],source:dominant,active,core,settled,restClarity,worldPosition:control.camera.position.toArray(),policy:p,loaded:[...slots.values()].filter(s=>s.ready).map(s=>s.source),travel:travel?{route:travel.route,target:travel.target}:null,usesFusedModel:hybrid&&weights[FUSED]>0,fusedScene:fusedId};
   if(performance.now()-lastTrim>2000){lastTrim=performance.now();trim(wanted)}
   return window.tourState;
@@ -132,7 +142,7 @@ try{
  document.querySelector('#range').onchange=e=>{core=Number(e.target.value);e.target.blur();force()};
  document.querySelector('#rest').onchange=e=>{restClarity=e.target.checked;e.target.blur();force()};
  document.querySelector('#down').onclick=()=>look(5);document.querySelector('#up').onclick=()=>look(4);document.querySelector('#front').onclick=()=>look(3);
- document.querySelector('#previous').href=(hybrid?'/native-tour-room.html':'/native-scene-room.html')+'?scene='+id;
+ document.querySelector('#previous').href=(hybrid||meta.photo_recolored?'/native-tour-room.html':'/native-scene-room.html')+'?scene='+(meta.reference_native_scene||id);
  window.roomViewer=control;window.tourMeta=meta;window.tourSlots=slots;window.inspectTour=inspect;window.flushTour=flush;window.goTour=go;
  await ensure(first);weights[first]=1;ready=true;await inspect(first,3);
  function frame(now){if(!alive)return;compose((now-lastTime)/1000);lastTime=now;requestAnimationFrame(frame)}requestAnimationFrame(frame);

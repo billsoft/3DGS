@@ -1,0 +1,1268 @@
+[
+  {
+    "id": "cam-0001",
+    "passed": true,
+    "selected": "photo-recolored",
+    "before_mae": 0.01017713638859849,
+    "after_mae": 0.0057643014171628116,
+    "photo_resolution": [
+      3840,
+      7680
+    ],
+    "steps": 1200,
+    "training_size": 1536,
+    "evaluation_size": 1024,
+    "training_yaw_degrees": [
+      0,
+      22.5,
+      45,
+      67.5
+    ],
+    "check_yaw_degrees": [
+      0,
+      11.25
+    ],
+    "geometry_opacity_exact": true,
+    "source_photo_sha256": "78993abbc4d87cd356ba270eabe22ab99aa87f3318f7085a14fc4b96f7ee1e91",
+    "source_ply_sha256": "0a063c2096de756aa8047ae01835954ddcdd744e1ae81bd6d021aabdd4cea398",
+    "views": [
+      {
+        "view": "face-0",
+        "before": {
+          "mae": 0.011026270101051948,
+          "ssim": 0.9633561281095756,
+          "holes": 0,
+          "mask_pixels": 1039202
+        },
+        "after": {
+          "mae": 0.006080536600535851,
+          "ssim": 0.9747222041264678,
+          "holes": 0,
+          "mask_pixels": 1039202
+        }
+      },
+      {
+        "view": "face-1",
+        "before": {
+          "mae": 0.004337532677251592,
+          "ssim": 0.9924931884213166,
+          "holes": 0,
+          "mask_pixels": 1048390
+        },
+        "after": {
+          "mae": 0.00212106202803665,
+          "ssim": 0.9950697376966562,
+          "holes": 0,
+          "mask_pixels": 1048390
+        }
+      },
+      {
+        "view": "face-2",
+        "before": {
+          "mae": 0.013833084799546902,
+          "ssim": 0.948400139405017,
+          "holes": 0,
+          "mask_pixels": 1029885
+        },
+        "after": {
+          "mae": 0.008073000087838417,
+          "ssim": 0.9650544786423247,
+          "holes": 0,
+          "mask_pixels": 1029885
+        }
+      },
+      {
+        "view": "face-3",
+        "before": {
+          "mae": 0.011147304693207846,
+          "ssim": 0.9645998017945722,
+          "holes": 0,
+          "mask_pixels": 1022347
+        },
+        "after": {
+          "mae": 0.005270059982817059,
+          "ssim": 0.9757011667544842,
+          "holes": 0,
+          "mask_pixels": 1022347
+        }
+      },
+      {
+        "view": "face-4",
+        "before": {
+          "mae": 0.007806893467491821,
+          "ssim": 0.9685610932633897,
+          "holes": 0,
+          "mask_pixels": 1030245
+        },
+        "after": {
+          "mae": 0.004246940210975433,
+          "ssim": 0.9760378610991838,
+          "holes": 0,
+          "mask_pixels": 1030245
+        }
+      },
+      {
+        "view": "face-5",
+        "before": {
+          "mae": 0.013162188704515153,
+          "ssim": 0.9080589514648414,
+          "holes": 0,
+          "mask_pixels": 1037681
+        },
+        "after": {
+          "mae": 0.008268563719831874,
+          "ssim": 0.9222444585169273,
+          "holes": 0,
+          "mask_pixels": 1037681
+        }
+      },
+      {
+        "view": "rotated-0",
+        "before": {
+          "mae": 0.011402189694001249,
+          "ssim": 0.961735977541527,
+          "holes": 0,
+          "mask_pixels": 1038941
+        },
+        "after": {
+          "mae": 0.007184128029356933,
+          "ssim": 0.9714759231957556,
+          "holes": 0,
+          "mask_pixels": 1038941
+        }
+      },
+      {
+        "view": "rotated-1",
+        "before": {
+          "mae": 0.005081609452621245,
+          "ssim": 0.9887609759227725,
+          "holes": 0,
+          "mask_pixels": 1048550
+        },
+        "after": {
+          "mae": 0.0028421708111160556,
+          "ssim": 0.9922167626455666,
+          "holes": 0,
+          "mask_pixels": 1048550
+        }
+      },
+      {
+        "view": "rotated-2",
+        "before": {
+          "mae": 0.012643767114631907,
+          "ssim": 0.9547147690135254,
+          "holes": 0,
+          "mask_pixels": 1028811
+        },
+        "after": {
+          "mae": 0.007122149834355328,
+          "ssim": 0.9700633929550131,
+          "holes": 0,
+          "mask_pixels": 1028811
+        }
+      },
+      {
+        "view": "rotated-3",
+        "before": {
+          "mae": 0.011039249832663049,
+          "ssim": 0.9642998260398338,
+          "holes": 0,
+          "mask_pixels": 1020281
+        },
+        "after": {
+          "mae": 0.005402099181753325,
+          "ssim": 0.974753487996312,
+          "holes": 0,
+          "mask_pixels": 1020281
+        }
+      },
+      {
+        "view": "rotated-4",
+        "before": {
+          "mae": 0.007696324218771465,
+          "ssim": 0.9684257225865466,
+          "holes": 0,
+          "mask_pixels": 1030586
+        },
+        "after": {
+          "mae": 0.004373574519245422,
+          "ssim": 0.975731309392608,
+          "holes": 0,
+          "mask_pixels": 1030586
+        }
+      },
+      {
+        "view": "rotated-5",
+        "before": {
+          "mae": 0.012949221907427706,
+          "ssim": 0.9096244526236155,
+          "holes": 0,
+          "mask_pixels": 1037993
+        },
+        "after": {
+          "mae": 0.008187332000091398,
+          "ssim": 0.923126027534814,
+          "holes": 0,
+          "mask_pixels": 1037993
+        }
+      }
+    ],
+    "seconds": 25.40359616279602,
+    "limitation": "Same-photo fitting checks only; nearby-view geometric correctness is not guaranteed."
+  },
+  {
+    "id": "cam-0002",
+    "passed": true,
+    "selected": "photo-recolored",
+    "before_mae": 0.012814664642275165,
+    "after_mae": 0.006355046867780663,
+    "photo_resolution": [
+      3840,
+      7680
+    ],
+    "steps": 1200,
+    "training_size": 1536,
+    "evaluation_size": 1024,
+    "training_yaw_degrees": [
+      0,
+      22.5,
+      45,
+      67.5
+    ],
+    "check_yaw_degrees": [
+      0,
+      11.25
+    ],
+    "geometry_opacity_exact": true,
+    "source_photo_sha256": "ec978d87cba53459fb3f4598fafc41424a145ea7194766ae1a7f8de8c3455dc5",
+    "source_ply_sha256": "f419da127dc590a2a3b739cd2446004d6432f8bf4eac71649be8ecc70db5554f",
+    "views": [
+      {
+        "view": "face-0",
+        "before": {
+          "mae": 0.011018554861963733,
+          "ssim": 0.9640530449340549,
+          "holes": 0,
+          "mask_pixels": 1042365
+        },
+        "after": {
+          "mae": 0.006333458874668692,
+          "ssim": 0.9738482254214385,
+          "holes": 0,
+          "mask_pixels": 1042365
+        }
+      },
+      {
+        "view": "face-1",
+        "before": {
+          "mae": 0.00582772114992418,
+          "ssim": 0.9883725662905202,
+          "holes": 0,
+          "mask_pixels": 1048040
+        },
+        "after": {
+          "mae": 0.002476709741345561,
+          "ssim": 0.9926318862558142,
+          "holes": 0,
+          "mask_pixels": 1048040
+        }
+      },
+      {
+        "view": "face-2",
+        "before": {
+          "mae": 0.01767896020313669,
+          "ssim": 0.9277111459537588,
+          "holes": 0,
+          "mask_pixels": 1023350
+        },
+        "after": {
+          "mae": 0.009546575652107484,
+          "ssim": 0.9500250234361928,
+          "holes": 0,
+          "mask_pixels": 1023350
+        }
+      },
+      {
+        "view": "face-3",
+        "before": {
+          "mae": 0.013814409748304116,
+          "ssim": 0.9656555656564655,
+          "holes": 0,
+          "mask_pixels": 1037126
+        },
+        "after": {
+          "mae": 0.005024212265868987,
+          "ssim": 0.9783061560901017,
+          "holes": 0,
+          "mask_pixels": 1037126
+        }
+      },
+      {
+        "view": "face-4",
+        "before": {
+          "mae": 0.009514369825762899,
+          "ssim": 0.9672017837763731,
+          "holes": 0,
+          "mask_pixels": 1035150
+        },
+        "after": {
+          "mae": 0.004111947558173943,
+          "ssim": 0.976090608170215,
+          "holes": 0,
+          "mask_pixels": 1035150
+        }
+      },
+      {
+        "view": "face-5",
+        "before": {
+          "mae": 0.01878712773345182,
+          "ssim": 0.8988795633179281,
+          "holes": 0,
+          "mask_pixels": 1031646
+        },
+        "after": {
+          "mae": 0.00948003255711196,
+          "ssim": 0.9211114963943425,
+          "holes": 0,
+          "mask_pixels": 1031646
+        }
+      },
+      {
+        "view": "rotated-0",
+        "before": {
+          "mae": 0.01280550688917131,
+          "ssim": 0.9563813386792175,
+          "holes": 0,
+          "mask_pixels": 1040004
+        },
+        "after": {
+          "mae": 0.00797083918070842,
+          "ssim": 0.9668126746541782,
+          "holes": 0,
+          "mask_pixels": 1040004
+        }
+      },
+      {
+        "view": "rotated-1",
+        "before": {
+          "mae": 0.004845317902263301,
+          "ssim": 0.9923166006113776,
+          "holes": 0,
+          "mask_pixels": 1048507
+        },
+        "after": {
+          "mae": 0.0023435235141828115,
+          "ssim": 0.9944376463994089,
+          "holes": 0,
+          "mask_pixels": 1048507
+        }
+      },
+      {
+        "view": "rotated-2",
+        "before": {
+          "mae": 0.017453205799917937,
+          "ssim": 0.9289562333425263,
+          "holes": 0,
+          "mask_pixels": 1022048
+        },
+        "after": {
+          "mae": 0.009733920823876726,
+          "ssim": 0.9496854170734027,
+          "holes": 0,
+          "mask_pixels": 1022048
+        }
+      },
+      {
+        "view": "rotated-3",
+        "before": {
+          "mae": 0.013848945009863705,
+          "ssim": 0.9646504734088365,
+          "holes": 0,
+          "mask_pixels": 1036460
+        },
+        "after": {
+          "mae": 0.005420336977088583,
+          "ssim": 0.9770437656796556,
+          "holes": 0,
+          "mask_pixels": 1036460
+        }
+      },
+      {
+        "view": "rotated-4",
+        "before": {
+          "mae": 0.009553587129702272,
+          "ssim": 0.9671663358197627,
+          "holes": 0,
+          "mask_pixels": 1034470
+        },
+        "after": {
+          "mae": 0.0041813163446109015,
+          "ssim": 0.9761392928805372,
+          "holes": 0,
+          "mask_pixels": 1034470
+        }
+      },
+      {
+        "view": "rotated-5",
+        "before": {
+          "mae": 0.018628269453839993,
+          "ssim": 0.8992450886311646,
+          "holes": 0,
+          "mask_pixels": 1032619
+        },
+        "after": {
+          "mae": 0.009637688923623886,
+          "ssim": 0.9210365150236509,
+          "holes": 0,
+          "mask_pixels": 1032619
+        }
+      }
+    ],
+    "seconds": 168.676500082016,
+    "limitation": "Same-photo fitting checks only; nearby-view geometric correctness is not guaranteed."
+  },
+  {
+    "id": "cam-0003",
+    "passed": true,
+    "selected": "photo-recolored",
+    "before_mae": 0.01683370911051921,
+    "after_mae": 0.008145763425564334,
+    "photo_resolution": [
+      3840,
+      7680
+    ],
+    "steps": 1200,
+    "training_size": 1536,
+    "evaluation_size": 1024,
+    "training_yaw_degrees": [
+      0,
+      22.5,
+      45,
+      67.5
+    ],
+    "check_yaw_degrees": [
+      0,
+      11.25
+    ],
+    "geometry_opacity_exact": true,
+    "source_photo_sha256": "bc334a78b1b49be7945ddfb17cde3bbeefa8669dbb2919f1a434905124475520",
+    "source_ply_sha256": "90b6600338f4cff7683de67d47cbdf45d9d3d807b05d2c476facd5654346347b",
+    "views": [
+      {
+        "view": "face-0",
+        "before": {
+          "mae": 0.010198238158702957,
+          "ssim": 0.9646360306862575,
+          "holes": 0,
+          "mask_pixels": 1042658
+        },
+        "after": {
+          "mae": 0.005220190108683966,
+          "ssim": 0.9767913258004735,
+          "holes": 0,
+          "mask_pixels": 1042658
+        }
+      },
+      {
+        "view": "face-1",
+        "before": {
+          "mae": 0.014991385237786432,
+          "ssim": 0.9239431778167915,
+          "holes": 0,
+          "mask_pixels": 1048181
+        },
+        "after": {
+          "mae": 0.010365375917465267,
+          "ssim": 0.9382491164843053,
+          "holes": 0,
+          "mask_pixels": 1048181
+        }
+      },
+      {
+        "view": "face-2",
+        "before": {
+          "mae": 0.02739592353544417,
+          "ssim": 0.9092548475547833,
+          "holes": 0,
+          "mask_pixels": 1007200
+        },
+        "after": {
+          "mae": 0.012101059365095583,
+          "ssim": 0.9387701557501306,
+          "holes": 0,
+          "mask_pixels": 1007200
+        }
+      },
+      {
+        "view": "face-3",
+        "before": {
+          "mae": 0.014345089734933928,
+          "ssim": 0.9586877386815295,
+          "holes": 0,
+          "mask_pixels": 1035781
+        },
+        "after": {
+          "mae": 0.006087780865258543,
+          "ssim": 0.9736360004313038,
+          "holes": 0,
+          "mask_pixels": 1035781
+        }
+      },
+      {
+        "view": "face-4",
+        "before": {
+          "mae": 0.01127176644157056,
+          "ssim": 0.9674938922277653,
+          "holes": 0,
+          "mask_pixels": 1035208
+        },
+        "after": {
+          "mae": 0.00409764078856775,
+          "ssim": 0.9763454401831435,
+          "holes": 0,
+          "mask_pixels": 1035208
+        }
+      },
+      {
+        "view": "face-5",
+        "before": {
+          "mae": 0.02405292011548392,
+          "ssim": 0.882514637465906,
+          "holes": 0,
+          "mask_pixels": 1024490
+        },
+        "after": {
+          "mae": 0.01044050516775384,
+          "ssim": 0.9151391840000587,
+          "holes": 0,
+          "mask_pixels": 1024490
+        }
+      },
+      {
+        "view": "rotated-0",
+        "before": {
+          "mae": 0.012104605495325025,
+          "ssim": 0.9597656627823866,
+          "holes": 0,
+          "mask_pixels": 1033032
+        },
+        "after": {
+          "mae": 0.006628401385589388,
+          "ssim": 0.9715113136471627,
+          "holes": 0,
+          "mask_pixels": 1033032
+        }
+      },
+      {
+        "view": "rotated-1",
+        "before": {
+          "mae": 0.014423334418657549,
+          "ssim": 0.928516940074882,
+          "holes": 0,
+          "mask_pixels": 1048229
+        },
+        "after": {
+          "mae": 0.010018409343814545,
+          "ssim": 0.9418158383462613,
+          "holes": 0,
+          "mask_pixels": 1048229
+        }
+      },
+      {
+        "view": "rotated-2",
+        "before": {
+          "mae": 0.025749748819525,
+          "ssim": 0.9125218154574495,
+          "holes": 0,
+          "mask_pixels": 1012327
+        },
+        "after": {
+          "mae": 0.012273968058373724,
+          "ssim": 0.9370186949519607,
+          "holes": 0,
+          "mask_pixels": 1012327
+        }
+      },
+      {
+        "view": "rotated-3",
+        "before": {
+          "mae": 0.013455745936892716,
+          "ssim": 0.960091333762582,
+          "holes": 0,
+          "mask_pixels": 1035017
+        },
+        "after": {
+          "mae": 0.006308935324029334,
+          "ssim": 0.9734871048312268,
+          "holes": 0,
+          "mask_pixels": 1035017
+        }
+      },
+      {
+        "view": "rotated-4",
+        "before": {
+          "mae": 0.011150866507831533,
+          "ssim": 0.9675108069890913,
+          "holes": 0,
+          "mask_pixels": 1035335
+        },
+        "after": {
+          "mae": 0.00416067579690564,
+          "ssim": 0.9762842534891233,
+          "holes": 0,
+          "mask_pixels": 1035335
+        }
+      },
+      {
+        "view": "rotated-5",
+        "before": {
+          "mae": 0.022864884924076703,
+          "ssim": 0.8873453266924225,
+          "holes": 0,
+          "mask_pixels": 1022319
+        },
+        "after": {
+          "mae": 0.010046218985234426,
+          "ssim": 0.9172771701042771,
+          "holes": 0,
+          "mask_pixels": 1022319
+        }
+      }
+    ],
+    "seconds": 168.71405863761902,
+    "limitation": "Same-photo fitting checks only; nearby-view geometric correctness is not guaranteed."
+  },
+  {
+    "id": "cam-0004",
+    "passed": true,
+    "selected": "photo-recolored",
+    "before_mae": 0.01399983418917281,
+    "after_mae": 0.005796230088183355,
+    "photo_resolution": [
+      3840,
+      7680
+    ],
+    "steps": 1200,
+    "training_size": 1536,
+    "evaluation_size": 1024,
+    "training_yaw_degrees": [
+      0,
+      22.5,
+      45,
+      67.5
+    ],
+    "check_yaw_degrees": [
+      0,
+      11.25
+    ],
+    "geometry_opacity_exact": true,
+    "source_photo_sha256": "9c6e898b8c836e6e0d19fb462d78d891735488b35dbc8237791acca7a89496fd",
+    "source_ply_sha256": "ab02893c5ff71358653a0cc49f4a6f0ccf97021dae839febe09806b523435bcc",
+    "views": [
+      {
+        "view": "face-0",
+        "before": {
+          "mae": 0.006470300499327237,
+          "ssim": 0.9860738510759937,
+          "holes": 0,
+          "mask_pixels": 1046296
+        },
+        "after": {
+          "mae": 0.002875613365588727,
+          "ssim": 0.9905910522571025,
+          "holes": 0,
+          "mask_pixels": 1046296
+        }
+      },
+      {
+        "view": "face-1",
+        "before": {
+          "mae": 0.014855181712593712,
+          "ssim": 0.961081299879838,
+          "holes": 0,
+          "mask_pixels": 1037763
+        },
+        "after": {
+          "mae": 0.005575567566497007,
+          "ssim": 0.9759003095773464,
+          "holes": 0,
+          "mask_pixels": 1037763
+        }
+      },
+      {
+        "view": "face-2",
+        "before": {
+          "mae": 0.021575048880831314,
+          "ssim": 0.9259347396783727,
+          "holes": 0,
+          "mask_pixels": 995457
+        },
+        "after": {
+          "mae": 0.010512945029514826,
+          "ssim": 0.9500617774722271,
+          "holes": 0,
+          "mask_pixels": 995457
+        }
+      },
+      {
+        "view": "face-3",
+        "before": {
+          "mae": 0.014436680835388798,
+          "ssim": 0.9636030374768313,
+          "holes": 0,
+          "mask_pixels": 1040140
+        },
+        "after": {
+          "mae": 0.0055402353254092864,
+          "ssim": 0.9779550910092658,
+          "holes": 0,
+          "mask_pixels": 1040140
+        }
+      },
+      {
+        "view": "face-4",
+        "before": {
+          "mae": 0.013302689597953839,
+          "ssim": 0.9696184316758976,
+          "holes": 0,
+          "mask_pixels": 1041262
+        },
+        "after": {
+          "mae": 0.003939449832710187,
+          "ssim": 0.9779654484536987,
+          "holes": 0,
+          "mask_pixels": 1041262
+        }
+      },
+      {
+        "view": "face-5",
+        "before": {
+          "mae": 0.013577146822160251,
+          "ssim": 0.9374425314355733,
+          "holes": 0,
+          "mask_pixels": 1040724
+        },
+        "after": {
+          "mae": 0.005906549419898585,
+          "ssim": 0.9533406472928015,
+          "holes": 0,
+          "mask_pixels": 1040724
+        }
+      },
+      {
+        "view": "rotated-0",
+        "before": {
+          "mae": 0.006614487205738802,
+          "ssim": 0.9835284620273355,
+          "holes": 0,
+          "mask_pixels": 1045894
+        },
+        "after": {
+          "mae": 0.0031599105974723027,
+          "ssim": 0.9891032527240392,
+          "holes": 0,
+          "mask_pixels": 1045894
+        }
+      },
+      {
+        "view": "rotated-1",
+        "before": {
+          "mae": 0.014535348240055411,
+          "ssim": 0.9628842131561985,
+          "holes": 0,
+          "mask_pixels": 1040460
+        },
+        "after": {
+          "mae": 0.005678041132012128,
+          "ssim": 0.9759534124950393,
+          "holes": 0,
+          "mask_pixels": 1040460
+        }
+      },
+      {
+        "view": "rotated-2",
+        "before": {
+          "mae": 0.02166122680240622,
+          "ssim": 0.9295863412425137,
+          "holes": 0,
+          "mask_pixels": 1004925
+        },
+        "after": {
+          "mae": 0.010415185722004096,
+          "ssim": 0.9512831880842577,
+          "holes": 0,
+          "mask_pixels": 1004925
+        }
+      },
+      {
+        "view": "rotated-3",
+        "before": {
+          "mae": 0.014020611630975592,
+          "ssim": 0.9626568558789911,
+          "holes": 0,
+          "mask_pixels": 1039900
+        },
+        "after": {
+          "mae": 0.006009337032207473,
+          "ssim": 0.9762243737797971,
+          "holes": 0,
+          "mask_pixels": 1039900
+        }
+      },
+      {
+        "view": "rotated-4",
+        "before": {
+          "mae": 0.013423021616989715,
+          "ssim": 0.9696874538943455,
+          "holes": 0,
+          "mask_pixels": 1040641
+        },
+        "after": {
+          "mae": 0.003994660629609033,
+          "ssim": 0.9779349319450282,
+          "holes": 0,
+          "mask_pixels": 1040641
+        }
+      },
+      {
+        "view": "rotated-5",
+        "before": {
+          "mae": 0.013526266425652824,
+          "ssim": 0.9366376339198617,
+          "holes": 0,
+          "mask_pixels": 1039309
+        },
+        "after": {
+          "mae": 0.0059472654052766085,
+          "ssim": 0.9534736186483281,
+          "holes": 0,
+          "mask_pixels": 1039309
+        }
+      }
+    ],
+    "seconds": 100.35076856613159,
+    "limitation": "Same-photo fitting checks only; nearby-view geometric correctness is not guaranteed."
+  },
+  {
+    "id": "cam-0005",
+    "passed": true,
+    "selected": "photo-recolored",
+    "before_mae": 0.010984781388713066,
+    "after_mae": 0.005461175145419078,
+    "photo_resolution": [
+      3840,
+      7680
+    ],
+    "steps": 1200,
+    "training_size": 1536,
+    "evaluation_size": 1024,
+    "training_yaw_degrees": [
+      0,
+      22.5,
+      45,
+      67.5
+    ],
+    "check_yaw_degrees": [
+      0,
+      11.25
+    ],
+    "geometry_opacity_exact": true,
+    "source_photo_sha256": "f120c78bbffba40c86fec08dad6d92083d8a8b7468bb81458b1a71fa381975a6",
+    "source_ply_sha256": "f5e0d3de1232d8f12c901ddfae169e786e67eb574d8cd5dc375d5e1514e3fb9c",
+    "views": [
+      {
+        "view": "face-0",
+        "before": {
+          "mae": 0.004643527376474031,
+          "ssim": 0.9879030763368224,
+          "holes": 0,
+          "mask_pixels": 1043248
+        },
+        "after": {
+          "mae": 0.0027749823712634103,
+          "ssim": 0.991961265972097,
+          "holes": 0,
+          "mask_pixels": 1043248
+        }
+      },
+      {
+        "view": "face-1",
+        "before": {
+          "mae": 0.013495229077378027,
+          "ssim": 0.955198163281544,
+          "holes": 0,
+          "mask_pixels": 1043461
+        },
+        "after": {
+          "mae": 0.007344624905173038,
+          "ssim": 0.9694162724310351,
+          "holes": 0,
+          "mask_pixels": 1043461
+        }
+      },
+      {
+        "view": "face-2",
+        "before": {
+          "mae": 0.01614743266457621,
+          "ssim": 0.9523965137707444,
+          "holes": 0,
+          "mask_pixels": 1026456
+        },
+        "after": {
+          "mae": 0.006807905546153758,
+          "ssim": 0.969860646538128,
+          "holes": 0,
+          "mask_pixels": 1026456
+        }
+      },
+      {
+        "view": "face-3",
+        "before": {
+          "mae": 0.009107421783135733,
+          "ssim": 0.9678081056046444,
+          "holes": 0,
+          "mask_pixels": 1033201
+        },
+        "after": {
+          "mae": 0.005102455750266762,
+          "ssim": 0.9788176962655639,
+          "holes": 0,
+          "mask_pixels": 1033201
+        }
+      },
+      {
+        "view": "face-4",
+        "before": {
+          "mae": 0.009226958364008556,
+          "ssim": 0.9661977232914423,
+          "holes": 0,
+          "mask_pixels": 1039201
+        },
+        "after": {
+          "mae": 0.00439153686509572,
+          "ssim": 0.9751506265391571,
+          "holes": 0,
+          "mask_pixels": 1039201
+        }
+      },
+      {
+        "view": "face-5",
+        "before": {
+          "mae": 0.013855835001524526,
+          "ssim": 0.9378859805420772,
+          "holes": 0,
+          "mask_pixels": 1031567
+        },
+        "after": {
+          "mae": 0.005991046855825109,
+          "ssim": 0.9524340014064998,
+          "holes": 0,
+          "mask_pixels": 1031567
+        }
+      },
+      {
+        "view": "rotated-0",
+        "before": {
+          "mae": 0.004684207240843047,
+          "ssim": 0.9875716478636611,
+          "holes": 0,
+          "mask_pixels": 1045700
+        },
+        "after": {
+          "mae": 0.002903669361746854,
+          "ssim": 0.9915472932462149,
+          "holes": 0,
+          "mask_pixels": 1045700
+        }
+      },
+      {
+        "view": "rotated-1",
+        "before": {
+          "mae": 0.01206671944212923,
+          "ssim": 0.958837896335242,
+          "holes": 0,
+          "mask_pixels": 1042268
+        },
+        "after": {
+          "mae": 0.006775691468335143,
+          "ssim": 0.9708484739941879,
+          "holes": 0,
+          "mask_pixels": 1042268
+        }
+      },
+      {
+        "view": "rotated-2",
+        "before": {
+          "mae": 0.01728011464445093,
+          "ssim": 0.9487861951674501,
+          "holes": 0,
+          "mask_pixels": 1027137
+        },
+        "after": {
+          "mae": 0.007813165766592736,
+          "ssim": 0.9664926205507449,
+          "holes": 0,
+          "mask_pixels": 1027137
+        }
+      },
+      {
+        "view": "rotated-3",
+        "before": {
+          "mae": 0.008863823397066109,
+          "ssim": 0.970235528754425,
+          "holes": 0,
+          "mask_pixels": 1031849
+        },
+        "after": {
+          "mae": 0.0053533960341248955,
+          "ssim": 0.9798253700154674,
+          "holes": 0,
+          "mask_pixels": 1031849
+        }
+      },
+      {
+        "view": "rotated-4",
+        "before": {
+          "mae": 0.008811300978427751,
+          "ssim": 0.9675718727052107,
+          "holes": 0,
+          "mask_pixels": 1039779
+        },
+        "after": {
+          "mae": 0.004316345687900726,
+          "ssim": 0.9757162403762576,
+          "holes": 0,
+          "mask_pixels": 1039779
+        }
+      },
+      {
+        "view": "rotated-5",
+        "before": {
+          "mae": 0.01363480669454262,
+          "ssim": 0.9382499937079792,
+          "holes": 0,
+          "mask_pixels": 1031053
+        },
+        "after": {
+          "mae": 0.005959281132550793,
+          "ssim": 0.9526791837554159,
+          "holes": 0,
+          "mask_pixels": 1031053
+        }
+      }
+    ],
+    "seconds": 70.25304436683655,
+    "limitation": "Same-photo fitting checks only; nearby-view geometric correctness is not guaranteed."
+  },
+  {
+    "id": "cam-0006",
+    "passed": true,
+    "selected": "photo-recolored",
+    "before_mae": 0.01285087327432523,
+    "after_mae": 0.005784882838294175,
+    "photo_resolution": [
+      3840,
+      7680
+    ],
+    "steps": 1200,
+    "training_size": 1536,
+    "evaluation_size": 1024,
+    "training_yaw_degrees": [
+      0,
+      22.5,
+      45,
+      67.5
+    ],
+    "check_yaw_degrees": [
+      0,
+      11.25
+    ],
+    "geometry_opacity_exact": true,
+    "source_photo_sha256": "10dee0f89a2c58c1b80c6890837172ac4e29a2b8b48572d3efcf3796d379e8db",
+    "source_ply_sha256": "8544883de9ba5abba3dad03af13bdffe96bd5d4da564ddcbfa7bc7b2f74871ac",
+    "views": [
+      {
+        "view": "face-0",
+        "before": {
+          "mae": 0.004936873793592242,
+          "ssim": 0.9849228942477681,
+          "holes": 0,
+          "mask_pixels": 1035134
+        },
+        "after": {
+          "mae": 0.002837873094299325,
+          "ssim": 0.9906030884739014,
+          "holes": 0,
+          "mask_pixels": 1035134
+        }
+      },
+      {
+        "view": "face-1",
+        "before": {
+          "mae": 0.013826122050687844,
+          "ssim": 0.9566218381757858,
+          "holes": 0,
+          "mask_pixels": 1040802
+        },
+        "after": {
+          "mae": 0.006156015532667785,
+          "ssim": 0.9710993518391424,
+          "holes": 0,
+          "mask_pixels": 1040802
+        }
+      },
+      {
+        "view": "face-2",
+        "before": {
+          "mae": 0.0207886198725989,
+          "ssim": 0.9377304292158406,
+          "holes": 0,
+          "mask_pixels": 1039179
+        },
+        "after": {
+          "mae": 0.007944803071557446,
+          "ssim": 0.9611493542264171,
+          "holes": 0,
+          "mask_pixels": 1039179
+        }
+      },
+      {
+        "view": "face-3",
+        "before": {
+          "mae": 0.011465955226356425,
+          "ssim": 0.9642890091014592,
+          "holes": 0,
+          "mask_pixels": 1032799
+        },
+        "after": {
+          "mae": 0.004781499838681723,
+          "ssim": 0.97740951394526,
+          "holes": 0,
+          "mask_pixels": 1032799
+        }
+      },
+      {
+        "view": "face-4",
+        "before": {
+          "mae": 0.012393585028027919,
+          "ssim": 0.9605517828529067,
+          "holes": 0,
+          "mask_pixels": 1043130
+        },
+        "after": {
+          "mae": 0.005138902960666243,
+          "ssim": 0.9716399619341879,
+          "holes": 0,
+          "mask_pixels": 1043130
+        }
+      },
+      {
+        "view": "face-5",
+        "before": {
+          "mae": 0.014666847698259336,
+          "ssim": 0.925347312030943,
+          "holes": 0,
+          "mask_pixels": 1035344
+        },
+        "after": {
+          "mae": 0.007589985736321569,
+          "ssim": 0.944935790923199,
+          "holes": 0,
+          "mask_pixels": 1035344
+        }
+      },
+      {
+        "view": "rotated-0",
+        "before": {
+          "mae": 0.004940766344712646,
+          "ssim": 0.9845838214536516,
+          "holes": 0,
+          "mask_pixels": 1036807
+        },
+        "after": {
+          "mae": 0.0030874951234169303,
+          "ssim": 0.9896589604536677,
+          "holes": 0,
+          "mask_pixels": 1036807
+        }
+      },
+      {
+        "view": "rotated-1",
+        "before": {
+          "mae": 0.011789590838488006,
+          "ssim": 0.9684857574889225,
+          "holes": 0,
+          "mask_pixels": 1038939
+        },
+        "after": {
+          "mae": 0.004991642811329306,
+          "ssim": 0.9786473658892149,
+          "holes": 0,
+          "mask_pixels": 1038939
+        }
+      },
+      {
+        "view": "rotated-2",
+        "before": {
+          "mae": 0.022341376603329903,
+          "ssim": 0.9291305597947044,
+          "holes": 0,
+          "mask_pixels": 1037952
+        },
+        "after": {
+          "mae": 0.009605007173135293,
+          "ssim": 0.953892272537138,
+          "holes": 0,
+          "mask_pixels": 1037952
+        }
+      },
+      {
+        "view": "rotated-3",
+        "before": {
+          "mae": 0.010675881335929577,
+          "ssim": 0.9698111246168015,
+          "holes": 0,
+          "mask_pixels": 1035946
+        },
+        "after": {
+          "mae": 0.004584462986079863,
+          "ssim": 0.9801122564139789,
+          "holes": 0,
+          "mask_pixels": 1035946
+        }
+      },
+      {
+        "view": "rotated-4",
+        "before": {
+          "mae": 0.012030407563310707,
+          "ssim": 0.9615587261986159,
+          "holes": 0,
+          "mask_pixels": 1041842
+        },
+        "after": {
+          "mae": 0.005137407313713302,
+          "ssim": 0.9719445833999064,
+          "holes": 0,
+          "mask_pixels": 1041842
+        }
+      },
+      {
+        "view": "rotated-5",
+        "before": {
+          "mae": 0.014354452936609254,
+          "ssim": 0.9260275226738036,
+          "holes": 0,
+          "mask_pixels": 1034375
+        },
+        "after": {
+          "mae": 0.007563498417661314,
+          "ssim": 0.9451611393618969,
+          "holes": 0,
+          "mask_pixels": 1034375
+        }
+      }
+    ],
+    "seconds": 70.45639944076538,
+    "limitation": "Same-photo fitting checks only; nearby-view geometric correctness is not guaranteed."
+  }
+]
