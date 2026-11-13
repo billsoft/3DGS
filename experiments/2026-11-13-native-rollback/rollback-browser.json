@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "retiredBlocked": true,
+  "baseline": "http://127.0.0.1:7870/native-tour-room.html?scene=native-source-six-v1&range=0.49",
+  "state": {
+    "ready": true,
+    "weights": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "source": 0,
+    "active": [
+      0
+    ],
+    "core": 0.49,
+    "settled": true,
+    "restClarity": true,
+    "worldPosition": [
+      -0.7250989309374053,
+      0.8871083973118394,
+      0.5350209017245628
+    ],
+    "policy": {
+      "source": 0,
+      "neighbor": 1,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "distances": [
+        0,
+        2.358063071635529,
+        5.443105207900878,
+        6.586172482351943,
+        4.696011192758053,
+        3.558449988937524
+      ],
+      "core": 0.49,
+      "spacing": 2.358063071635529
+    },
+    "loaded": [
+      0
+    ],
+    "travel": null,
+    "usesFusedModel": false,
+    "fusedScene": null
+  }
+}

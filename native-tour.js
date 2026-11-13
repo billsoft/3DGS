@@ -11,6 +11,13 @@ if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');
 const root='/four-room/scenes/'+id,status=document.querySelector('#status'),detail=document.querySelector('#detail');
 try{
  const response=await fetch(root+'/native.json');if(!response.ok)throw Error('场景信息无法读取');const meta=await response.json();
+ if(meta.retired){
+  document.querySelector('h1').textContent='试验版本已撤回';
+  document.querySelector('#previous').href='/native-tour-room.html?scene=native-source-six-v1&range=0.49';
+  document.querySelector('#previous').textContent='打开原始漫游基线';
+  document.querySelector('#single').hidden=true;
+  throw Error(meta.retirement_reason||'请使用原始漫游基线');
+ }
  const fusedId=query.get('fused'),hybrid=!!fusedId,FUSED=meta.stations.length;
  let fusedMeta=null,fusedPath=null;
  if(hybrid){
@@ -32,6 +39,7 @@ try{
  const slots=new Map(),weights=Array(meta.stations.length+(hybrid?1:0)).fill(0),buttons=[];
  let ready=false,alive=true,serial=Promise.resolve(),core=.38,revision=0,travel=null,lastTime=performance.now(),lastTrim=0,restClarity=true,lastTranslation=0;
  if(hybrid){core=.49;document.querySelector('#range').value=String(core)}
+ if(query.has('range')){const selected=Number(query.get('range'));if(![.30,.38,.44,.49].includes(selected))throw Error('Invalid tour range');core=selected;document.querySelector('#range').value=String(core)}
  const lastPosition=control.camera.position.clone();
  const force=()=>{for(const slot of slots.values())if(slot.ready)slot.viewer.forceRenderNextFrame()};
  const cancel=()=>{revision++;travel=null};

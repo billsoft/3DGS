@@ -1,0 +1,38 @@
+{
+  "code_tag": "baseline-native-tour-20261113",
+  "code_commit": "6f28b9f",
+  "revert_commit": "af780a5",
+  "verified": true,
+  "stations": [
+    {
+      "id": "cam-0001",
+      "label": "1",
+      "sha256": "0a063c2096de756aa8047ae01835954ddcdd744e1ae81bd6d021aabdd4cea398"
+    },
+    {
+      "id": "cam-0002",
+      "label": "2",
+      "sha256": "f419da127dc590a2a3b739cd2446004d6432f8bf4eac71649be8ecc70db5554f"
+    },
+    {
+      "id": "cam-0003",
+      "label": "3",
+      "sha256": "90b6600338f4cff7683de67d47cbdf45d9d3d807b05d2c476facd5654346347b"
+    },
+    {
+      "id": "cam-0004",
+      "label": "4",
+      "sha256": "ab02893c5ff71358653a0cc49f4a6f0ccf97021dae839febe09806b523435bcc"
+    },
+    {
+      "id": "cam-0005",
+      "label": "5",
+      "sha256": "f5e0d3de1232d8f12c901ddfae169e786e67eb574d8cd5dc375d5e1514e3fb9c"
+    },
+    {
+      "id": "cam-0006",
+      "label": "6",
+      "sha256": "8544883de9ba5abba3dad03af13bdffe96bd5d4da564ddcbfa7bc7b2f74871ac"
+    }
+  ]
+}

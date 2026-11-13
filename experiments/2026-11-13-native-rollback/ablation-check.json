@@ -1,0 +1,20 @@
+{
+  "views": 216,
+  "train_fov": 50,
+  "test_fov": 60,
+  "poses_unchanged": true,
+  "candidates": [
+    {
+      "candidate": "control",
+      "geometry_exact": true,
+      "points": 1367420,
+      "promoted": false
+    },
+    {
+      "candidate": "detail",
+      "geometry_exact": true,
+      "points": 1367420,
+      "promoted": false
+    }
+  ]
+}
