@@ -1,0 +1,1620 @@
+[
+  {
+    "mesh": "four-room\\scenes\\geometry-smooth-mesh-raw-six-v1\\surface.npz",
+    "faces": 1199999,
+    "components": 8033,
+    "tiny_components": 7876,
+    "tiny_faces": 26975,
+    "boundary_edges": 58865,
+    "nonmanifold_edges": 0,
+    "views": [
+      {
+        "view": "source-cam-0001-3",
+        "misses": 353
+      },
+      {
+        "view": "source-cam-0001-4",
+        "misses": 477
+      },
+      {
+        "view": "source-cam-0001-5",
+        "misses": 2312
+      },
+      {
+        "view": "source-cam-0002-3",
+        "misses": 258
+      },
+      {
+        "view": "source-cam-0002-4",
+        "misses": 205
+      },
+      {
+        "view": "source-cam-0002-5",
+        "misses": 1823
+      },
+      {
+        "view": "source-cam-0003-3",
+        "misses": 468
+      },
+      {
+        "view": "source-cam-0003-4",
+        "misses": 306
+      },
+      {
+        "view": "source-cam-0003-5",
+        "misses": 1903
+      },
+      {
+        "view": "source-cam-0004-3",
+        "misses": 485
+      },
+      {
+        "view": "source-cam-0004-4",
+        "misses": 276
+      },
+      {
+        "view": "source-cam-0004-5",
+        "misses": 2610
+      },
+      {
+        "view": "source-cam-0005-3",
+        "misses": 496
+      },
+      {
+        "view": "source-cam-0005-4",
+        "misses": 83
+      },
+      {
+        "view": "source-cam-0005-5",
+        "misses": 2051
+      },
+      {
+        "view": "source-cam-0006-3",
+        "misses": 523
+      },
+      {
+        "view": "source-cam-0006-4",
+        "misses": 101
+      },
+      {
+        "view": "source-cam-0006-5",
+        "misses": 1860
+      },
+      {
+        "view": "oblique-1--1-floor",
+        "misses": 3408
+      },
+      {
+        "view": "oblique-1--1-ceiling",
+        "misses": 1143
+      },
+      {
+        "view": "oblique-1--1-wall",
+        "misses": 1342
+      },
+      {
+        "view": "oblique-1-1-floor",
+        "misses": 631
+      },
+      {
+        "view": "oblique-1-1-ceiling",
+        "misses": 475
+      },
+      {
+        "view": "oblique-1-1-wall",
+        "misses": 386
+      },
+      {
+        "view": "oblique-2--1-floor",
+        "misses": 301
+      },
+      {
+        "view": "oblique-2--1-ceiling",
+        "misses": 214
+      },
+      {
+        "view": "oblique-2--1-wall",
+        "misses": 209
+      },
+      {
+        "view": "oblique-2-1-floor",
+        "misses": 2215
+      },
+      {
+        "view": "oblique-2-1-ceiling",
+        "misses": 212
+      },
+      {
+        "view": "oblique-2-1-wall",
+        "misses": 583
+      },
+      {
+        "view": "oblique-3--1-floor",
+        "misses": 235
+      },
+      {
+        "view": "oblique-3--1-ceiling",
+        "misses": 251
+      },
+      {
+        "view": "oblique-3--1-wall",
+        "misses": 242
+      },
+      {
+        "view": "oblique-3-1-floor",
+        "misses": 2658
+      },
+      {
+        "view": "oblique-3-1-ceiling",
+        "misses": 416
+      },
+      {
+        "view": "oblique-3-1-wall",
+        "misses": 1112
+      },
+      {
+        "view": "oblique-4--1-floor",
+        "misses": 2345
+      },
+      {
+        "view": "oblique-4--1-ceiling",
+        "misses": 276
+      },
+      {
+        "view": "oblique-4--1-wall",
+        "misses": 1413
+      },
+      {
+        "view": "oblique-4-1-floor",
+        "misses": 184
+      },
+      {
+        "view": "oblique-4-1-ceiling",
+        "misses": 159
+      },
+      {
+        "view": "oblique-4-1-wall",
+        "misses": 159
+      },
+      {
+        "view": "oblique-5--1-floor",
+        "misses": 194
+      },
+      {
+        "view": "oblique-5--1-ceiling",
+        "misses": 102
+      },
+      {
+        "view": "oblique-5--1-wall",
+        "misses": 164
+      },
+      {
+        "view": "oblique-5-1-floor",
+        "misses": 2051
+      },
+      {
+        "view": "oblique-5-1-ceiling",
+        "misses": 208
+      },
+      {
+        "view": "oblique-5-1-wall",
+        "misses": 760
+      },
+      {
+        "view": "oblique-6--1-floor",
+        "misses": 316
+      },
+      {
+        "view": "oblique-6--1-ceiling",
+        "misses": 238
+      },
+      {
+        "view": "oblique-6--1-wall",
+        "misses": 244
+      },
+      {
+        "view": "oblique-6-1-floor",
+        "misses": 2867
+      },
+      {
+        "view": "oblique-6-1-ceiling",
+        "misses": 656
+      },
+      {
+        "view": "oblique-6-1-wall",
+        "misses": 1856
+      },
+      {
+        "view": "route-1-2-0.2-floor",
+        "misses": 1288
+      },
+      {
+        "view": "route-1-2-0.2-ceiling",
+        "misses": 579
+      },
+      {
+        "view": "route-1-2-0.4-floor",
+        "misses": 846
+      },
+      {
+        "view": "route-1-2-0.4-ceiling",
+        "misses": 463
+      },
+      {
+        "view": "route-1-2-0.5-floor",
+        "misses": 783
+      },
+      {
+        "view": "route-1-2-0.5-ceiling",
+        "misses": 352
+      },
+      {
+        "view": "route-1-2-0.6-floor",
+        "misses": 861
+      },
+      {
+        "view": "route-1-2-0.6-ceiling",
+        "misses": 253
+      },
+      {
+        "view": "route-1-2-0.8-floor",
+        "misses": 963
+      },
+      {
+        "view": "route-1-2-0.8-ceiling",
+        "misses": 233
+      },
+      {
+        "view": "route-1-6-0.2-floor",
+        "misses": 93
+      },
+      {
+        "view": "route-1-6-0.2-ceiling",
+        "misses": 179
+      },
+      {
+        "view": "route-1-6-0.4-floor",
+        "misses": 40
+      },
+      {
+        "view": "route-1-6-0.4-ceiling",
+        "misses": 64
+      },
+      {
+        "view": "route-1-6-0.5-floor",
+        "misses": 56
+      },
+      {
+        "view": "route-1-6-0.5-ceiling",
+        "misses": 52
+      },
+      {
+        "view": "route-1-6-0.6-floor",
+        "misses": 50
+      },
+      {
+        "view": "route-1-6-0.6-ceiling",
+        "misses": 47
+      },
+      {
+        "view": "route-1-6-0.8-floor",
+        "misses": 69
+      },
+      {
+        "view": "route-1-6-0.8-ceiling",
+        "misses": 85
+      },
+      {
+        "view": "route-2-3-0.2-floor",
+        "misses": 1151
+      },
+      {
+        "view": "route-2-3-0.2-ceiling",
+        "misses": 165
+      },
+      {
+        "view": "route-2-3-0.4-floor",
+        "misses": 966
+      },
+      {
+        "view": "route-2-3-0.4-ceiling",
+        "misses": 219
+      },
+      {
+        "view": "route-2-3-0.5-floor",
+        "misses": 804
+      },
+      {
+        "view": "route-2-3-0.5-ceiling",
+        "misses": 195
+      },
+      {
+        "view": "route-2-3-0.6-floor",
+        "misses": 664
+      },
+      {
+        "view": "route-2-3-0.6-ceiling",
+        "misses": 142
+      },
+      {
+        "view": "route-2-3-0.8-floor",
+        "misses": 988
+      },
+      {
+        "view": "route-2-3-0.8-ceiling",
+        "misses": 88
+      },
+      {
+        "view": "route-3-4-0.2-floor",
+        "misses": 128
+      },
+      {
+        "view": "route-3-4-0.2-ceiling",
+        "misses": 105
+      },
+      {
+        "view": "route-3-4-0.4-floor",
+        "misses": 171
+      },
+      {
+        "view": "route-3-4-0.4-ceiling",
+        "misses": 32
+      },
+      {
+        "view": "route-3-4-0.5-floor",
+        "misses": 170
+      },
+      {
+        "view": "route-3-4-0.5-ceiling",
+        "misses": 7
+      },
+      {
+        "view": "route-3-4-0.6-floor",
+        "misses": 207
+      },
+      {
+        "view": "route-3-4-0.6-ceiling",
+        "misses": 0
+      },
+      {
+        "view": "route-3-4-0.8-floor",
+        "misses": 43
+      },
+      {
+        "view": "route-3-4-0.8-ceiling",
+        "misses": 6
+      },
+      {
+        "view": "route-4-5-0.2-floor",
+        "misses": 846
+      },
+      {
+        "view": "route-4-5-0.2-ceiling",
+        "misses": 136
+      },
+      {
+        "view": "route-4-5-0.4-floor",
+        "misses": 1134
+      },
+      {
+        "view": "route-4-5-0.4-ceiling",
+        "misses": 125
+      },
+      {
+        "view": "route-4-5-0.5-floor",
+        "misses": 1099
+      },
+      {
+        "view": "route-4-5-0.5-ceiling",
+        "misses": 123
+      },
+      {
+        "view": "route-4-5-0.6-floor",
+        "misses": 1304
+      },
+      {
+        "view": "route-4-5-0.6-ceiling",
+        "misses": 119
+      },
+      {
+        "view": "route-4-5-0.8-floor",
+        "misses": 1246
+      },
+      {
+        "view": "route-4-5-0.8-ceiling",
+        "misses": 146
+      },
+      {
+        "view": "route-5-6-0.2-floor",
+        "misses": 998
+      },
+      {
+        "view": "route-5-6-0.2-ceiling",
+        "misses": 234
+      },
+      {
+        "view": "route-5-6-0.4-floor",
+        "misses": 633
+      },
+      {
+        "view": "route-5-6-0.4-ceiling",
+        "misses": 194
+      },
+      {
+        "view": "route-5-6-0.5-floor",
+        "misses": 556
+      },
+      {
+        "view": "route-5-6-0.5-ceiling",
+        "misses": 140
+      },
+      {
+        "view": "route-5-6-0.6-floor",
+        "misses": 837
+      },
+      {
+        "view": "route-5-6-0.6-ceiling",
+        "misses": 96
+      },
+      {
+        "view": "route-5-6-0.8-floor",
+        "misses": 722
+      },
+      {
+        "view": "route-5-6-0.8-ceiling",
+        "misses": 193
+      }
+    ]
+  },
+  {
+    "mesh": "four-room\\scenes\\geometry-smooth-photo-mesh-six-v1\\surface-owned.npz",
+    "faces": 1099106,
+    "components": 554,
+    "tiny_components": 485,
+    "tiny_faces": 3193,
+    "boundary_edges": 38064,
+    "nonmanifold_edges": 0,
+    "views": [
+      {
+        "view": "source-cam-0001-3",
+        "misses": 316,
+        "untextured_hits": 2,
+        "lost_hits": 90,
+        "surface_retreat_gt_0_1": 411,
+        "surface_advance_gt_0_1": 59,
+        "absolute_depth_change_median": 0.0022687911987304688,
+        "absolute_depth_change_p95": 0.01818780899047851
+      },
+      {
+        "view": "source-cam-0001-4",
+        "misses": 377,
+        "untextured_hits": 0,
+        "lost_hits": 144,
+        "surface_retreat_gt_0_1": 723,
+        "surface_advance_gt_0_1": 263,
+        "absolute_depth_change_median": 0.0015952587127685547,
+        "absolute_depth_change_p95": 0.01543827056884764
+      },
+      {
+        "view": "source-cam-0001-5",
+        "misses": 2202,
+        "untextured_hits": 0,
+        "lost_hits": 265,
+        "surface_retreat_gt_0_1": 838,
+        "surface_advance_gt_0_1": 92,
+        "absolute_depth_change_median": 0.0011248588562011719,
+        "absolute_depth_change_p95": 0.009938585758209249
+      },
+      {
+        "view": "source-cam-0002-3",
+        "misses": 167,
+        "untextured_hits": 0,
+        "lost_hits": 44,
+        "surface_retreat_gt_0_1": 591,
+        "surface_advance_gt_0_1": 264,
+        "absolute_depth_change_median": 0.0020279884338378906,
+        "absolute_depth_change_p95": 0.020317745208740245
+      },
+      {
+        "view": "source-cam-0002-4",
+        "misses": 125,
+        "untextured_hits": 0,
+        "lost_hits": 50,
+        "surface_retreat_gt_0_1": 299,
+        "surface_advance_gt_0_1": 181,
+        "absolute_depth_change_median": 0.0013782978057861328,
+        "absolute_depth_change_p95": 0.01411128044128418
+      },
+      {
+        "view": "source-cam-0002-5",
+        "misses": 1728,
+        "untextured_hits": 0,
+        "lost_hits": 270,
+        "surface_retreat_gt_0_1": 919,
+        "surface_advance_gt_0_1": 166,
+        "absolute_depth_change_median": 0.0014128684997558594,
+        "absolute_depth_change_p95": 0.01226043701171875
+      },
+      {
+        "view": "source-cam-0003-3",
+        "misses": 397,
+        "untextured_hits": 0,
+        "lost_hits": 72,
+        "surface_retreat_gt_0_1": 775,
+        "surface_advance_gt_0_1": 463,
+        "absolute_depth_change_median": 0.001950979232788086,
+        "absolute_depth_change_p95": 0.020038247108459473
+      },
+      {
+        "view": "source-cam-0003-4",
+        "misses": 144,
+        "untextured_hits": 0,
+        "lost_hits": 68,
+        "surface_retreat_gt_0_1": 311,
+        "surface_advance_gt_0_1": 169,
+        "absolute_depth_change_median": 0.0013985633850097656,
+        "absolute_depth_change_p95": 0.012426137924194336
+      },
+      {
+        "view": "source-cam-0003-5",
+        "misses": 1820,
+        "untextured_hits": 1,
+        "lost_hits": 312,
+        "surface_retreat_gt_0_1": 1091,
+        "surface_advance_gt_0_1": 217,
+        "absolute_depth_change_median": 0.0014443397521972656,
+        "absolute_depth_change_p95": 0.013696432113647461
+      },
+      {
+        "view": "source-cam-0004-3",
+        "misses": 434,
+        "untextured_hits": 0,
+        "lost_hits": 79,
+        "surface_retreat_gt_0_1": 743,
+        "surface_advance_gt_0_1": 414,
+        "absolute_depth_change_median": 0.0017518997192382812,
+        "absolute_depth_change_p95": 0.021121299266815156
+      },
+      {
+        "view": "source-cam-0004-4",
+        "misses": 260,
+        "untextured_hits": 0,
+        "lost_hits": 100,
+        "surface_retreat_gt_0_1": 419,
+        "surface_advance_gt_0_1": 82,
+        "absolute_depth_change_median": 0.0016744136810302734,
+        "absolute_depth_change_p95": 0.017226564884185766
+      },
+      {
+        "view": "source-cam-0004-5",
+        "misses": 2738,
+        "untextured_hits": 0,
+        "lost_hits": 397,
+        "surface_retreat_gt_0_1": 839,
+        "surface_advance_gt_0_1": 177,
+        "absolute_depth_change_median": 0.0010721683502197266,
+        "absolute_depth_change_p95": 0.010426568984985354
+      },
+      {
+        "view": "source-cam-0005-3",
+        "misses": 450,
+        "untextured_hits": 0,
+        "lost_hits": 98,
+        "surface_retreat_gt_0_1": 874,
+        "surface_advance_gt_0_1": 298,
+        "absolute_depth_change_median": 0.0021457672119140625,
+        "absolute_depth_change_p95": 0.022960162162780753
+      },
+      {
+        "view": "source-cam-0005-4",
+        "misses": 43,
+        "untextured_hits": 0,
+        "lost_hits": 16,
+        "surface_retreat_gt_0_1": 521,
+        "surface_advance_gt_0_1": 89,
+        "absolute_depth_change_median": 0.0015492439270019531,
+        "absolute_depth_change_p95": 0.02098374366760237
+      },
+      {
+        "view": "source-cam-0005-5",
+        "misses": 2082,
+        "untextured_hits": 0,
+        "lost_hits": 303,
+        "surface_retreat_gt_0_1": 762,
+        "surface_advance_gt_0_1": 133,
+        "absolute_depth_change_median": 0.0009781718254089355,
+        "absolute_depth_change_p95": 0.00975798368453979
+      },
+      {
+        "view": "source-cam-0006-3",
+        "misses": 422,
+        "untextured_hits": 0,
+        "lost_hits": 99,
+        "surface_retreat_gt_0_1": 1047,
+        "surface_advance_gt_0_1": 224,
+        "absolute_depth_change_median": 0.0028187036514282227,
+        "absolute_depth_change_p95": 0.023882412910461434
+      },
+      {
+        "view": "source-cam-0006-4",
+        "misses": 37,
+        "untextured_hits": 0,
+        "lost_hits": 24,
+        "surface_retreat_gt_0_1": 1384,
+        "surface_advance_gt_0_1": 188,
+        "absolute_depth_change_median": 0.0018088817596435547,
+        "absolute_depth_change_p95": 0.020270347595214844
+      },
+      {
+        "view": "source-cam-0006-5",
+        "misses": 1785,
+        "untextured_hits": 0,
+        "lost_hits": 272,
+        "surface_retreat_gt_0_1": 849,
+        "surface_advance_gt_0_1": 135,
+        "absolute_depth_change_median": 0.0012273788452148438,
+        "absolute_depth_change_p95": 0.010504543781280525
+      },
+      {
+        "view": "oblique-1--1-floor",
+        "misses": 3156,
+        "untextured_hits": 0,
+        "lost_hits": 283,
+        "surface_retreat_gt_0_1": 889,
+        "surface_advance_gt_0_1": 255,
+        "absolute_depth_change_median": 0.0016620159149169922,
+        "absolute_depth_change_p95": 0.01990327835083
+      },
+      {
+        "view": "oblique-1--1-ceiling",
+        "misses": 984,
+        "untextured_hits": 0,
+        "lost_hits": 194,
+        "surface_retreat_gt_0_1": 754,
+        "surface_advance_gt_0_1": 351,
+        "absolute_depth_change_median": 0.0018570423126220703,
+        "absolute_depth_change_p95": 0.021951675415039062
+      },
+      {
+        "view": "oblique-1--1-wall",
+        "misses": 1147,
+        "untextured_hits": 1,
+        "lost_hits": 178,
+        "surface_retreat_gt_0_1": 889,
+        "surface_advance_gt_0_1": 282,
+        "absolute_depth_change_median": 0.0017063617706298828,
+        "absolute_depth_change_p95": 0.02077925205230713
+      },
+      {
+        "view": "oblique-1-1-floor",
+        "misses": 393,
+        "untextured_hits": 0,
+        "lost_hits": 91,
+        "surface_retreat_gt_0_1": 701,
+        "surface_advance_gt_0_1": 276,
+        "absolute_depth_change_median": 0.0016388893127441406,
+        "absolute_depth_change_p95": 0.019646024703979498
+      },
+      {
+        "view": "oblique-1-1-ceiling",
+        "misses": 294,
+        "untextured_hits": 0,
+        "lost_hits": 73,
+        "surface_retreat_gt_0_1": 574,
+        "surface_advance_gt_0_1": 408,
+        "absolute_depth_change_median": 0.0019683837890625,
+        "absolute_depth_change_p95": 0.02218940258026121
+      },
+      {
+        "view": "oblique-1-1-wall",
+        "misses": 218,
+        "untextured_hits": 0,
+        "lost_hits": 62,
+        "surface_retreat_gt_0_1": 672,
+        "surface_advance_gt_0_1": 325,
+        "absolute_depth_change_median": 0.0017590522766113281,
+        "absolute_depth_change_p95": 0.021017229557037352
+      },
+      {
+        "view": "oblique-2--1-floor",
+        "misses": 194,
+        "untextured_hits": 1,
+        "lost_hits": 55,
+        "surface_retreat_gt_0_1": 600,
+        "surface_advance_gt_0_1": 89,
+        "absolute_depth_change_median": 0.0019055604934692383,
+        "absolute_depth_change_p95": 0.019745469093322726
+      },
+      {
+        "view": "oblique-2--1-ceiling",
+        "misses": 126,
+        "untextured_hits": 0,
+        "lost_hits": 44,
+        "surface_retreat_gt_0_1": 471,
+        "surface_advance_gt_0_1": 265,
+        "absolute_depth_change_median": 0.0020699501037597656,
+        "absolute_depth_change_p95": 0.022786426544189442
+      },
+      {
+        "view": "oblique-2--1-wall",
+        "misses": 127,
+        "untextured_hits": 0,
+        "lost_hits": 40,
+        "surface_retreat_gt_0_1": 572,
+        "surface_advance_gt_0_1": 257,
+        "absolute_depth_change_median": 0.0020570755004882812,
+        "absolute_depth_change_p95": 0.02023272514343251
+      },
+      {
+        "view": "oblique-2-1-floor",
+        "misses": 2125,
+        "untextured_hits": 0,
+        "lost_hits": 124,
+        "surface_retreat_gt_0_1": 597,
+        "surface_advance_gt_0_1": 64,
+        "absolute_depth_change_median": 0.0018992424011230469,
+        "absolute_depth_change_p95": 0.019515132904052726
+      },
+      {
+        "view": "oblique-2-1-ceiling",
+        "misses": 153,
+        "untextured_hits": 1,
+        "lost_hits": 67,
+        "surface_retreat_gt_0_1": 531,
+        "surface_advance_gt_0_1": 243,
+        "absolute_depth_change_median": 0.001979827880859375,
+        "absolute_depth_change_p95": 0.02279262542724607
+      },
+      {
+        "view": "oblique-2-1-wall",
+        "misses": 482,
+        "untextured_hits": 0,
+        "lost_hits": 74,
+        "surface_retreat_gt_0_1": 603,
+        "surface_advance_gt_0_1": 219,
+        "absolute_depth_change_median": 0.0019483566284179688,
+        "absolute_depth_change_p95": 0.020022249221801777
+      },
+      {
+        "view": "oblique-3--1-floor",
+        "misses": 133,
+        "untextured_hits": 1,
+        "lost_hits": 23,
+        "surface_retreat_gt_0_1": 809,
+        "surface_advance_gt_0_1": 315,
+        "absolute_depth_change_median": 0.0017732977867126465,
+        "absolute_depth_change_p95": 0.018367159366607662
+      },
+      {
+        "view": "oblique-3--1-ceiling",
+        "misses": 178,
+        "untextured_hits": 0,
+        "lost_hits": 15,
+        "surface_retreat_gt_0_1": 508,
+        "surface_advance_gt_0_1": 346,
+        "absolute_depth_change_median": 0.001695394515991211,
+        "absolute_depth_change_p95": 0.018378996849060053
+      },
+      {
+        "view": "oblique-3--1-wall",
+        "misses": 183,
+        "untextured_hits": 0,
+        "lost_hits": 40,
+        "surface_retreat_gt_0_1": 660,
+        "surface_advance_gt_0_1": 411,
+        "absolute_depth_change_median": 0.0018024444580078125,
+        "absolute_depth_change_p95": 0.01938592195510868
+      },
+      {
+        "view": "oblique-3-1-floor",
+        "misses": 2691,
+        "untextured_hits": 0,
+        "lost_hits": 276,
+        "surface_retreat_gt_0_1": 1111,
+        "surface_advance_gt_0_1": 681,
+        "absolute_depth_change_median": 0.002407550811767578,
+        "absolute_depth_change_p95": 0.023012518882751465
+      },
+      {
+        "view": "oblique-3-1-ceiling",
+        "misses": 337,
+        "untextured_hits": 0,
+        "lost_hits": 52,
+        "surface_retreat_gt_0_1": 725,
+        "surface_advance_gt_0_1": 573,
+        "absolute_depth_change_median": 0.0018702149391174316,
+        "absolute_depth_change_p95": 0.020551300048828103
+      },
+      {
+        "view": "oblique-3-1-wall",
+        "misses": 1073,
+        "untextured_hits": 4,
+        "lost_hits": 144,
+        "surface_retreat_gt_0_1": 989,
+        "surface_advance_gt_0_1": 786,
+        "absolute_depth_change_median": 0.0022765398025512695,
+        "absolute_depth_change_p95": 0.023723959922790444
+      },
+      {
+        "view": "oblique-4--1-floor",
+        "misses": 2532,
+        "untextured_hits": 7,
+        "lost_hits": 456,
+        "surface_retreat_gt_0_1": 1102,
+        "surface_advance_gt_0_1": 346,
+        "absolute_depth_change_median": 0.0016019344329833984,
+        "absolute_depth_change_p95": 0.01747643947601317
+      },
+      {
+        "view": "oblique-4--1-ceiling",
+        "misses": 193,
+        "untextured_hits": 0,
+        "lost_hits": 29,
+        "surface_retreat_gt_0_1": 691,
+        "surface_advance_gt_0_1": 391,
+        "absolute_depth_change_median": 0.0018384456634521484,
+        "absolute_depth_change_p95": 0.02275407314300537
+      },
+      {
+        "view": "oblique-4--1-wall",
+        "misses": 1409,
+        "untextured_hits": 1,
+        "lost_hits": 143,
+        "surface_retreat_gt_0_1": 795,
+        "surface_advance_gt_0_1": 433,
+        "absolute_depth_change_median": 0.0017733573913574219,
+        "absolute_depth_change_p95": 0.02074151039123534
+      },
+      {
+        "view": "oblique-4-1-floor",
+        "misses": 124,
+        "untextured_hits": 0,
+        "lost_hits": 38,
+        "surface_retreat_gt_0_1": 628,
+        "surface_advance_gt_0_1": 331,
+        "absolute_depth_change_median": 0.0015492439270019531,
+        "absolute_depth_change_p95": 0.017595958709716808
+      },
+      {
+        "view": "oblique-4-1-ceiling",
+        "misses": 110,
+        "untextured_hits": 0,
+        "lost_hits": 15,
+        "surface_retreat_gt_0_1": 646,
+        "surface_advance_gt_0_1": 378,
+        "absolute_depth_change_median": 0.0017900466918945312,
+        "absolute_depth_change_p95": 0.022528505325317333
+      },
+      {
+        "view": "oblique-4-1-wall",
+        "misses": 86,
+        "untextured_hits": 0,
+        "lost_hits": 21,
+        "surface_retreat_gt_0_1": 665,
+        "surface_advance_gt_0_1": 443,
+        "absolute_depth_change_median": 0.0017430782318115234,
+        "absolute_depth_change_p95": 0.021235108375549316
+      },
+      {
+        "view": "oblique-5--1-floor",
+        "misses": 118,
+        "untextured_hits": 0,
+        "lost_hits": 50,
+        "surface_retreat_gt_0_1": 339,
+        "surface_advance_gt_0_1": 221,
+        "absolute_depth_change_median": 0.0018482208251953125,
+        "absolute_depth_change_p95": 0.025436830520629866
+      },
+      {
+        "view": "oblique-5--1-ceiling",
+        "misses": 52,
+        "untextured_hits": 0,
+        "lost_hits": 22,
+        "surface_retreat_gt_0_1": 341,
+        "surface_advance_gt_0_1": 258,
+        "absolute_depth_change_median": 0.002388477325439453,
+        "absolute_depth_change_p95": 0.02705240249633789
+      },
+      {
+        "view": "oblique-5--1-wall",
+        "misses": 97,
+        "untextured_hits": 0,
+        "lost_hits": 28,
+        "surface_retreat_gt_0_1": 303,
+        "surface_advance_gt_0_1": 288,
+        "absolute_depth_change_median": 0.0022400617599487305,
+        "absolute_depth_change_p95": 0.02463293075561529
+      },
+      {
+        "view": "oblique-5-1-floor",
+        "misses": 2105,
+        "untextured_hits": 4,
+        "lost_hits": 299,
+        "surface_retreat_gt_0_1": 624,
+        "surface_advance_gt_0_1": 166,
+        "absolute_depth_change_median": 0.0018301010131835938,
+        "absolute_depth_change_p95": 0.025533437728881836
+      },
+      {
+        "view": "oblique-5-1-ceiling",
+        "misses": 83,
+        "untextured_hits": 0,
+        "lost_hits": 24,
+        "surface_retreat_gt_0_1": 359,
+        "surface_advance_gt_0_1": 260,
+        "absolute_depth_change_median": 0.0023463964462280273,
+        "absolute_depth_change_p95": 0.027395784854888923
+      },
+      {
+        "view": "oblique-5-1-wall",
+        "misses": 666,
+        "untextured_hits": 0,
+        "lost_hits": 51,
+        "surface_retreat_gt_0_1": 275,
+        "surface_advance_gt_0_1": 225,
+        "absolute_depth_change_median": 0.0021271705627441406,
+        "absolute_depth_change_p95": 0.024253177642822255
+      },
+      {
+        "view": "oblique-6--1-floor",
+        "misses": 164,
+        "untextured_hits": 0,
+        "lost_hits": 35,
+        "surface_retreat_gt_0_1": 426,
+        "surface_advance_gt_0_1": 322,
+        "absolute_depth_change_median": 0.0015649795532226562,
+        "absolute_depth_change_p95": 0.018042278289794905
+      },
+      {
+        "view": "oblique-6--1-ceiling",
+        "misses": 145,
+        "untextured_hits": 0,
+        "lost_hits": 37,
+        "surface_retreat_gt_0_1": 571,
+        "surface_advance_gt_0_1": 347,
+        "absolute_depth_change_median": 0.002043008804321289,
+        "absolute_depth_change_p95": 0.023355484008789062
+      },
+      {
+        "view": "oblique-6--1-wall",
+        "misses": 168,
+        "untextured_hits": 0,
+        "lost_hits": 46,
+        "surface_retreat_gt_0_1": 570,
+        "surface_advance_gt_0_1": 466,
+        "absolute_depth_change_median": 0.0017955303192138672,
+        "absolute_depth_change_p95": 0.021878838539123535
+      },
+      {
+        "view": "oblique-6-1-floor",
+        "misses": 2908,
+        "untextured_hits": 3,
+        "lost_hits": 333,
+        "surface_retreat_gt_0_1": 707,
+        "surface_advance_gt_0_1": 150,
+        "absolute_depth_change_median": 0.0015954971313476562,
+        "absolute_depth_change_p95": 0.01778888702392578
+      },
+      {
+        "view": "oblique-6-1-ceiling",
+        "misses": 581,
+        "untextured_hits": 0,
+        "lost_hits": 97,
+        "surface_retreat_gt_0_1": 629,
+        "surface_advance_gt_0_1": 280,
+        "absolute_depth_change_median": 0.0020322799682617188,
+        "absolute_depth_change_p95": 0.02283763885498047
+      },
+      {
+        "view": "oblique-6-1-wall",
+        "misses": 1929,
+        "untextured_hits": 3,
+        "lost_hits": 291,
+        "surface_retreat_gt_0_1": 673,
+        "surface_advance_gt_0_1": 244,
+        "absolute_depth_change_median": 0.0017499923706054688,
+        "absolute_depth_change_p95": 0.0210899829864502
+      },
+      {
+        "view": "route-1-2-0.2-floor",
+        "misses": 998,
+        "untextured_hits": 0,
+        "lost_hits": 202,
+        "surface_retreat_gt_0_1": 819,
+        "surface_advance_gt_0_1": 221,
+        "absolute_depth_change_median": 0.0018239021301269531,
+        "absolute_depth_change_p95": 0.020662784576416016
+      },
+      {
+        "view": "route-1-2-0.2-ceiling",
+        "misses": 369,
+        "untextured_hits": 0,
+        "lost_hits": 87,
+        "surface_retreat_gt_0_1": 578,
+        "surface_advance_gt_0_1": 382,
+        "absolute_depth_change_median": 0.0019373893737792969,
+        "absolute_depth_change_p95": 0.023077726364135687
+      },
+      {
+        "view": "route-1-2-0.4-floor",
+        "misses": 661,
+        "untextured_hits": 0,
+        "lost_hits": 147,
+        "surface_retreat_gt_0_1": 829,
+        "surface_advance_gt_0_1": 249,
+        "absolute_depth_change_median": 0.0018672943115234375,
+        "absolute_depth_change_p95": 0.021661615371704093
+      },
+      {
+        "view": "route-1-2-0.4-ceiling",
+        "misses": 320,
+        "untextured_hits": 0,
+        "lost_hits": 81,
+        "surface_retreat_gt_0_1": 562,
+        "surface_advance_gt_0_1": 318,
+        "absolute_depth_change_median": 0.0019030570983886719,
+        "absolute_depth_change_p95": 0.02283060550689693
+      },
+      {
+        "view": "route-1-2-0.5-floor",
+        "misses": 661,
+        "untextured_hits": 1,
+        "lost_hits": 131,
+        "surface_retreat_gt_0_1": 790,
+        "surface_advance_gt_0_1": 206,
+        "absolute_depth_change_median": 0.001905977725982666,
+        "absolute_depth_change_p95": 0.021733272075653072
+      },
+      {
+        "view": "route-1-2-0.5-ceiling",
+        "misses": 233,
+        "untextured_hits": 0,
+        "lost_hits": 89,
+        "surface_retreat_gt_0_1": 528,
+        "surface_advance_gt_0_1": 303,
+        "absolute_depth_change_median": 0.0019614696502685547,
+        "absolute_depth_change_p95": 0.022586488723754822
+      },
+      {
+        "view": "route-1-2-0.6-floor",
+        "misses": 749,
+        "untextured_hits": 0,
+        "lost_hits": 111,
+        "surface_retreat_gt_0_1": 778,
+        "surface_advance_gt_0_1": 249,
+        "absolute_depth_change_median": 0.0019528865814208984,
+        "absolute_depth_change_p95": 0.0221944034099579
+      },
+      {
+        "view": "route-1-2-0.6-ceiling",
+        "misses": 176,
+        "untextured_hits": 0,
+        "lost_hits": 85,
+        "surface_retreat_gt_0_1": 557,
+        "surface_advance_gt_0_1": 304,
+        "absolute_depth_change_median": 0.002019643783569336,
+        "absolute_depth_change_p95": 0.022625327110290513
+      },
+      {
+        "view": "route-1-2-0.8-floor",
+        "misses": 919,
+        "untextured_hits": 0,
+        "lost_hits": 148,
+        "surface_retreat_gt_0_1": 912,
+        "surface_advance_gt_0_1": 290,
+        "absolute_depth_change_median": 0.00226593017578125,
+        "absolute_depth_change_p95": 0.02379608154296875
+      },
+      {
+        "view": "route-1-2-0.8-ceiling",
+        "misses": 135,
+        "untextured_hits": 0,
+        "lost_hits": 52,
+        "surface_retreat_gt_0_1": 575,
+        "surface_advance_gt_0_1": 297,
+        "absolute_depth_change_median": 0.0022056102752685547,
+        "absolute_depth_change_p95": 0.02300405502319336
+      },
+      {
+        "view": "route-1-6-0.2-floor",
+        "misses": 87,
+        "untextured_hits": 3,
+        "lost_hits": 24,
+        "surface_retreat_gt_0_1": 364,
+        "surface_advance_gt_0_1": 68,
+        "absolute_depth_change_median": 0.001171112060546875,
+        "absolute_depth_change_p95": 0.009015130996704104
+      },
+      {
+        "view": "route-1-6-0.2-ceiling",
+        "misses": 94,
+        "untextured_hits": 0,
+        "lost_hits": 45,
+        "surface_retreat_gt_0_1": 491,
+        "surface_advance_gt_0_1": 183,
+        "absolute_depth_change_median": 0.0014424324035644531,
+        "absolute_depth_change_p95": 0.01647663116455078
+      },
+      {
+        "view": "route-1-6-0.4-floor",
+        "misses": 26,
+        "untextured_hits": 2,
+        "lost_hits": 26,
+        "surface_retreat_gt_0_1": 404,
+        "surface_advance_gt_0_1": 96,
+        "absolute_depth_change_median": 0.0011620521545410156,
+        "absolute_depth_change_p95": 0.008153271675109847
+      },
+      {
+        "view": "route-1-6-0.4-ceiling",
+        "misses": 33,
+        "untextured_hits": 0,
+        "lost_hits": 19,
+        "surface_retreat_gt_0_1": 346,
+        "surface_advance_gt_0_1": 147,
+        "absolute_depth_change_median": 0.0013370513916015625,
+        "absolute_depth_change_p95": 0.014488267898559566
+      },
+      {
+        "view": "route-1-6-0.5-floor",
+        "misses": 33,
+        "untextured_hits": 6,
+        "lost_hits": 32,
+        "surface_retreat_gt_0_1": 438,
+        "surface_advance_gt_0_1": 101,
+        "absolute_depth_change_median": 0.0010771751403808594,
+        "absolute_depth_change_p95": 0.0075860321521759
+      },
+      {
+        "view": "route-1-6-0.5-ceiling",
+        "misses": 27,
+        "untextured_hits": 0,
+        "lost_hits": 18,
+        "surface_retreat_gt_0_1": 310,
+        "surface_advance_gt_0_1": 142,
+        "absolute_depth_change_median": 0.0012799501419067383,
+        "absolute_depth_change_p95": 0.014593183994293213
+      },
+      {
+        "view": "route-1-6-0.6-floor",
+        "misses": 45,
+        "untextured_hits": 35,
+        "lost_hits": 45,
+        "surface_retreat_gt_0_1": 431,
+        "surface_advance_gt_0_1": 165,
+        "absolute_depth_change_median": 0.0011551380157470703,
+        "absolute_depth_change_p95": 0.006904125213623047
+      },
+      {
+        "view": "route-1-6-0.6-ceiling",
+        "misses": 27,
+        "untextured_hits": 0,
+        "lost_hits": 12,
+        "surface_retreat_gt_0_1": 333,
+        "surface_advance_gt_0_1": 72,
+        "absolute_depth_change_median": 0.0012691020965576172,
+        "absolute_depth_change_p95": 0.014977598190307605
+      },
+      {
+        "view": "route-1-6-0.8-floor",
+        "misses": 24,
+        "untextured_hits": 0,
+        "lost_hits": 24,
+        "surface_retreat_gt_0_1": 326,
+        "surface_advance_gt_0_1": 0,
+        "absolute_depth_change_median": 0.0011415481567382812,
+        "absolute_depth_change_p95": 0.006775808334350583
+      },
+      {
+        "view": "route-1-6-0.8-ceiling",
+        "misses": 49,
+        "untextured_hits": 0,
+        "lost_hits": 21,
+        "surface_retreat_gt_0_1": 518,
+        "surface_advance_gt_0_1": 23,
+        "absolute_depth_change_median": 0.0013511180877685547,
+        "absolute_depth_change_p95": 0.015281093120574948
+      },
+      {
+        "view": "route-2-3-0.2-floor",
+        "misses": 1064,
+        "untextured_hits": 0,
+        "lost_hits": 202,
+        "surface_retreat_gt_0_1": 588,
+        "surface_advance_gt_0_1": 230,
+        "absolute_depth_change_median": 0.0027396678924560547,
+        "absolute_depth_change_p95": 0.025126695632934556
+      },
+      {
+        "view": "route-2-3-0.2-ceiling",
+        "misses": 69,
+        "untextured_hits": 0,
+        "lost_hits": 64,
+        "surface_retreat_gt_0_1": 387,
+        "surface_advance_gt_0_1": 327,
+        "absolute_depth_change_median": 0.0023970603942871094,
+        "absolute_depth_change_p95": 0.023489522933959936
+      },
+      {
+        "view": "route-2-3-0.4-floor",
+        "misses": 872,
+        "untextured_hits": 0,
+        "lost_hits": 189,
+        "surface_retreat_gt_0_1": 625,
+        "surface_advance_gt_0_1": 243,
+        "absolute_depth_change_median": 0.0028609037399291992,
+        "absolute_depth_change_p95": 0.025229454040527344
+      },
+      {
+        "view": "route-2-3-0.4-ceiling",
+        "misses": 17,
+        "untextured_hits": 0,
+        "lost_hits": 17,
+        "surface_retreat_gt_0_1": 180,
+        "surface_advance_gt_0_1": 194,
+        "absolute_depth_change_median": 0.00241851806640625,
+        "absolute_depth_change_p95": 0.0238037109375
+      },
+      {
+        "view": "route-2-3-0.5-floor",
+        "misses": 709,
+        "untextured_hits": 0,
+        "lost_hits": 138,
+        "surface_retreat_gt_0_1": 522,
+        "surface_advance_gt_0_1": 241,
+        "absolute_depth_change_median": 0.0028928518295288086,
+        "absolute_depth_change_p95": 0.025102519989013694
+      },
+      {
+        "view": "route-2-3-0.5-ceiling",
+        "misses": 13,
+        "untextured_hits": 0,
+        "lost_hits": 13,
+        "surface_retreat_gt_0_1": 175,
+        "surface_advance_gt_0_1": 156,
+        "absolute_depth_change_median": 0.0025377273559570312,
+        "absolute_depth_change_p95": 0.024135112762451172
+      },
+      {
+        "view": "route-2-3-0.6-floor",
+        "misses": 521,
+        "untextured_hits": 1,
+        "lost_hits": 110,
+        "surface_retreat_gt_0_1": 457,
+        "surface_advance_gt_0_1": 246,
+        "absolute_depth_change_median": 0.002796649932861328,
+        "absolute_depth_change_p95": 0.025523090362548795
+      },
+      {
+        "view": "route-2-3-0.6-ceiling",
+        "misses": 15,
+        "untextured_hits": 0,
+        "lost_hits": 15,
+        "surface_retreat_gt_0_1": 193,
+        "surface_advance_gt_0_1": 168,
+        "absolute_depth_change_median": 0.002702474594116211,
+        "absolute_depth_change_p95": 0.02488951683044434
+      },
+      {
+        "view": "route-2-3-0.8-floor",
+        "misses": 913,
+        "untextured_hits": 0,
+        "lost_hits": 110,
+        "surface_retreat_gt_0_1": 482,
+        "surface_advance_gt_0_1": 97,
+        "absolute_depth_change_median": 0.002605259418487549,
+        "absolute_depth_change_p95": 0.02497714757919311
+      },
+      {
+        "view": "route-2-3-0.8-ceiling",
+        "misses": 16,
+        "untextured_hits": 0,
+        "lost_hits": 15,
+        "surface_retreat_gt_0_1": 93,
+        "surface_advance_gt_0_1": 261,
+        "absolute_depth_change_median": 0.0026895999908447266,
+        "absolute_depth_change_p95": 0.025023555755615205
+      },
+      {
+        "view": "route-3-4-0.2-floor",
+        "misses": 67,
+        "untextured_hits": 0,
+        "lost_hits": 6,
+        "surface_retreat_gt_0_1": 286,
+        "surface_advance_gt_0_1": 45,
+        "absolute_depth_change_median": 0.0010985136032104492,
+        "absolute_depth_change_p95": 0.010053133964538566
+      },
+      {
+        "view": "route-3-4-0.2-ceiling",
+        "misses": 96,
+        "untextured_hits": 0,
+        "lost_hits": 69,
+        "surface_retreat_gt_0_1": 303,
+        "surface_advance_gt_0_1": 144,
+        "absolute_depth_change_median": 0.0013842582702636719,
+        "absolute_depth_change_p95": 0.019208908081054688
+      },
+      {
+        "view": "route-3-4-0.4-floor",
+        "misses": 71,
+        "untextured_hits": 2,
+        "lost_hits": 14,
+        "surface_retreat_gt_0_1": 294,
+        "surface_advance_gt_0_1": 43,
+        "absolute_depth_change_median": 0.0010442733764648438,
+        "absolute_depth_change_p95": 0.0109480619430542
+      },
+      {
+        "view": "route-3-4-0.4-ceiling",
+        "misses": 46,
+        "untextured_hits": 0,
+        "lost_hits": 43,
+        "surface_retreat_gt_0_1": 236,
+        "surface_advance_gt_0_1": 144,
+        "absolute_depth_change_median": 0.0012862682342529297,
+        "absolute_depth_change_p95": 0.019628047943115234
+      },
+      {
+        "view": "route-3-4-0.5-floor",
+        "misses": 76,
+        "untextured_hits": 2,
+        "lost_hits": 18,
+        "surface_retreat_gt_0_1": 370,
+        "surface_advance_gt_0_1": 56,
+        "absolute_depth_change_median": 0.0010650157928466797,
+        "absolute_depth_change_p95": 0.011299610137939453
+      },
+      {
+        "view": "route-3-4-0.5-ceiling",
+        "misses": 22,
+        "untextured_hits": 0,
+        "lost_hits": 22,
+        "surface_retreat_gt_0_1": 201,
+        "surface_advance_gt_0_1": 92,
+        "absolute_depth_change_median": 0.0012593269348144531,
+        "absolute_depth_change_p95": 0.018608927726745585
+      },
+      {
+        "view": "route-3-4-0.6-floor",
+        "misses": 105,
+        "untextured_hits": 2,
+        "lost_hits": 23,
+        "surface_retreat_gt_0_1": 478,
+        "surface_advance_gt_0_1": 87,
+        "absolute_depth_change_median": 0.00112152099609375,
+        "absolute_depth_change_p95": 0.010121762752532959
+      },
+      {
+        "view": "route-3-4-0.6-ceiling",
+        "misses": 22,
+        "untextured_hits": 0,
+        "lost_hits": 22,
+        "surface_retreat_gt_0_1": 193,
+        "surface_advance_gt_0_1": 43,
+        "absolute_depth_change_median": 0.0012164115905761719,
+        "absolute_depth_change_p95": 0.016774654388427762
+      },
+      {
+        "view": "route-3-4-0.8-floor",
+        "misses": 18,
+        "untextured_hits": 1,
+        "lost_hits": 9,
+        "surface_retreat_gt_0_1": 243,
+        "surface_advance_gt_0_1": 63,
+        "absolute_depth_change_median": 0.0011031627655029297,
+        "absolute_depth_change_p95": 0.009871912002563488
+      },
+      {
+        "view": "route-3-4-0.8-ceiling",
+        "misses": 5,
+        "untextured_hits": 0,
+        "lost_hits": 5,
+        "surface_retreat_gt_0_1": 174,
+        "surface_advance_gt_0_1": 23,
+        "absolute_depth_change_median": 0.0012507438659667969,
+        "absolute_depth_change_p95": 0.014083576202392575
+      },
+      {
+        "view": "route-4-5-0.2-floor",
+        "misses": 873,
+        "untextured_hits": 5,
+        "lost_hits": 199,
+        "surface_retreat_gt_0_1": 851,
+        "surface_advance_gt_0_1": 345,
+        "absolute_depth_change_median": 0.001529693603515625,
+        "absolute_depth_change_p95": 0.018784761428833008
+      },
+      {
+        "view": "route-4-5-0.2-ceiling",
+        "misses": 60,
+        "untextured_hits": 0,
+        "lost_hits": 12,
+        "surface_retreat_gt_0_1": 621,
+        "surface_advance_gt_0_1": 354,
+        "absolute_depth_change_median": 0.001824021339416504,
+        "absolute_depth_change_p95": 0.022517597675323485
+      },
+      {
+        "view": "route-4-5-0.4-floor",
+        "misses": 1065,
+        "untextured_hits": 0,
+        "lost_hits": 147,
+        "surface_retreat_gt_0_1": 824,
+        "surface_advance_gt_0_1": 330,
+        "absolute_depth_change_median": 0.0015974044799804688,
+        "absolute_depth_change_p95": 0.020033049583435034
+      },
+      {
+        "view": "route-4-5-0.4-ceiling",
+        "misses": 57,
+        "untextured_hits": 0,
+        "lost_hits": 8,
+        "surface_retreat_gt_0_1": 698,
+        "surface_advance_gt_0_1": 361,
+        "absolute_depth_change_median": 0.001970529556274414,
+        "absolute_depth_change_p95": 0.0228924751281738
+      },
+      {
+        "view": "route-4-5-0.5-floor",
+        "misses": 997,
+        "untextured_hits": 1,
+        "lost_hits": 115,
+        "surface_retreat_gt_0_1": 771,
+        "surface_advance_gt_0_1": 337,
+        "absolute_depth_change_median": 0.0016416311264038086,
+        "absolute_depth_change_p95": 0.020757579803466764
+      },
+      {
+        "view": "route-4-5-0.5-ceiling",
+        "misses": 55,
+        "untextured_hits": 0,
+        "lost_hits": 12,
+        "surface_retreat_gt_0_1": 719,
+        "surface_advance_gt_0_1": 370,
+        "absolute_depth_change_median": 0.0020322799682617188,
+        "absolute_depth_change_p95": 0.022599220275878906
+      },
+      {
+        "view": "route-4-5-0.6-floor",
+        "misses": 1200,
+        "untextured_hits": 0,
+        "lost_hits": 127,
+        "surface_retreat_gt_0_1": 792,
+        "surface_advance_gt_0_1": 292,
+        "absolute_depth_change_median": 0.0016732215881347656,
+        "absolute_depth_change_p95": 0.020623159408569333
+      },
+      {
+        "view": "route-4-5-0.6-ceiling",
+        "misses": 74,
+        "untextured_hits": 0,
+        "lost_hits": 17,
+        "surface_retreat_gt_0_1": 702,
+        "surface_advance_gt_0_1": 332,
+        "absolute_depth_change_median": 0.0021049976348876953,
+        "absolute_depth_change_p95": 0.02301983833312987
+      },
+      {
+        "view": "route-4-5-0.8-floor",
+        "misses": 1201,
+        "untextured_hits": 1,
+        "lost_hits": 158,
+        "surface_retreat_gt_0_1": 825,
+        "surface_advance_gt_0_1": 220,
+        "absolute_depth_change_median": 0.0017652511596679688,
+        "absolute_depth_change_p95": 0.01994773149490351
+      },
+      {
+        "view": "route-4-5-0.8-ceiling",
+        "misses": 110,
+        "untextured_hits": 0,
+        "lost_hits": 27,
+        "surface_retreat_gt_0_1": 778,
+        "surface_advance_gt_0_1": 346,
+        "absolute_depth_change_median": 0.00222015380859375,
+        "absolute_depth_change_p95": 0.022663116455078125
+      },
+      {
+        "view": "route-5-6-0.2-floor",
+        "misses": 987,
+        "untextured_hits": 8,
+        "lost_hits": 172,
+        "surface_retreat_gt_0_1": 868,
+        "surface_advance_gt_0_1": 172,
+        "absolute_depth_change_median": 0.0018224716186523438,
+        "absolute_depth_change_p95": 0.02105998992919922
+      },
+      {
+        "view": "route-5-6-0.2-ceiling",
+        "misses": 187,
+        "untextured_hits": 0,
+        "lost_hits": 49,
+        "surface_retreat_gt_0_1": 847,
+        "surface_advance_gt_0_1": 251,
+        "absolute_depth_change_median": 0.002201080322265625,
+        "absolute_depth_change_p95": 0.022433662414550762
+      },
+      {
+        "view": "route-5-6-0.4-floor",
+        "misses": 607,
+        "untextured_hits": 0,
+        "lost_hits": 159,
+        "surface_retreat_gt_0_1": 850,
+        "surface_advance_gt_0_1": 166,
+        "absolute_depth_change_median": 0.002056300640106201,
+        "absolute_depth_change_p95": 0.021960949897766133
+      },
+      {
+        "view": "route-5-6-0.4-ceiling",
+        "misses": 131,
+        "untextured_hits": 0,
+        "lost_hits": 56,
+        "surface_retreat_gt_0_1": 1007,
+        "surface_advance_gt_0_1": 288,
+        "absolute_depth_change_median": 0.002324223518371582,
+        "absolute_depth_change_p95": 0.02405571937561035
+      },
+      {
+        "view": "route-5-6-0.5-floor",
+        "misses": 562,
+        "untextured_hits": 3,
+        "lost_hits": 174,
+        "surface_retreat_gt_0_1": 908,
+        "surface_advance_gt_0_1": 167,
+        "absolute_depth_change_median": 0.002131938934326172,
+        "absolute_depth_change_p95": 0.02193540334701538
+      },
+      {
+        "view": "route-5-6-0.5-ceiling",
+        "misses": 92,
+        "untextured_hits": 0,
+        "lost_hits": 45,
+        "surface_retreat_gt_0_1": 1104,
+        "surface_advance_gt_0_1": 243,
+        "absolute_depth_change_median": 0.002330780029296875,
+        "absolute_depth_change_p95": 0.02480030059814453
+      },
+      {
+        "view": "route-5-6-0.6-floor",
+        "misses": 808,
+        "untextured_hits": 2,
+        "lost_hits": 191,
+        "surface_retreat_gt_0_1": 924,
+        "surface_advance_gt_0_1": 159,
+        "absolute_depth_change_median": 0.002128124237060547,
+        "absolute_depth_change_p95": 0.021547520160675036
+      },
+      {
+        "view": "route-5-6-0.6-ceiling",
+        "misses": 55,
+        "untextured_hits": 0,
+        "lost_hits": 20,
+        "surface_retreat_gt_0_1": 1149,
+        "surface_advance_gt_0_1": 272,
+        "absolute_depth_change_median": 0.0023398399353027344,
+        "absolute_depth_change_p95": 0.023847901821136455
+      },
+      {
+        "view": "route-5-6-0.8-floor",
+        "misses": 735,
+        "untextured_hits": 3,
+        "lost_hits": 246,
+        "surface_retreat_gt_0_1": 1039,
+        "surface_advance_gt_0_1": 218,
+        "absolute_depth_change_median": 0.002158045768737793,
+        "absolute_depth_change_p95": 0.017404508590698226
+      },
+      {
+        "view": "route-5-6-0.8-ceiling",
+        "misses": 116,
+        "untextured_hits": 0,
+        "lost_hits": 27,
+        "surface_retreat_gt_0_1": 1338,
+        "surface_advance_gt_0_1": 283,
+        "absolute_depth_change_median": 0.002477407455444336,
+        "absolute_depth_change_p95": 0.024253904819488525
+      }
+    ]
+  }
+]

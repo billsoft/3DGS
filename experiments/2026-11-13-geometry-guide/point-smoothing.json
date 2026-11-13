@@ -1,0 +1,25 @@
+{
+  "method": "Open3D Screened Poisson from oriented cleaned TSDF surface",
+  "depth": 9,
+  "samples": 499223,
+  "raw_faces": 1375336,
+  "faces": 1198934,
+  "input_sha256": "d64a9c18c436137406ecbb254c74a72e77780f853324f20ad20730b03a4e821a",
+  "inferred_geometry": true,
+  "point_smoothing": {
+    "iterations": 4,
+    "neighbors": 24,
+    "spatial_sigma": 0.060195647180080414,
+    "max_displacement": 0.030097823590040703,
+    "displacement_cap": 0.030097823590040207
+  },
+  "density_quantiles": [
+    4.858335494995117,
+    6.8079330301284795,
+    8.575451850891113,
+    9.303770313262941,
+    9.493461608886719
+  ],
+  "removed_components": 95,
+  "spacing": 0.030097823590040207
+}

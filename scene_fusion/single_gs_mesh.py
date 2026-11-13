@@ -66,7 +66,9 @@ def integrate(a):
     volume=o3d.pipelines.integration.ScalableTSDFVolume(voxel_length=voxel,sdf_trunc=trunc,color_type=o3d.pipelines.integration.TSDFVolumeColorType.NoColor)
     intrinsic=camera_intrinsics(o3d,size)
     records=[]
-    for i,f in enumerate(meta['frames']):
+    frames=[f for f in meta['frames'] if not a.original_only or f['original_camera']]
+    if not frames:raise ValueError('No selected depth frames')
+    for i,f in enumerate(frames):
         z=np.load(a.source/f['depth']);d=z['depth'].astype('f');alpha=z['alpha']
         # Keep sharp discontinuities; do not interpolate or blur foreground depth
         # into background. TSDF handles the geometric integration itself.
@@ -76,7 +78,7 @@ def integrate(a):
         rgbd=o3d.geometry.RGBDImage.create_from_color_and_depth(o3d.geometry.Image(color),o3d.geometry.Image(d),depth_scale=1.,depth_trunc=30.,convert_rgb_to_intensity=False)
         volume.integrate(rgbd,intrinsic,np.array(f['viewmat']))
         records.append(float(good.mean()))
-        if i%12==0:print('Open3D TSDF',i,'/',len(meta['frames']),'voxel',voxel,flush=True)
+        if i%12==0:print('Open3D TSDF',i,'/',len(frames),'voxel',voxel,flush=True)
     mesh=volume.extract_triangle_mesh();mesh.remove_degenerate_triangles();mesh.remove_duplicated_triangles();mesh.remove_unreferenced_vertices()
     raw_faces=len(mesh.triangles)
     if raw_faces>a.max_faces:mesh=mesh.simplify_quadric_decimation(a.max_faces)
@@ -85,11 +87,12 @@ def integrate(a):
     if not len(tri) or not np.isfinite(p).all():raise ValueError('Invalid reconstructed surface')
     a.out.mkdir(parents=True,exist_ok=True);np.savez_compressed(a.out/'surface.npz',p=p,tri=tri)
     o3d.io.write_triangle_mesh(str(a.out/'surface.ply'),mesh)
-    save_json(a.out/'surface-report.json',dict(method='Open3D ScalableTSDFVolume',open3d_version=o3d.__version__,voxel=voxel,truncation=trunc,depth_views=len(meta['frames']),raw_faces=raw_faces,faces=len(tri),vertices=len(p),valid_depth_fraction=records,synthetic_depth=True,model_sha256=meta['model_sha256']))
+    save_json(a.out/'surface-report.json',dict(method='Open3D ScalableTSDFVolume',open3d_version=o3d.__version__,voxel=voxel,truncation=trunc,depth_views=len(frames),original_only=a.original_only,raw_faces=raw_faces,faces=len(tri),vertices=len(p),valid_depth_fraction=records,synthetic_depth=True,model_sha256=meta['model_sha256']))
     print('Mesh',len(p),'vertices',len(tri),'faces',flush=True)
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('stage',choices=['capture','integrate']);p.add_argument('--source',type=Path,required=True);p.add_argument('--model',type=Path);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--size',type=int,default=1024);p.add_argument('--resolution',type=int,default=640);p.add_argument('--max-faces',type=int,default=1600000)
+    p.add_argument('--original-only',action='store_true',help='Exclude synthetic midpoint cameras from geometric integration')
     a=p.parse_args();globals()[a.stage](a)

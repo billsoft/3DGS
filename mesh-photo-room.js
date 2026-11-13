@@ -32,6 +32,7 @@ try{
  }));
  const ownerMaterials=meta.groups.map(g=>new T.MeshBasicMaterial({color:new T.Color().setHSL((g.source*.61803398875)%1,.65,.55),side:T.DoubleSide}));
  const normalMaterial=new T.MeshNormalMaterial({side:T.DoubleSide}),wireMaterial=new T.MeshBasicMaterial({color:0xb5d7e9,wireframe:true,side:T.DoubleSide});
+ if(meta.geometry_guide_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.geometry_guide_scene)){const link=document.createElement('a');link.href='/four-room/scenes/'+meta.geometry_guide_scene+'/geometry-guide.ply';link.textContent='下载平滑几何点云（非高斯模型）';document.querySelector('#download').after(link)}
  const mesh=new T.Mesh(geometry,materials);scene.add(mesh);
  const render=()=>renderer.render(scene,camera);let moving=null;
  const cancel=()=>{moving=null};

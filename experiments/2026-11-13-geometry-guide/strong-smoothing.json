@@ -1,0 +1,735 @@
+{
+  "profile": "strong",
+  "parameters": {
+    "radius": 5,
+    "sigma": 0.025,
+    "iterations": 4,
+    "max_change": 0.035
+  },
+  "records": [
+    {
+      "frame": "warped-depth\\cam-0001\\depth-0.npz",
+      "valid": 589130,
+      "changed": 546672,
+      "protected": 42291,
+      "relative_change_p95": 0.005451798043213738,
+      "relative_change_max": 0.03500012308359146,
+      "roughness_before": 0.0008467570296488702,
+      "roughness_after": 0.0004757160204462707
+    },
+    {
+      "frame": "warped-depth\\cam-0001\\depth-1.npz",
+      "valid": 589749,
+      "changed": 573692,
+      "protected": 15512,
+      "relative_change_p95": 0.0009640769567340608,
+      "relative_change_max": 0.011374599300324917,
+      "roughness_before": 0.0001511571608716622,
+      "roughness_after": 2.7815061912406236e-05
+    },
+    {
+      "frame": "warped-depth\\cam-0001\\depth-2.npz",
+      "valid": 588888,
+      "changed": 532579,
+      "protected": 56200,
+      "relative_change_p95": 0.005836611730046576,
+      "relative_change_max": 0.03500013425946236,
+      "roughness_before": 0.0012170522240921855,
+      "roughness_after": 0.0007818183512426913
+    },
+    {
+      "frame": "warped-depth\\cam-0001\\depth-3.npz",
+      "valid": 580383,
+      "changed": 515039,
+      "protected": 65135,
+      "relative_change_p95": 0.0032934125978499687,
+      "relative_change_max": 0.035000111907720566,
+      "roughness_before": 0.0006141095655038953,
+      "roughness_after": 0.00028214999474585056
+    },
+    {
+      "frame": "warped-depth\\cam-0001\\depth-4.npz",
+      "valid": 583092,
+      "changed": 546435,
+      "protected": 36320,
+      "relative_change_p95": 0.0033217727788724003,
+      "relative_change_max": 0.035000160336494446,
+      "roughness_before": 0.0007144364644773304,
+      "roughness_after": 0.0009160636109299958
+    },
+    {
+      "frame": "warped-depth\\cam-0001\\depth-5.npz",
+      "valid": 586584,
+      "changed": 538523,
+      "protected": 47640,
+      "relative_change_p95": 0.003099701565224677,
+      "relative_change_max": 0.035000186413526535,
+      "roughness_before": 0.0005362553056329489,
+      "roughness_after": 0.000304790330119431
+    },
+    {
+      "frame": "warped-depth\\cam-0002\\depth-0.npz",
+      "valid": 589685,
+      "changed": 553182,
+      "protected": 36329,
+      "relative_change_p95": 0.0036985533311963046,
+      "relative_change_max": 0.03500009700655937,
+      "roughness_before": 0.0006438209093175828,
+      "roughness_after": 0.00024144123017322272
+    },
+    {
+      "frame": "warped-depth\\cam-0002\\depth-1.npz",
+      "valid": 589822,
+      "changed": 567931,
+      "protected": 21274,
+      "relative_change_p95": 0.0011377777205780143,
+      "relative_change_max": 0.03500008583068848,
+      "roughness_before": 0.00021272076992318034,
+      "roughness_after": 8.717906894162297e-05
+    },
+    {
+      "frame": "warped-depth\\cam-0002\\depth-2.npz",
+      "valid": 587291,
+      "changed": 524183,
+      "protected": 62984,
+      "relative_change_p95": 0.006404228741303086,
+      "relative_change_max": 0.035000160336494446,
+      "roughness_before": 0.0012281505623832345,
+      "roughness_after": 0.0007440648041665554
+    },
+    {
+      "frame": "warped-depth\\cam-0002\\depth-3.npz",
+      "valid": 586634,
+      "changed": 522922,
+      "protected": 63568,
+      "relative_change_p95": 0.004089407506398845,
+      "relative_change_max": 0.03500015288591385,
+      "roughness_before": 0.0008023948757909238,
+      "roughness_after": 0.000507950026076287
+    },
+    {
+      "frame": "warped-depth\\cam-0002\\depth-4.npz",
+      "valid": 585241,
+      "changed": 547686,
+      "protected": 37245,
+      "relative_change_p95": 0.002366773784160614,
+      "relative_change_max": 0.03500016778707504,
+      "roughness_before": 0.0005927547463215888,
+      "roughness_after": 0.0007313896785490215
+    },
+    {
+      "frame": "warped-depth\\cam-0002\\depth-5.npz",
+      "valid": 583875,
+      "changed": 517139,
+      "protected": 66473,
+      "relative_change_p95": 0.004885123530402779,
+      "relative_change_max": 0.03500012680888176,
+      "roughness_before": 0.0007621318218298256,
+      "roughness_after": 0.0005667632794938982
+    },
+    {
+      "frame": "warped-depth\\cam-0003\\depth-0.npz",
+      "valid": 588587,
+      "changed": 544822,
+      "protected": 43562,
+      "relative_change_p95": 0.0034413845743983974,
+      "relative_change_max": 0.03500011935830116,
+      "roughness_before": 0.0006007193587720394,
+      "roughness_after": 0.00021948741050437093
+    },
+    {
+      "frame": "warped-depth\\cam-0003\\depth-1.npz",
+      "valid": 589292,
+      "changed": 557574,
+      "protected": 31381,
+      "relative_change_p95": 0.005705686798319219,
+      "relative_change_max": 0.03500010818243027,
+      "roughness_before": 0.0008882026304490864,
+      "roughness_after": 0.00017235461564268917
+    },
+    {
+      "frame": "warped-depth\\cam-0003\\depth-2.npz",
+      "valid": 575232,
+      "changed": 467660,
+      "protected": 107396,
+      "relative_change_p95": 0.005168512370437381,
+      "relative_change_max": 0.03500011935830116,
+      "roughness_before": 0.0009117191657423973,
+      "roughness_after": 0.0005350850988179445
+    },
+    {
+      "frame": "warped-depth\\cam-0003\\depth-3.npz",
+      "valid": 589079,
+      "changed": 527540,
+      "protected": 61419,
+      "relative_change_p95": 0.005630170367658136,
+      "relative_change_max": 0.03500019386410713,
+      "roughness_before": 0.0010832316474989057,
+      "roughness_after": 0.0006214579334482551
+    },
+    {
+      "frame": "warped-depth\\cam-0003\\depth-4.npz",
+      "valid": 584517,
+      "changed": 549042,
+      "protected": 35159,
+      "relative_change_p95": 0.0016748060472309572,
+      "relative_change_max": 0.035000160336494446,
+      "roughness_before": 0.0004341370367910713,
+      "roughness_after": 0.00043768822797574103
+    },
+    {
+      "frame": "warped-depth\\cam-0003\\depth-5.npz",
+      "valid": 581636,
+      "changed": 501018,
+      "protected": 80304,
+      "relative_change_p95": 0.004854130558669567,
+      "relative_change_max": 0.03500010818243027,
+      "roughness_before": 0.0008006545249372721,
+      "roughness_after": 0.0007121515809558332
+    },
+    {
+      "frame": "warped-depth\\cam-0004\\depth-0.npz",
+      "valid": 589201,
+      "changed": 568560,
+      "protected": 20058,
+      "relative_change_p95": 0.0013502469519153237,
+      "relative_change_max": 0.020543137565255165,
+      "roughness_before": 0.00019107756088487804,
+      "roughness_after": 4.078030906384811e-05
+    },
+    {
+      "frame": "warped-depth\\cam-0004\\depth-1.npz",
+      "valid": 588127,
+      "changed": 532582,
+      "protected": 55410,
+      "relative_change_p95": 0.004257573140785096,
+      "relative_change_max": 0.035000160336494446,
+      "roughness_before": 0.0009300019592046738,
+      "roughness_after": 0.0006668781861662865
+    },
+    {
+      "frame": "warped-depth\\cam-0004\\depth-2.npz",
+      "valid": 573076,
+      "changed": 470391,
+      "protected": 102522,
+      "relative_change_p95": 0.005166700342670083,
+      "relative_change_max": 0.03500013425946236,
+      "roughness_before": 0.000895841047167778,
+      "roughness_after": 0.0004715870600193739
+    },
+    {
+      "frame": "warped-depth\\cam-0004\\depth-3.npz",
+      "valid": 589236,
+      "changed": 538986,
+      "protected": 50092,
+      "relative_change_p95": 0.005258015939034522,
+      "relative_change_max": 0.03500015661120415,
+      "roughness_before": 0.0010514066088944674,
+      "roughness_after": 0.0006382123101502657
+    },
+    {
+      "frame": "warped-depth\\cam-0004\\depth-4.npz",
+      "valid": 587719,
+      "changed": 560628,
+      "protected": 26733,
+      "relative_change_p95": 0.0016761643113568415,
+      "relative_change_max": 0.03500014543533325,
+      "roughness_before": 0.00038349488750100136,
+      "roughness_after": 0.00028972839936614037
+    },
+    {
+      "frame": "warped-depth\\cam-0004\\depth-5.npz",
+      "valid": 586659,
+      "changed": 534483,
+      "protected": 51817,
+      "relative_change_p95": 0.002780372975394128,
+      "relative_change_max": 0.035000089555978775,
+      "roughness_before": 0.0004892389988526702,
+      "roughness_after": 0.0003470499941613525
+    },
+    {
+      "frame": "warped-depth\\cam-0005\\depth-0.npz",
+      "valid": 588162,
+      "changed": 564347,
+      "protected": 23243,
+      "relative_change_p95": 0.0015973642759490674,
+      "relative_change_max": 0.02942091040313244,
+      "roughness_before": 0.00020670529920607805,
+      "roughness_after": 4.836635707761161e-05
+    },
+    {
+      "frame": "warped-depth\\cam-0005\\depth-1.npz",
+      "valid": 589379,
+      "changed": 541909,
+      "protected": 47306,
+      "relative_change_p95": 0.005618736380711196,
+      "relative_change_max": 0.03500014916062355,
+      "roughness_before": 0.0011202498571947217,
+      "roughness_after": 0.0008146986947394907
+    },
+    {
+      "frame": "warped-depth\\cam-0005\\depth-2.npz",
+      "valid": 588351,
+      "changed": 541044,
+      "protected": 47169,
+      "relative_change_p95": 0.004788766615092754,
+      "relative_change_max": 0.03500010445713997,
+      "roughness_before": 0.0008966076420620084,
+      "roughness_after": 0.0005185988848097622
+    },
+    {
+      "frame": "warped-depth\\cam-0005\\depth-3.npz",
+      "valid": 587976,
+      "changed": 531451,
+      "protected": 56374,
+      "relative_change_p95": 0.004837819957174361,
+      "relative_change_max": 0.03500015288591385,
+      "roughness_before": 0.0009378075483255088,
+      "roughness_after": 0.0005907108425162733
+    },
+    {
+      "frame": "warped-depth\\cam-0005\\depth-4.npz",
+      "valid": 587733,
+      "changed": 560598,
+      "protected": 26801,
+      "relative_change_p95": 0.003112696995958687,
+      "relative_change_max": 0.03500015288591385,
+      "roughness_before": 0.0005154808168299496,
+      "roughness_after": 0.0004911733558401465
+    },
+    {
+      "frame": "warped-depth\\cam-0005\\depth-5.npz",
+      "valid": 586179,
+      "changed": 536061,
+      "protected": 49735,
+      "relative_change_p95": 0.0029290067730471433,
+      "relative_change_max": 0.03500013053417206,
+      "roughness_before": 0.000488298770505935,
+      "roughness_after": 0.0003123937058262527
+    },
+    {
+      "frame": "warped-depth\\cam-0006\\depth-0.npz",
+      "valid": 584305,
+      "changed": 552185,
+      "protected": 31661,
+      "relative_change_p95": 0.0016166507266461845,
+      "relative_change_max": 0.03182988986372948,
+      "roughness_before": 0.00023185709142126143,
+      "roughness_after": 6.874649261590093e-05
+    },
+    {
+      "frame": "warped-depth\\cam-0006\\depth-1.npz",
+      "valid": 588718,
+      "changed": 536517,
+      "protected": 52035,
+      "relative_change_p95": 0.004356988472864037,
+      "relative_change_max": 0.03500015288591385,
+      "roughness_before": 0.0009838389232754707,
+      "roughness_after": 0.0008492353954352438
+    },
+    {
+      "frame": "warped-depth\\cam-0006\\depth-2.npz",
+      "valid": 588679,
+      "changed": 542954,
+      "protected": 45600,
+      "relative_change_p95": 0.005866500828415155,
+      "relative_change_max": 0.03500019386410713,
+      "roughness_before": 0.0011358452029526234,
+      "roughness_after": 0.0006457165000028908
+    },
+    {
+      "frame": "warped-depth\\cam-0006\\depth-3.npz",
+      "valid": 583143,
+      "changed": 515534,
+      "protected": 67434,
+      "relative_change_p95": 0.003600654774345458,
+      "relative_change_max": 0.03500005230307579,
+      "roughness_before": 0.0006199938361532986,
+      "roughness_after": 0.00026544826687313616
+    },
+    {
+      "frame": "warped-depth\\cam-0006\\depth-4.npz",
+      "valid": 588313,
+      "changed": 560860,
+      "protected": 27141,
+      "relative_change_p95": 0.004103652015328414,
+      "relative_change_max": 0.035000164061784744,
+      "roughness_before": 0.0006664218381047249,
+      "roughness_after": 0.0006841270951554179
+    },
+    {
+      "frame": "warped-depth\\cam-0006\\depth-5.npz",
+      "valid": 584235,
+      "changed": 526413,
+      "protected": 57478,
+      "relative_change_p95": 0.003480632207356392,
+      "relative_change_max": 0.03500014543533325,
+      "roughness_before": 0.0005782165681011975,
+      "roughness_after": 0.00033837062073871493
+    },
+    {
+      "frame": "virtual-depth\\mid-0-1\\depth-0.npz",
+      "valid": 589642,
+      "changed": 551477,
+      "protected": 37994,
+      "relative_change_p95": 0.005144615774042902,
+      "relative_change_max": 0.03500014543533325,
+      "roughness_before": 0.0008190377266146243,
+      "roughness_after": 0.00037911831168457866
+    },
+    {
+      "frame": "virtual-depth\\mid-0-1\\depth-1.npz",
+      "valid": 589824,
+      "changed": 574004,
+      "protected": 15260,
+      "relative_change_p95": 0.0008837528555886818,
+      "relative_change_max": 0.01084349025040865,
+      "roughness_before": 0.00013904133811593056,
+      "roughness_after": 2.539462730055675e-05
+    },
+    {
+      "frame": "virtual-depth\\mid-0-1\\depth-2.npz",
+      "valid": 588328,
+      "changed": 524963,
+      "protected": 63238,
+      "relative_change_p95": 0.006246154871769253,
+      "relative_change_max": 0.03500016778707504,
+      "roughness_before": 0.001277963281609118,
+      "roughness_after": 0.0009025498293340206
+    },
+    {
+      "frame": "virtual-depth\\mid-0-1\\depth-3.npz",
+      "valid": 582348,
+      "changed": 504808,
+      "protected": 77382,
+      "relative_change_p95": 0.003509901964571327,
+      "relative_change_max": 0.03500014916062355,
+      "roughness_before": 0.0006887434283271432,
+      "roughness_after": 0.0003814238007180393
+    },
+    {
+      "frame": "virtual-depth\\mid-0-1\\depth-4.npz",
+      "valid": 584755,
+      "changed": 549307,
+      "protected": 35126,
+      "relative_change_p95": 0.002252955036237827,
+      "relative_change_max": 0.03500015661120415,
+      "roughness_before": 0.0005679852911271155,
+      "roughness_after": 0.0007130057783797383
+    },
+    {
+      "frame": "virtual-depth\\mid-0-1\\depth-5.npz",
+      "valid": 586270,
+      "changed": 541329,
+      "protected": 44573,
+      "relative_change_p95": 0.0041804645908996435,
+      "relative_change_max": 0.03500012680888176,
+      "roughness_before": 0.000652272196020931,
+      "roughness_after": 0.0004781642055604607
+    },
+    {
+      "frame": "virtual-depth\\mid-0-5\\depth-0.npz",
+      "valid": 585201,
+      "changed": 557042,
+      "protected": 27945,
+      "relative_change_p95": 0.003684914205223322,
+      "relative_change_max": 0.03500007838010788,
+      "roughness_before": 0.0005246638902463019,
+      "roughness_after": 0.00018912559607997537
+    },
+    {
+      "frame": "virtual-depth\\mid-0-5\\depth-1.npz",
+      "valid": 587688,
+      "changed": 559029,
+      "protected": 28427,
+      "relative_change_p95": 0.0029179624631069617,
+      "relative_change_max": 0.03500015288591385,
+      "roughness_before": 0.0005607702187262475,
+      "roughness_after": 0.000512774393428117
+    },
+    {
+      "frame": "virtual-depth\\mid-0-5\\depth-2.npz",
+      "valid": 589184,
+      "changed": 530720,
+      "protected": 58351,
+      "relative_change_p95": 0.006721167708747088,
+      "relative_change_max": 0.03500020131468773,
+      "roughness_before": 0.0013363169273361564,
+      "roughness_after": 0.0008376848418265581
+    },
+    {
+      "frame": "virtual-depth\\mid-0-5\\depth-3.npz",
+      "valid": 582489,
+      "changed": 507473,
+      "protected": 74847,
+      "relative_change_p95": 0.004040298610925671,
+      "relative_change_max": 0.035000137984752655,
+      "roughness_before": 0.0008624964393675327,
+      "roughness_after": 0.0005516892415471375
+    },
+    {
+      "frame": "virtual-depth\\mid-0-5\\depth-4.npz",
+      "valid": 587645,
+      "changed": 565014,
+      "protected": 22301,
+      "relative_change_p95": 0.0030933537054806948,
+      "relative_change_max": 0.035000164061784744,
+      "roughness_before": 0.000498347042594105,
+      "roughness_after": 0.0005355915636755526
+    },
+    {
+      "frame": "virtual-depth\\mid-0-5\\depth-5.npz",
+      "valid": 588496,
+      "changed": 534160,
+      "protected": 53836,
+      "relative_change_p95": 0.004305287613533437,
+      "relative_change_max": 0.03500011935830116,
+      "roughness_before": 0.0005648743244819343,
+      "roughness_after": 0.00040182608063332736
+    },
+    {
+      "frame": "virtual-depth\\mid-1-2\\depth-0.npz",
+      "valid": 589678,
+      "changed": 554571,
+      "protected": 34922,
+      "relative_change_p95": 0.0036448196857236364,
+      "relative_change_max": 0.035000141710042953,
+      "roughness_before": 0.00065512367291376,
+      "roughness_after": 0.0004088520654477179
+    },
+    {
+      "frame": "virtual-depth\\mid-1-2\\depth-1.npz",
+      "valid": 589800,
+      "changed": 560600,
+      "protected": 28804,
+      "relative_change_p95": 0.0042879823129624,
+      "relative_change_max": 0.03381654620170593,
+      "roughness_before": 0.0005005329730920494,
+      "roughness_after": 9.365878213429824e-05
+    },
+    {
+      "frame": "virtual-depth\\mid-1-2\\depth-2.npz",
+      "valid": 585097,
+      "changed": 508891,
+      "protected": 76075,
+      "relative_change_p95": 0.005456568300724014,
+      "relative_change_max": 0.035000115633010864,
+      "roughness_before": 0.0009883714374154806,
+      "roughness_after": 0.0004999787779524922
+    },
+    {
+      "frame": "virtual-depth\\mid-1-2\\depth-3.npz",
+      "valid": 588548,
+      "changed": 532687,
+      "protected": 55733,
+      "relative_change_p95": 0.004374163714237513,
+      "relative_change_max": 0.03500015661120415,
+      "roughness_before": 0.0009097888832911849,
+      "roughness_after": 0.00048016372602432966
+    },
+    {
+      "frame": "virtual-depth\\mid-1-2\\depth-4.npz",
+      "valid": 583598,
+      "changed": 543512,
+      "protected": 39792,
+      "relative_change_p95": 0.003219952562358232,
+      "relative_change_max": 0.035000160336494446,
+      "roughness_before": 0.0005835096817463636,
+      "roughness_after": 0.0006621789652854204
+    },
+    {
+      "frame": "virtual-depth\\mid-1-2\\depth-5.npz",
+      "valid": 582694,
+      "changed": 518955,
+      "protected": 63502,
+      "relative_change_p95": 0.005883257440291343,
+      "relative_change_max": 0.03500016778707504,
+      "roughness_before": 0.0008765659877099097,
+      "roughness_after": 0.0007373575353994966
+    },
+    {
+      "frame": "virtual-depth\\mid-2-3\\depth-0.npz",
+      "valid": 588184,
+      "changed": 562036,
+      "protected": 25876,
+      "relative_change_p95": 0.0028853794559836375,
+      "relative_change_max": 0.035000111907720566,
+      "roughness_before": 0.00043623032979667187,
+      "roughness_after": 0.00017221219604834914
+    },
+    {
+      "frame": "virtual-depth\\mid-2-3\\depth-1.npz",
+      "valid": 583738,
+      "changed": 529477,
+      "protected": 54081,
+      "relative_change_p95": 0.004704015655443074,
+      "relative_change_max": 0.035000141710042953,
+      "roughness_before": 0.0010079757776111364,
+      "roughness_after": 0.000845908944029361
+    },
+    {
+      "frame": "virtual-depth\\mid-2-3\\depth-2.npz",
+      "valid": 574180,
+      "changed": 471783,
+      "protected": 102236,
+      "relative_change_p95": 0.004963311157189293,
+      "relative_change_max": 0.03500010073184967,
+      "roughness_before": 0.0008045691647566855,
+      "roughness_after": 0.00034977716859430075
+    },
+    {
+      "frame": "virtual-depth\\mid-2-3\\depth-3.npz",
+      "valid": 589182,
+      "changed": 533801,
+      "protected": 55264,
+      "relative_change_p95": 0.00562962498515843,
+      "relative_change_max": 0.03500024974346161,
+      "roughness_before": 0.001123487250879407,
+      "roughness_after": 0.0007575006457045674
+    },
+    {
+      "frame": "virtual-depth\\mid-2-3\\depth-4.npz",
+      "valid": 588255,
+      "changed": 562374,
+      "protected": 25465,
+      "relative_change_p95": 0.001301687455270437,
+      "relative_change_max": 0.03500013425946236,
+      "roughness_before": 0.0002739719639066607,
+      "roughness_after": 0.00024850721820257604
+    },
+    {
+      "frame": "virtual-depth\\mid-2-3\\depth-5.npz",
+      "valid": 588417,
+      "changed": 527902,
+      "protected": 60062,
+      "relative_change_p95": 0.003871144214645025,
+      "relative_change_max": 0.035000137984752655,
+      "roughness_before": 0.0006054143304936588,
+      "roughness_after": 0.0005448001902550459
+    },
+    {
+      "frame": "virtual-depth\\mid-3-4\\depth-0.npz",
+      "valid": 589199,
+      "changed": 569094,
+      "protected": 19496,
+      "relative_change_p95": 0.0015294775832444404,
+      "relative_change_max": 0.022877128794789314,
+      "roughness_before": 0.00019273457292001694,
+      "roughness_after": 4.176710353931412e-05
+    },
+    {
+      "frame": "virtual-depth\\mid-3-4\\depth-1.npz",
+      "valid": 589328,
+      "changed": 542915,
+      "protected": 46241,
+      "relative_change_p95": 0.004509237688034778,
+      "relative_change_max": 0.03500012680888176,
+      "roughness_before": 0.0009919148869812489,
+      "roughness_after": 0.0007757589919492602
+    },
+    {
+      "frame": "virtual-depth\\mid-3-4\\depth-2.npz",
+      "valid": 585527,
+      "changed": 516637,
+      "protected": 68717,
+      "relative_change_p95": 0.004591945791617032,
+      "relative_change_max": 0.03500012680888176,
+      "roughness_before": 0.0008298250613734126,
+      "roughness_after": 0.0003930446691811085
+    },
+    {
+      "frame": "virtual-depth\\mid-3-4\\depth-3.npz",
+      "valid": 588661,
+      "changed": 534319,
+      "protected": 54180,
+      "relative_change_p95": 0.0051805139519274235,
+      "relative_change_max": 0.03500024601817131,
+      "roughness_before": 0.001046195742674172,
+      "roughness_after": 0.0006396197713911533
+    },
+    {
+      "frame": "virtual-depth\\mid-3-4\\depth-4.npz",
+      "valid": 586408,
+      "changed": 558059,
+      "protected": 28026,
+      "relative_change_p95": 0.0027522922260686776,
+      "relative_change_max": 0.03500014543533325,
+      "roughness_before": 0.0004771969688590616,
+      "roughness_after": 0.000405303348088637
+    },
+    {
+      "frame": "virtual-depth\\mid-3-4\\depth-5.npz",
+      "valid": 585301,
+      "changed": 537962,
+      "protected": 46936,
+      "relative_change_p95": 0.0024331717286258936,
+      "relative_change_max": 0.035000111907720566,
+      "roughness_before": 0.0004464319790713489,
+      "roughness_after": 0.0002955694799311459
+    },
+    {
+      "frame": "virtual-depth\\mid-4-5\\depth-0.npz",
+      "valid": 585535,
+      "changed": 554583,
+      "protected": 30448,
+      "relative_change_p95": 0.0018377204658463523,
+      "relative_change_max": 0.034999992698431015,
+      "roughness_before": 0.000242583395447582,
+      "roughness_after": 7.329168147407472e-05
+    },
+    {
+      "frame": "virtual-depth\\mid-4-5\\depth-1.npz",
+      "valid": 589412,
+      "changed": 545115,
+      "protected": 44104,
+      "relative_change_p95": 0.0054066226584836815,
+      "relative_change_max": 0.035000160336494446,
+      "roughness_before": 0.0010261536808684468,
+      "roughness_after": 0.0007416764856316149
+    },
+    {
+      "frame": "virtual-depth\\mid-4-5\\depth-2.npz",
+      "valid": 588791,
+      "changed": 545743,
+      "protected": 42928,
+      "relative_change_p95": 0.005121575435623527,
+      "relative_change_max": 0.03500015288591385,
+      "roughness_before": 0.0009570961119607091,
+      "roughness_after": 0.0005203492473810911
+    },
+    {
+      "frame": "virtual-depth\\mid-4-5\\depth-3.npz",
+      "valid": 586350,
+      "changed": 515180,
+      "protected": 71021,
+      "relative_change_p95": 0.004467970016412435,
+      "relative_change_max": 0.035000141710042953,
+      "roughness_before": 0.0008221405441872776,
+      "roughness_after": 0.000522869813721627
+    },
+    {
+      "frame": "virtual-depth\\mid-4-5\\depth-4.npz",
+      "valid": 586912,
+      "changed": 561744,
+      "protected": 24828,
+      "relative_change_p95": 0.0035092958016321035,
+      "relative_change_max": 0.03500015661120415,
+      "roughness_before": 0.0005773312877863646,
+      "roughness_after": 0.0006278312066569924
+    },
+    {
+      "frame": "virtual-depth\\mid-4-5\\depth-5.npz",
+      "valid": 584201,
+      "changed": 534288,
+      "protected": 49576,
+      "relative_change_p95": 0.003341292031109333,
+      "relative_change_max": 0.035000115633010864,
+      "roughness_before": 0.0005344662931747735,
+      "roughness_after": 0.00035793284769169986
+    }
+  ],
+  "no_unknown_depth_filled": true,
+  "alpha_unchanged": true,
+  "color_unchanged": true,
+  "input_capture_sha256": "1f2cd45a7a3df4b69bc65e812cfc6ed5ff80a6c63bf30535970548232eef6a15"
+}

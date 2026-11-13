@@ -9,6 +9,9 @@ import numpy as np
 from core import write_json
 from tour_distill import tour_weights
 
+def at_original_station(view,centers):
+    return bool(np.min(np.linalg.norm(np.asarray(centers)-view['center'],axis=1))<1e-6)
+
 
 def split_arrays(base,sh,ids):
     from scipy.spatial.transform import Rotation
@@ -61,12 +64,18 @@ def run(a):
         return b,sh
     score=torch.zeros(len(base),device='cuda');count=score.clone();radius=score.clone()
     ids=[i for i,v in enumerate(meta['views']) if v['role']=='train'];anchors=[i for i in ids if meta['views'][i]['kind']=='anchor']
+    original={i for i in ids if at_original_station(meta['views'][i],meta['centers'])}
+    if a.anchor_probability is not None:anchors=sorted(original)
+    if not anchors:raise ValueError('No original station training views')
+    sampled_original=0
     order=[];history=[];splits=[];start=time.monotonic();size=a.size
     for step in range(a.steps):
         for group in optim.param_groups:group['lr']=group['base_lr']*a.final_lr_ratio**(step/max(1,a.steps-1))
         size=a.sizes[step%len(a.sizes)] if a.sizes else a.size
         if not order:order=list(rng.permutation(ids))
-        j=int(rng.choice(anchors)) if step%3==0 else int(order.pop());v=meta['views'][j]
+        anchor_step=step%3==0 if a.anchor_probability is None else rng.random()<a.anchor_probability
+        j=int(rng.choice(anchors)) if anchor_step else int(order.pop());v=meta['views'][j]
+        sampled_original+=int(j in original)
         with torch.no_grad():
             truth=torch.zeros((size,size,3),device='cuda');ta=torch.zeros((size,size),device='cuda');td=ta.clone()
             for i,w in enumerate(v['weights']):
@@ -89,6 +98,7 @@ def run(a):
             loss+=a.patch_weight*patches.topk(max(1,len(patches)//4)).values.mean()
         valid=(td>.1)&(td<30)&(ta>.98)
         if valid.any():loss+=.008*((im[:,:,3]-td).abs()/td.clamp(min=.5)).clamp(max=1)[valid].mean()
+        if j in original:loss*=a.anchor_weight
         if not torch.isfinite(loss):raise ValueError('Nonfinite refined PLY loss')
         loss.backward()
         with torch.no_grad():
@@ -115,6 +125,7 @@ def run(a):
             b,s=arrays();np.savez(a.out/'optimized.npz',base=b,sh=s)
             write_json(a.out/'training.json',dict(steps=step+1,size=size,training_sizes=a.sizes or [a.size],points=len(b),core=a.core,history=history,splits=splits,appearance_only=a.appearance_only,synthetic_supervision=True,teacher_temporal_state=False,
                 lr_scale=a.lr_scale,final_lr_ratio=a.final_lr_ratio,patch_weight=a.patch_weight,split_steps=a.split_steps,
+                anchor_probability=a.anchor_probability,anchor_weight=a.anchor_weight,sampled_original_views=sampled_original,
                 reference_model_sha256=hashlib.sha256((a.reference/'optimized.npz').read_bytes()).hexdigest()))
 
 
@@ -126,7 +137,10 @@ if __name__=='__main__':
     p.add_argument('--appearance-only',action='store_true',help='Freeze positions, sizes and rotations; fit color and opacity only')
     p.add_argument('--lr-scale',type=float,default=1.);p.add_argument('--final-lr-ratio',type=float,default=1.)
     p.add_argument('--patch-weight',type=float,default=0.);p.add_argument('--split-steps',type=int,nargs='+',default=[500,1300,2100])
+    p.add_argument('--anchor-probability',type=float,help='Optional probability of drawing directly from original station views, including narrow FOVs')
+    p.add_argument('--anchor-weight',type=float,default=1.,help='Extra loss weight for original station views, not virtual near-station views')
     a=p.parse_args()
     if not 0<a.lr_scale or not 0<a.final_lr_ratio<=1 or a.patch_weight<0:p.error('Invalid refinement rates/weight')
+    if a.anchor_weight<=0 or (a.anchor_probability is not None and not 0<=a.anchor_probability<=1):p.error('Invalid original station weighting')
     if a.appearance_only:a.no_split=True
     run(a)

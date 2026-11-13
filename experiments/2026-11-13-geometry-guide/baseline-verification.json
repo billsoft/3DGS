@@ -1,0 +1,12 @@
+[
+  {
+    "scene": "tour-distilled-six-v3",
+    "unchanged": true,
+    "sha256": "39d2c1ff758d3ecd6a1bbfc3e5f2bb005e68f149b703d376c0cc15f45735c75c"
+  },
+  {
+    "scene": "tour-appearance-six-v1",
+    "unchanged": true,
+    "sha256": "20f2e88187f2563fdaa77364cd6f55cbd5d8f9125c05e16d8ccba211f4bb9556"
+  }
+]

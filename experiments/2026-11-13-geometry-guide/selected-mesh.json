@@ -1,0 +1,136 @@
+{
+  "triangles": 1198934,
+  "vertices": 599123,
+  "centers": [
+    [
+      -0.7250989309374053,
+      0.8871083973118394,
+      0.5350209017245628
+    ],
+    [
+      1.608337316038925,
+      1.2253881107563642,
+      0.5018009291163128
+    ],
+    [
+      4.6666068720345715,
+      1.6291405903543734,
+      0.4557046804047901
+    ],
+    [
+      5.269339467265343,
+      -1.8168807688325836,
+      0.17057770064103578
+    ],
+    [
+      2.848292357701877,
+      -2.1432113957931715,
+      0.21791244661527015
+    ],
+    [
+      -0.08859701093907814,
+      -2.603416007291323,
+      0.2635968599050355
+    ]
+  ],
+  "up": [
+    0.046864476901019046,
+    -0.04801626203178111,
+    0.9977465406531305
+  ],
+  "stations": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "midpoint_edges": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      5
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      4,
+      5
+    ]
+  ],
+  "method": "One reconstructed triangle surface; visible coherent photo ownership; gated one-ring linear-light seam feather",
+  "input_surface": "four-room\\scenes\\geometry-smooth-guide-poisson-six-v1\\surface.npz",
+  "surface_sha256": "913e083b82ed06cf865460602b66000096c32d2a29a713e994fba5d89146a0f7",
+  "camera_sha256": "4f501245f823e0720d710ba23c9f5fd0c1d97578823a76146cdc847bc9f923a8",
+  "warped_depth": true,
+  "smoothing": {
+    "max_displacement": 0.0,
+    "locked_vertices": 599123,
+    "invalid_faces": 0
+  },
+  "degenerate_faces_removed": 0,
+  "unobserved_faces_removed": 0,
+  "protected_geometry_faces": 1198934,
+  "protected_untextured_faces": 59143,
+  "footprint_visibility": true,
+  "visibility_method": "raycast",
+  "fragment_cleanup": null,
+  "texture_size": [
+    7680,
+    3840
+  ],
+  "feather_pixels": [
+    1265684,
+    727557,
+    709666,
+    943133,
+    608533,
+    739864
+  ],
+  "experimental": true,
+  "source_depth": "single-GS-rendered",
+  "source_model_sha256": "282984b4834578bac35cf8e217a417b2ad37a21d858819a816d99763e693cddc",
+  "reference_scene": "tour-appearance-six-v1",
+  "preview_title": "三维几何磨皮 · 高清原片贴图",
+  "preview_note": "先平滑重建引导点的位置与法线，再进行连续曲面重建和原片贴图。保留原始高斯；补面包含推断，细结构和部分边缘仍可能变形。",
+  "poisson_reconstruction": {
+    "method": "Open3D Screened Poisson from oriented cleaned TSDF surface",
+    "depth": 9,
+    "samples": 499223,
+    "raw_faces": 1375336,
+    "faces": 1198934,
+    "input_sha256": "d64a9c18c436137406ecbb254c74a72e77780f853324f20ad20730b03a4e821a",
+    "inferred_geometry": true,
+    "point_smoothing": {
+      "iterations": 4,
+      "neighbors": 24,
+      "spatial_sigma": 0.060195647180080414,
+      "max_displacement": 0.030097823590040703,
+      "displacement_cap": 0.030097823590040207
+    },
+    "density_quantiles": [
+      4.858335494995117,
+      6.8079330301284795,
+      8.575451850891113,
+      9.303770313262941,
+      9.493461608886719
+    ],
+    "removed_components": 95,
+    "spacing": 0.030097823590040207
+  },
+  "geometry_guide_scene": "geometry-smooth-guide-poisson-six-v1"
+}

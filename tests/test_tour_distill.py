@@ -4,8 +4,14 @@ import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scene_fusion'))
 from tour_distill import tour_weights,sample_views
 from tour_detail_views import transition_views
+from tour_refine import at_original_station
 
 class TourDistillationTests(unittest.TestCase):
+    def test_station_weighting_uses_position_not_view_label(self):
+        centers=[[0,0,0],[2,0,0]]
+        self.assertTrue(at_original_station(dict(center=[0,0,0],kind='oblique',fov=50),centers))
+        self.assertFalse(at_original_station(dict(center=[.02,0,0],kind='anchor'),centers))
+        self.assertFalse(at_original_station(dict(center=[1,0,0]),centers))
     def test_boundary_sampling_preserves_metadata_and_held_positions(self):
         for n in (2,4,6,9):
             centers=np.c_[np.arange(n)*3,np.zeros((n,2))].tolist();basis=np.eye(3).tolist()

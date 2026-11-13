@@ -308,6 +308,9 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
         result.update(poisson_reconstruction=json.loads(poisson_path.read_text('utf8')),preview_title='连续表面重建 · 原片高清贴图',
             inspection_views=make_views(C,Q,dataset['midpoint_edges']),
             preview_note='使用带法线的表面样本进行泊松重建，再按射线可见性贴原片。补洞包含推断；未观测表面显示灰色，细杆、椅背和遮挡边缘仍可能变形。')
+        if result['poisson_reconstruction'].get('point_smoothing'):
+            result.update(preview_title='三维几何磨皮 · 高清原片贴图',geometry_guide_scene=geometry.parent.name,
+                preview_note='先平滑重建引导点的位置与法线，再进行连续曲面重建和原片贴图。保留原始高斯；补面包含推断，细结构和部分边缘仍可能变形。')
     repair_path=geometry.parent/'sphere-repair.json'
     if repair_path.exists():
         repair=json.loads(repair_path.read_text(encoding='utf8'))
