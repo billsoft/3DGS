@@ -151,6 +151,9 @@ $env:GS_INPUT_DIR = 'D:\your-room-input'
 [重建引导几何的平滑与降噪](docs/geometry-guide-smoothing.md) 增加独立几何
 分支：深度保边平滑、三维点 / 法线磨皮、连续曲面重建和原片贴图。附有
 原机位加权、移除虚拟视点和自动平面约束的消融结果；旧模型继续保留。
+2026-11-13 用户接受 `geometry-smooth-guide-photo-six-v1` 为 Mesh + 贴图新基线，
+见 [基线记录](experiments/2026-11-13-geometry-guide/accepted-baseline.json)，
+标签 `baseline-mesh-guide-20261113`。单一高斯与原始漫游的基线不变。
 
 ## 第三方组件与许可
 

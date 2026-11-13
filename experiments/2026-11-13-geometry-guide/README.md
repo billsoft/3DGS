@@ -1,8 +1,11 @@
 # 几何引导平滑与原机位优先：验证记录
 
 实现、算法边界和复现命令见 [说明](../../docs/geometry-guide-smoothing.md)。
-本轮选择 `geometry-smooth-guide-photo-six-v1` 作为独立预览候选；全部旧
-模型保留，没有将有局部退步的原机位加权模型替换成新的上游基线。
+2026-11-13 用户确认 `geometry-smooth-guide-photo-six-v1` 为新的 Mesh + 贴图
+基线。实现版本为 `68c6045`，基线标签为 `baseline-mesh-guide-20261113`；
+模型、贴图、下载包及几何引导点云的大小和 SHA-256 见
+[accepted-baseline.json](accepted-baseline.json)。大文件继续保留在本机原场景目录。
+全部旧模型保留，没有将有局部退步的原机位加权模型替换成新的上游基线。
 
 输入为已接受 `tour-appearance-six-v1` 的等价检查点，输出约 120 万面 Mesh，
 重新投影六张 7680×3840 原片；相机数量和邻接关系从元数据读取。

@@ -1,0 +1,91 @@
+{
+  "status": "user-accepted-baseline",
+  "accepted_date": "2026-11-13",
+  "scene": "geometry-smooth-guide-photo-six-v1",
+  "implementation_commit": "68c60455b6f93466ac99b7d0c9c5b504b038e805",
+  "tag": "baseline-mesh-guide-20261113",
+  "input_scene": "tour-appearance-six-v1",
+  "input_checkpoint_sha256": "282984b4834578bac35cf8e217a417b2ad37a21d858819a816d99763e693cddc",
+  "preview_path": "/mesh-photo-room.html?scene=geometry-smooth-guide-photo-six-v1",
+  "triangles": 1198934,
+  "guide_points": 499223,
+  "guide_format": "ordinary oriented point cloud, not Gaussian splats",
+  "artifacts": [
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/mesh.bin",
+      "bytes": 71936040,
+      "sha256": "5db7f48641124b4c7551f15327aa0c979c901adc4df868bc6ca4d1e95ebbd0ea"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/mesh.json",
+      "bytes": 178268,
+      "sha256": "73b780fea1090df7b516868b1097e7e0cd91927f0751b8d76aaf4afcea8b527d"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/room.obj",
+      "bytes": 258255891,
+      "sha256": "bc7f53a9d7abe4168cc15e9f738b97bce60d1a37cbb52afa49aa6399574b9a5c"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/room.mtl",
+      "bytes": 477,
+      "sha256": "43e459db6d8c5575505454d8579e7bdd808db5e25615e8094546699b76929f20"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/surface-owned.npz",
+      "bytes": 32014963,
+      "sha256": "c40ee93aca56228893fa618baa1c9f687b0f5c518f8926faac15404206a56352"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/textured-room.zip",
+      "bytes": 67797015,
+      "sha256": "4f4b1b652a3178cb43b62a804d5706d33e71a2787042c5148cbcb172798e215a"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-1.jpg",
+      "bytes": 4422619,
+      "sha256": "94ee5599c90b2fb1bd766d47c474dc102a9e947ea0e3b5d98c683ad1ccd73966"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-2.jpg",
+      "bytes": 4586320,
+      "sha256": "474c775bc3fb3cf7d5e8c785624106c5c002c867eb36d403cabfd2f7c063d1d5"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-3.jpg",
+      "bytes": 4849234,
+      "sha256": "3e9fabdd01ed3b477111701b7da84158d454778a037e762e74c67c0fdfcd28da"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-4.jpg",
+      "bytes": 4338253,
+      "sha256": "fe84c500e4a8d2196b6336fd02fa2f7a40e60d159d6cfa2940311b59fff71011"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-5.jpg",
+      "bytes": 4307261,
+      "sha256": "7338fb6b505c49c12b6493ef0e25ed32e3368fa5ea41813d36324c07c327d752"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-6.jpg",
+      "bytes": 4318435,
+      "sha256": "2106294db4bff4e78c5e767abcb8d6386a291c55ab66f0bce06e7e83d8f3d8da"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/unobserved.jpg",
+      "bytes": 630,
+      "sha256": "43ce58550923e2aa6c6f2981b3c78a39de6c51883fb97653615a50e91c8762c0"
+    },
+    {
+      "path": "geometry-smooth-guide-poisson-six-v1/geometry-guide.ply",
+      "bytes": 23962910,
+      "sha256": "7e64ba027d27361968b4b835184d60341ec6ab4b512d28ae7ca174f091f31f51"
+    }
+  ],
+  "limitations": [
+    "Remaining thin-structure deformation and texture seams",
+    "170 nonmanifold edges; not a certified solid",
+    "114 sampled views without ray misses do not prove all-view geometric accuracy"
+  ],
+  "preservation": "Existing single Gaussian PLY and native tour baselines remain unchanged; large assets remain local and are not uploaded to the public repository"
+}
