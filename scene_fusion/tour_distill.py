@@ -8,7 +8,7 @@ representable by one static Gaussian model.
 import argparse,hashlib,json,time
 from pathlib import Path
 import numpy as np
-from core import gs,write_json,viewmat
+from core import gs,write_json,viewmat,scene_id
 
 
 def tour_weights(position,centers,core=.44):
@@ -51,18 +51,20 @@ def prepare(a):
     a.out.mkdir(parents=True,exist_ok=True);data=a.out/'data';data.mkdir(exist_ok=True)
     if (data/'dataset.json').exists():raise ValueError('Dataset exists; use another output directory')
     shape=(len(views),size,size)
-    rgb=np.lib.format.open_memmap(data/'teacher-rgb-float.npy',mode='w+',dtype='f4',shape=shape+(3,));rgb[:]=0
-    alpha=np.lib.format.open_memmap(data/'teacher-alpha.npy',mode='w+',dtype='f4',shape=shape);alpha[:]=0
-    depth=np.lib.format.open_memmap(data/'teacher-depth.npy',mode='w+',dtype='f4',shape=shape);depth[:]=0
+    live=getattr(a,'live_targets',False)
+    if not live:
+        rgb=np.lib.format.open_memmap(data/'teacher-rgb-float.npy',mode='w+',dtype='f4',shape=shape+(3,));rgb[:]=0
+        alpha=np.lib.format.open_memmap(data/'teacher-alpha.npy',mode='w+',dtype='f4',shape=shape);alpha[:]=0
+        depth=np.lib.format.open_memmap(data/'teacher-depth.npy',mode='w+',dtype='f4',shape=shape);depth[:]=0
     C=np.array(meta['centers']);owned=[];stats=[];torch.set_num_threads(4)
     for i,s in enumerate(meta['stations']):
         if hashlib.sha256((a.native/s['file']).read_bytes()).hexdigest()!=s['sha256']:raise ValueError('Native PLY changed since camera calibration')
         raw=read_gaussians(a.native/s['file']);M=np.array(s['world_from_raw']);array=gs.transform(raw,M)
         world_path=data/f'teacher-{i}.npy';np.save(world_path,array)
-        model=load_scene(world_path)
+        model=load_scene(world_path) if not live else None
         weights=np.array([v['weights'][i] for v in views]);indices=np.flatnonzero(weights>0)
         with torch.no_grad():
-            for j in indices:
+            for j in ([] if live else indices):
                 image,opacity,_=render(model,views[j],size,depth=True);image=image.cpu().numpy();w=weights[j]
                 rgb[j]+=w*image[:,:,:3];alpha[j]+=w*opacity.cpu().numpy()
                 if w>.999:depth[j]=image[:,:,3]
@@ -75,14 +77,16 @@ def prepare(a):
         owned.append(array[keep]);stats.append(dict(source=s['label'],original=len(array),initial_kept=int(keep.sum())))
         print('Teacher',i+1,'views',len(indices),'owned',int(keep.sum()),flush=True)
         del model;torch.cuda.empty_cache()
-    rgb.flush();alpha.flush();depth.flush()
-    targets=np.lib.format.open_memmap(data/'targets.npy',mode='w+',dtype='u1',shape=shape+(3,))
-    for j in range(len(views)):targets[j]=np.uint8(np.clip(rgb[j],0,1)*255+.5)
-    targets.flush();initial=np.concatenate(owned).astype('f');np.save(data/'initial.npy',initial)
+    if not live:
+        rgb.flush();alpha.flush();depth.flush()
+        targets=np.lib.format.open_memmap(data/'targets.npy',mode='w+',dtype='u1',shape=shape+(3,))
+        for j in range(len(views)):targets[j]=np.uint8(np.clip(rgb[j],0,1)*255+.5)
+        targets.flush()
+    initial=np.concatenate(owned).astype('f');np.save(data/'initial.npy',initial)
     write_json(data/'dataset.json',dict(size=size,views=views,centers=meta['centers'],up=meta['up'],midpoint_edges=meta['midpoint_edges'],
         stations=[s['label'] for s in meta['stations']],core=a.core,rest_clarity=False,temporal_smoothing=False,
         teacher='Unmodified native models, transformed to common coordinates; deterministic image-level mixing',
-        source_hashes=[s['sha256'] for s in meta['stations']],native_scene=a.native.name,initialization=stats,synthetic_targets=True))
+        source_hashes=[s['sha256'] for s in meta['stations']],native_scene=scene_id(a.native),initialization=stats,synthetic_targets=True,live_teacher_required=live))
     print('Prepared',len(views),'views',len(initial),'Gaussians',flush=True)
 
 
@@ -99,7 +103,8 @@ def train(a):
     torch.set_num_threads(4);torch.manual_seed(721);rng=np.random.default_rng(721)
     model=load_scene(a.resume or data/'initial.npy');reference=np.load(data/'initial.npy')
     initial=torch.tensor(reference[:,:3],device='cuda');initial_logs=torch.tensor(reference[:,7:10],device='cuda')
-    teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))] if live else None
+    from teacher_cache import TeacherCache
+    teachers=TeacherCache(data,len(meta['centers'])) if live else None
     sh=model.get('sh',torch.zeros((len(initial),9,3),device='cuda'));sh[:,0]=(model['colors']-.5)/SH0
     for k in ['means','logs','quats','opacity']:model[k]=torch.nn.Parameter(model[k])
     dc=torch.nn.Parameter(sh[:,:1].clone());rest=torch.nn.Parameter(sh[:,1:].clone())
@@ -160,7 +165,9 @@ def evaluate(a):
     torch.set_num_threads(4)
     model=load_scene(a.out/'optimized.npz');initial=load_scene(Path(meta['comparison_model']) if meta.get('comparison_model') else data/'initial.npy');records=[];out=a.out/a.evaluation_folder;out.mkdir(exist_ok=True)
     size=a.eval_size or meta['size'];teachers=None
-    if size!=meta['size'] or meta.get('live_teacher_required',False):teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))]
+    if size!=meta['size'] or meta.get('live_teacher_required',False):
+        from teacher_cache import TeacherCache
+        teachers=TeacherCache(data,len(meta['centers']))
     else:targets=np.load(data/'targets.npy',mmap_mode='r');alphas=np.load(data/'teacher-alpha.npy',mmap_mode='r')
     with torch.no_grad():
         for j,v in enumerate(meta['views']):
@@ -216,7 +223,7 @@ def export(a):
             if candidate.get('model_sha256')==ev['model_sha256']:evaluations.append(dict(folder=folder.name,size=candidate['size'],anchor_fidelity_passed=candidate['anchor_fidelity_passed']))
     (a.out/'data-512').mkdir(exist_ok=True);write_json(a.out/'data-512/dataset.json',meta)
     write_json(a.out/'fusion.json',dict(optimized=True,model_folder='final',sh_degree=2,splat_alpha_threshold=0,stations=meta['stations'],centers=meta['centers'],up=meta['up'],
-        native_scene=a.native.name if a.native else meta.get('native_scene'),tour_core=meta['core'],comparison_scene=Path(meta['comparison_model']).parent.name if meta.get('comparison_model') else None,report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,evaluations=evaluations,local_quality_folder=a.evaluation_folder if (a.out/a.evaluation_folder/'local-quality.json').exists() else None,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
+        native_scene=scene_id(a.native) if a.native else meta.get('native_scene'),tour_core=meta['core'],comparison_scene=scene_id(Path(meta['comparison_model']).parent) if meta.get('comparison_model') else None,report_page='tour-distill-report.html',evaluation_folder=a.evaluation_folder,evaluations=evaluations,local_quality_folder=a.evaluation_folder if (a.out/a.evaluation_folder/'local-quality.json').exists() else None,preview_title=f'{meta["core"]:.0%} 漫游蒸馏 · 单一 PLY 试验',preview_status='一个静态模型，不切换原始 PLY',
         preview_note='由原始模型漫游渲染监督训练。不是无损烘焙；机位保真门槛'+('通过' if ev['anchor_fidelity_passed'] else '尚未通过')+'，请与原始漫游对照。'))
     write_json(final/'validation.json',dict(points=len(base),degree=2,roundtrip_exact=True,independent_ply=True,teacher_models_required_at_playback=False,
         sha256=hashlib.sha256((final/'fused.ply').read_bytes()).hexdigest(),anchor_fidelity_passed=ev['anchor_fidelity_passed']))
@@ -228,6 +235,7 @@ if __name__=='__main__':
     p.add_argument('--eval-size',type=int);p.add_argument('--evaluation-folder',default='evaluation')
     p.add_argument('--train-size',type=int);p.add_argument('--lr-scale',type=float,default=1.)
     p.add_argument('--local-checks',action='store_true')
+    p.add_argument('--live-targets',action='store_true',help='Render supervision on demand instead of storing all images/depths')
     a=p.parse_args()
     if a.stage=='prepare' and a.native is None:p.error('prepare requires --native')
     globals()[a.stage](a)

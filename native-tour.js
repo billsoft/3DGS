@@ -7,7 +7,7 @@ import {installRoomNavigation} from './room-navigation.js';
 import {installRoomSortRefresh} from './room-sorting.js';
 
 const query=new URLSearchParams(location.search),id=query.get('scene')||'native-source-six-v1';
-if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');
+if(!/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(id))throw Error('Invalid scene');
 const root='/four-room/scenes/'+id,status=document.querySelector('#status'),detail=document.querySelector('#detail');
 try{
  const response=await fetch(root+'/native.json');if(!response.ok)throw Error('场景信息无法读取');const meta=await response.json();
@@ -21,7 +21,7 @@ try{
  const fusedId=query.get('fused'),hybrid=!!fusedId,FUSED=meta.stations.length;
  let fusedMeta=null,fusedPath=null;
  if(hybrid){
-  if(!/^[a-zA-Z0-9_-]+$/.test(fusedId))throw Error('Invalid fused scene');
+  if(!/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(fusedId))throw Error('Invalid fused scene');
   const r=await fetch('/four-room/scenes/'+fusedId+'/fusion.json');if(!r.ok)throw Error('融合模型信息无法读取');fusedMeta=await r.json();
   if(fusedMeta.centers?.length!==meta.centers.length||meta.centers.some((c,i)=>Math.hypot(...c.map((v,k)=>v-fusedMeta.centers[i][k]))>1e-4))throw Error('原始与融合模型坐标不一致，不能直接切换');
   fusedPath='/four-room/scenes/'+fusedId+'/'+fusedMeta.model_folder+'/fused.ply';
@@ -141,6 +141,7 @@ try{
  document.querySelector('#rest').onchange=e=>{restClarity=e.target.checked;e.target.blur();force()};
  document.querySelector('#down').onclick=()=>look(5);document.querySelector('#up').onclick=()=>look(4);document.querySelector('#front').onclick=()=>look(3);
  document.querySelector('#previous').href=(hybrid?'/native-tour-room.html':'/native-scene-room.html')+'?scene='+id;
+ if(!hybrid&&!meta.baseline)document.querySelector('#previous').hidden=true;
  window.roomViewer=control;window.tourMeta=meta;window.tourSlots=slots;window.inspectTour=inspect;window.flushTour=flush;window.goTour=go;
  await ensure(first);weights[first]=1;ready=true;await inspect(first,3);
  function frame(now){if(!alive)return;compose((now-lastTime)/1000);lastTime=now;requestAnimationFrame(frame)}requestAnimationFrame(frame);

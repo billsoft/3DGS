@@ -1,5 +1,6 @@
 {
   "cpu_python": "C:/path/to/cpu-env/Scripts/python.exe",
   "gpu_python": "C:/path/to/gpu-env/Scripts/python.exe",
+  "mesh_python": "C:/path/to/open3d-env/Scripts/python.exe",
   "serve_root": "C:/path/to/served-root"
 }

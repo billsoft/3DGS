@@ -1,7 +1,7 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const scene=process.argv[2],viewsPath=process.argv[3]||'four-room/scenes/oblique-audit-v1/views.json';
-assert(/^[\w-]+$/.test(scene));
+assert(/^[\w-]+(?:\/[\w-]+)*$/.test(scene));
 const views=JSON.parse(await readFile(viewsPath,'utf8')).views,root=`four-room/scenes/${scene}/oblique-browser`;
 await mkdir(root,{recursive:true});
 const tab=(await(await fetch('http://localhost:19346/json/list')).json()).find(t=>t.type==='page'&&t.url.startsWith('http://127.0.0.1:7870/'));assert(tab);

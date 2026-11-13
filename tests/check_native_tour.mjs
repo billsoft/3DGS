@@ -1,6 +1,7 @@
 import {mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const root='four-room/scenes/native-source-six-v1/tour-browser';await mkdir(root,{recursive:true});
+const scene=process.argv[2]||'native-source-six-v1';assert(/^[\w-]+(?:\/[\w-]+)*$/.test(scene));
+const root='four-room/scenes/'+scene+'/tour-browser';await mkdir(root,{recursive:true});
 const tab=(await(await fetch('http://localhost:19346/json/list')).json()).find(t=>t.type==='page'&&t.url.startsWith('http://127.0.0.1:7870/'));
 assert(tab);const ws=new WebSocket(tab.webSocketDebuggerUrl);await new Promise(r=>ws.onopen=r);let sequence=0;const pending=new Map(),errors=[];
 ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);if(m.id){const p=pending.get(m.id);if(p){clearTimeout(p.timer);pending.delete(m.id);m.error?p.reject(m.error):p.resolve(m.result)}}};
@@ -9,7 +10,7 @@ const ev=async expression=>{const r=await call('Runtime.evaluate',{expression,aw
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 try{
  await call('Runtime.enable');await call('Emulation.setDeviceMetricsOverride',{width:1280,height:900,deviceScaleFactor:1,mobile:false});
- await call('Page.navigate',{url:'http://127.0.0.1:7870/native-tour-room.html?scene=native-source-six-v1'});
+ await call('Page.navigate',{url:'http://127.0.0.1:7870/native-tour-room.html?scene='+scene});
  let ready=false;for(let i=0;i<120;i++){await pause(1000);if(await ev('!!window.tourState?.ready')){ready=true;break}}assert(ready,'Tour failed to load');
  const meta=await ev('window.tourMeta');await ev('window.roomViewer.camera.fov=90;window.roomViewer.camera.updateProjectionMatrix()');
  const records=[];

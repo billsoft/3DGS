@@ -10,7 +10,7 @@ import numpy as np
 import cv2 as cv
 from numba import njit
 from scipy.sparse import coo_matrix
-from core import load, prep, write_json
+from core import load, prep, write_json, scene_id
 from surface_export import adjacency, sample_photo
 from surface_volume import fields
 from mesh_cleanup import remove_unsupported_islands
@@ -310,7 +310,7 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
     if capture_path.exists():
         capture=json.loads(capture_path.read_text('utf8'))
         result.update(source_depth='single-GS-rendered',source_model_sha256=capture['model_sha256'],
-            reference_scene=Path(capture['model']).parent.name,
+            reference_scene=scene_id(Path(capture['model']).parent),
             preview_title='单一 PLY 重建 · 高清原片贴图',
             preview_note='从已融合单一高斯的渲染深度提取网格，再按可见性投影原始全景。细结构可能变形或缺失，不能视作无损转换。')
     repair_report=geometry.parent/'repair.json'
@@ -351,6 +351,10 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
     if repair_path.exists():
         repair=json.loads(repair_path.read_text(encoding='utf8'))
         result['repaired_surfaces']=[dict(center=s['center'],radius=s['radius'],type='sphere',supporting_cameras=s['validation']['supporting_cameras']) for s in repair['candidates'] if s['validation']['accepted']]
+    if result.get('geometry_guide_scene'):result['geometry_guide_scene']=scene_id(geometry.parent)
+    if capture_path.exists():
+        model_meta=Path(capture['model']).parent/'data/dataset.json'
+        if model_meta.exists():result['native_scene']=json.loads(model_meta.read_text('utf8')).get('native_scene')
     write_json(out/'mesh.json',result)
     with (out/'room.obj').open('w',encoding='utf8') as f:
         f.write('mtllib room.mtl\n'); np.savetxt(f,rows[:,:3],fmt='v %.6f %.6f %.6f')

@@ -48,7 +48,8 @@ def run(a):
             try:os.link(file,dest)
             except OSError:shutil.copy2(file,dest)
     write_json(data/'dataset.json',meta)
-    teachers=[load_scene(data/f'teacher-{i}.npy') for i in range(len(meta['centers']))]
+    from teacher_cache import TeacherCache
+    teachers=TeacherCache(data,len(meta['centers']))
     z=np.load(a.resume or a.reference/'optimized.npz');base,coeff=z['base'],z['sh'];model={}
     def setup(base,coeff):
         m={k:torch.nn.Parameter(torch.tensor(v.copy(),device='cuda')) for k,v in dict(means=base[:,:3],logs=base[:,7:10],quats=base[:,10:14],opacity=base[:,6],dc=coeff[:,:1],rest=coeff[:,1:]).items()}

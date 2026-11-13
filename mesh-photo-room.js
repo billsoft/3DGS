@@ -3,15 +3,16 @@ import {OrbitControls} from './mesh-orbit-controls.js';
 import {installRoomLook,setRoomLook} from './room-look.js';
 import {installRoomNavigation} from './room-navigation.js';
 const id=new URLSearchParams(location.search).get('scene')||'mesh-photo-six-v4';
-if(!/^[a-zA-Z0-9_-]+$/.test(id))throw Error('Invalid scene');
+if(!/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(id))throw Error('Invalid scene');
 const base='/four-room/scenes/'+id+'/',status=document.querySelector('#status');
 try{
  const get=async name=>{const r=await fetch(base+name);if(!r.ok)throw Error(name+' 无法读取');return r};
  const [meta,buffer]=await Promise.all([get('mesh.json').then(r=>r.json()),get('mesh.bin').then(r=>r.arrayBuffer())]);
+ if(meta.native_scene&&/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(meta.native_scene)){const link=document.querySelector('#native');link.hidden=false;link.href='/native-tour-room.html?scene='+meta.native_scene}
  if(meta.preview_title)document.querySelector('h1').textContent=meta.preview_title;
  if(meta.preview_note)document.querySelector('#note').textContent=meta.preview_note;
  if(meta.surface_repair){const link=document.createElement('a');link.href='/mesh-repair-report.html?scene='+id;link.textContent='清理前后同视点对照';document.querySelector('#tools').appendChild(link)}
- if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){
+ if(meta.reference_scene&&/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(meta.reference_scene)){
   const link=document.createElement('a');link.href='/scene-room.html?scene='+meta.reference_scene+'&inspect=3';link.textContent='重建前的单一 PLY';document.querySelector('#tools').appendChild(link);
  }
  const rows=new Float32Array(buffer),count=rows.length/5;
@@ -32,7 +33,7 @@ try{
  }));
  const ownerMaterials=meta.groups.map(g=>new T.MeshBasicMaterial({color:new T.Color().setHSL((g.source*.61803398875)%1,.65,.55),side:T.DoubleSide}));
  const normalMaterial=new T.MeshNormalMaterial({side:T.DoubleSide}),wireMaterial=new T.MeshBasicMaterial({color:0xb5d7e9,wireframe:true,side:T.DoubleSide});
- if(meta.geometry_guide_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.geometry_guide_scene)){const link=document.createElement('a');link.href='/four-room/scenes/'+meta.geometry_guide_scene+'/geometry-guide.ply';link.textContent='下载平滑几何点云（非高斯模型）';document.querySelector('#download').after(link)}
+ if(meta.geometry_guide_scene&&/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(meta.geometry_guide_scene)){const link=document.createElement('a');link.href='/four-room/scenes/'+meta.geometry_guide_scene+'/geometry-guide.ply';link.textContent='下载平滑几何点云（非高斯模型）';document.querySelector('#download').after(link)}
  const mesh=new T.Mesh(geometry,materials);scene.add(mesh);
  const render=()=>renderer.render(scene,camera);let moving=null;
  const cancel=()=>{moving=null};

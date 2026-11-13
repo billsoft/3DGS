@@ -5,7 +5,7 @@
 import * as THREE from 'three';import {Viewer,RenderMode,SceneRevealMode} from './gaussian.js';import {installRoomNavigation} from './room-navigation.js';import {installRoomSortRefresh} from './room-sorting.js';
 import {installRoomLook,setRoomLook} from './room-look.js';
 const query=new URLSearchParams(location.search),scene=query.get('scene')||'six-20261112';
-if(!/^[a-zA-Z0-9_-]+$/.test(scene))throw Error('Invalid scene ID');
+if(!/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(scene))throw Error('Invalid scene ID');
 const root='/four-room/scenes/'+scene,initial=query.get('version')==='initial';
 const standardDisplay=query.get('quality')==='standard';
 const qualityControl=document.createElement('p');
@@ -19,10 +19,10 @@ try{
  document.querySelector('#title').textContent=meta.preview_title||meta.stations.length+'机位 · 场景融合试验';
  if(meta.preview_note){const note=document.createElement('p');note.textContent=meta.preview_note;document.querySelector('#tools').appendChild(note)}
  if(meta.report_page==='tour-distill-report.html')document.querySelector('#report').href='/tour-distill-report.html?scene='+scene;
- if(meta.reference_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.reference_scene)){document.querySelector('#initial').href='?scene='+meta.reference_scene+'&inspect=3';document.querySelector('#initial').textContent=meta.reference_label||'修复前对照'}
- if(meta.native_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.native_scene)){document.querySelector('#initial').href='/native-tour-room.html?scene='+meta.native_scene;document.querySelector('#initial').textContent='原始漫游对照'}
+ if(meta.reference_scene&&/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(meta.reference_scene)){document.querySelector('#initial').href='?scene='+meta.reference_scene+'&inspect=3';document.querySelector('#initial').textContent=meta.reference_label||'修复前对照'}
+ if(meta.native_scene&&/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(meta.native_scene)){document.querySelector('#initial').href='/native-tour-room.html?scene='+meta.native_scene;document.querySelector('#initial').textContent='原始漫游对照'}
  if([.30,.38,.44,.49].includes(meta.tour_core)&&meta.native_scene)document.querySelector('#initial').href+='&range='+meta.tour_core;
- if(meta.comparison_scene&&/^[a-zA-Z0-9_-]+$/.test(meta.comparison_scene)){const a=document.createElement('a');a.href='?scene='+meta.comparison_scene+'&inspect=3&quality=hd';a.textContent='旧单一 PLY 对照';document.querySelector('#report').after(a)}
+ if(meta.comparison_scene&&/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(meta.comparison_scene)){const a=document.createElement('a');a.href='?scene='+meta.comparison_scene+'&inspect=3&quality=hd';a.textContent='旧单一 PLY 对照';document.querySelector('#report').after(a)}
  const centers=meta.centers.map(p=>new THREE.Vector3(...p)),up=new THREE.Vector3(...meta.up),target=centers.reduce((s,c)=>s.add(c),new THREE.Vector3()).multiplyScalar(1/centers.length).addScaledVector(up,-.5);
  const shDegree=optimized?(meta.sh_degree||0):0;
  if(![0,1,2].includes(shDegree))throw Error('当前播放器仅支持到二阶球谐颜色');

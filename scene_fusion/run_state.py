@@ -3,6 +3,9 @@ import hashlib,json,os,time
 from pathlib import Path
 
 def digest(path):
+    path=Path(path)
+    if path.is_dir():
+        return hashlib.sha256(json.dumps([(p.relative_to(path).as_posix(),digest(p)) for p in sorted(path.rglob('*')) if p.is_file()],ensure_ascii=False).encode()).hexdigest()
     h=hashlib.sha256()
     with Path(path).open('rb') as f:
         while chunk:=f.read(4*1024*1024):h.update(chunk)
@@ -22,17 +25,29 @@ class RunState:
     def stage(self,name,argv,outputs,execute):
         fingerprint=hashlib.sha256(json.dumps([self.code_hash,self.chain,argv],sort_keys=True).encode()).hexdigest()
         outputs=[Path(p) for p in outputs];old=self.data['stages'].get(name,{})
-        hashes={str(p.relative_to(self.out)):digest(p) for p in outputs if p.is_file()}
+        def hashes_for(snapshot=None):
+            hashes={}
+            for p in outputs:
+                key=str(p.relative_to(self.out))
+                if not p.exists():continue
+                if p.is_dir() and snapshot is not None and key in snapshot:
+                    files=snapshot[key]
+                    if any(not (p/f).is_file() for f in files):continue
+                    hashes[key]=hashlib.sha256(json.dumps([(f,digest(p/f)) for f in files],ensure_ascii=False).encode()).hexdigest()
+                else:hashes[key]=digest(p)
+            return hashes
+        hashes=hashes_for(old.get('directory_files'))
         if old.get('status')=='complete' and old.get('fingerprint')==fingerprint and len(hashes)==len(outputs) and hashes==old.get('artifacts'):
             print('REUSE',name,flush=True);self.chain=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()+fingerprint.encode()).hexdigest();return
         self.data.update(stage=name,status='running');self.data['stages'][name]=dict(status='running',fingerprint=fingerprint);self.save()
         started=time.monotonic();print('START',name,flush=True)
         try:
             execute()
-            missing=[str(p) for p in outputs if not p.is_file()]
+            missing=[str(p) for p in outputs if not p.exists()]
             if missing:raise ValueError('Stage did not produce '+', '.join(missing))
-            hashes={str(p.relative_to(self.out)):digest(p) for p in outputs}
-            self.data['stages'][name]=dict(status='complete',fingerprint=fingerprint,artifacts=hashes,seconds=time.monotonic()-started)
+            directories={str(p.relative_to(self.out)):[f.relative_to(p).as_posix() for f in sorted(p.rglob('*')) if f.is_file()] for p in outputs if p.is_dir()}
+            hashes=hashes_for(directories)
+            self.data['stages'][name]=dict(status='complete',fingerprint=fingerprint,artifacts=hashes,directory_files=directories,seconds=time.monotonic()-started)
             self.chain=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()+fingerprint.encode()).hexdigest();self.save();print('DONE',name,flush=True)
         except Exception as e:
             self.data['stages'][name].update(status='failed',error=str(e));self.data.update(status='failed',error=str(e));self.save();raise

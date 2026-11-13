@@ -1,0 +1,450 @@
+{
+  "profile": "smoke",
+  "inputs": 2,
+  "source_hashes_verified": true,
+  "artifact_hashes_verified": true,
+  "stages": [
+    {
+      "name": "preflight",
+      "seconds": 0.062000000034458935
+    },
+    {
+      "name": "prepare",
+      "seconds": 8.468999999924563
+    },
+    {
+      "name": "registration",
+      "seconds": 3.672000000020489
+    },
+    {
+      "name": "bundle",
+      "seconds": 4.733999999938533
+    },
+    {
+      "name": "scales",
+      "seconds": 1.702999999979511
+    },
+    {
+      "name": "camera-graph",
+      "seconds": 0.9380000000819564
+    },
+    {
+      "name": "native",
+      "seconds": 0.984000000054948
+    },
+    {
+      "name": "teacher",
+      "seconds": 8.468999999924563
+    },
+    {
+      "name": "distill",
+      "seconds": 12.71799999999348
+    },
+    {
+      "name": "detail-views",
+      "seconds": 0.9540000000270084
+    },
+    {
+      "name": "refine",
+      "seconds": 12.98499999998603
+    },
+    {
+      "name": "evaluate",
+      "seconds": 11.984000000054948
+    },
+    {
+      "name": "export",
+      "seconds": 1.015999999945052
+    },
+    {
+      "name": "capture",
+      "seconds": 10.26500000001397
+    },
+    {
+      "name": "depth-smooth",
+      "seconds": 0.765999999945052
+    },
+    {
+      "name": "tsdf",
+      "seconds": 1.5150000000139698
+    },
+    {
+      "name": "repair",
+      "seconds": 1.8290000000270084
+    },
+    {
+      "name": "guide",
+      "seconds": 2.2179999999934807
+    },
+    {
+      "name": "adaptive-lowpass",
+      "seconds": 2.35999999998603
+    },
+    {
+      "name": "adaptive-weld",
+      "seconds": 1.4690000000409782
+    },
+    {
+      "name": "adaptive-texture",
+      "seconds": 1.9839999999385327
+    },
+    {
+      "name": "smooth-lowpass",
+      "seconds": 1.6880000000819564
+    },
+    {
+      "name": "smooth-weld",
+      "seconds": 1.390999999945052
+    },
+    {
+      "name": "smooth-texture",
+      "seconds": 2.015999999945052
+    },
+    {
+      "name": "inspection-views",
+      "seconds": 0.31200000003445894
+    },
+    {
+      "name": "mesh-audit",
+      "seconds": 1.797000000020489
+    },
+    {
+      "name": "delivery",
+      "seconds": 0.015999999945051968
+    }
+  ],
+  "camera_graph": {
+    "stations": [
+      "cam-0001",
+      "cam-0002"
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ]
+    ],
+    "validated_edges": 1,
+    "rejected_edges": [],
+    "method": "validated match edges, spatial minimum spanning tree plus nearest supported neighbors",
+    "assumes_ring": false,
+    "collision_free_routes": false
+  },
+  "bundle_acceptance": {
+    "passed": true,
+    "reasons": []
+  },
+  "ply": {
+    "points": 54799,
+    "degree": 2,
+    "roundtrip_exact": true,
+    "independent_ply": true,
+    "teacher_models_required_at_playback": false,
+    "sha256": "4cdaaf534fc23ef687c2d47a10fb3841d9460c69e77f7b2e8d298d7f320ef0a3",
+    "anchor_fidelity_passed": false
+  },
+  "meshes": {
+    "adaptive": {
+      "triangles": 20810,
+      "texture_size": [
+        1024,
+        512
+      ],
+      "numeric_weld": {
+        "tolerance": 0.00019945882260799408,
+        "input_faces": 20832,
+        "faces": 20810,
+        "input_vertices": 10418,
+        "vertices": 10407,
+        "tiny_faces": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "input_sha256": "1bc700f196429ffda6c4ceedb6dcc81fea61848796cae766d0aba7fb53ee1058"
+      }
+    },
+    "smooth": {
+      "triangles": 20556,
+      "texture_size": [
+        1024,
+        512
+      ],
+      "numeric_weld": {
+        "tolerance": 0.00019924402236938478,
+        "input_faces": 20824,
+        "faces": 20556,
+        "input_vertices": 10414,
+        "vertices": 10280,
+        "tiny_faces": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 1,
+        "input_sha256": "d452d720eba735d6879787261666ef925e3e13036c70db7240e3d83452f57ad4"
+      }
+    }
+  },
+  "browser": {
+    "adaptive/browser": {
+      "passed": true,
+      "triangles": 20810,
+      "sources": 2,
+      "views": [
+        {
+          "source": 0,
+          "face": 3
+        },
+        {
+          "source": 0,
+          "face": 4
+        },
+        {
+          "source": 0,
+          "face": 5
+        },
+        {
+          "source": 1,
+          "face": 3
+        },
+        {
+          "source": 1,
+          "face": 4
+        },
+        {
+          "source": 1,
+          "face": 5
+        }
+      ],
+      "midpoints": 1,
+      "errors": []
+    },
+    "adaptive/oblique-browser": {
+      "passed": true,
+      "views": [
+        "oblique-1--1-floor",
+        "oblique-1--1-ceiling",
+        "oblique-1--1-wall",
+        "oblique-1-1-floor",
+        "oblique-1-1-ceiling",
+        "oblique-1-1-wall",
+        "oblique-2--1-floor",
+        "oblique-2--1-ceiling",
+        "oblique-2--1-wall",
+        "oblique-2-1-floor",
+        "oblique-2-1-ceiling",
+        "oblique-2-1-wall",
+        "route-1-2-0.2-floor",
+        "route-1-2-0.2-ceiling",
+        "route-1-2-0.4-floor",
+        "route-1-2-0.4-ceiling",
+        "route-1-2-0.5-floor",
+        "route-1-2-0.5-ceiling",
+        "route-1-2-0.6-floor",
+        "route-1-2-0.6-ceiling",
+        "route-1-2-0.8-floor",
+        "route-1-2-0.8-ceiling"
+      ],
+      "errors": []
+    },
+    "smooth/browser": {
+      "passed": true,
+      "triangles": 20556,
+      "sources": 2,
+      "views": [
+        {
+          "source": 0,
+          "face": 3
+        },
+        {
+          "source": 0,
+          "face": 4
+        },
+        {
+          "source": 0,
+          "face": 5
+        },
+        {
+          "source": 1,
+          "face": 3
+        },
+        {
+          "source": 1,
+          "face": 4
+        },
+        {
+          "source": 1,
+          "face": 5
+        }
+      ],
+      "midpoints": 1,
+      "errors": []
+    },
+    "smooth/oblique-browser": {
+      "passed": true,
+      "views": [
+        "oblique-1--1-floor",
+        "oblique-1--1-ceiling",
+        "oblique-1--1-wall",
+        "oblique-1-1-floor",
+        "oblique-1-1-ceiling",
+        "oblique-1-1-wall",
+        "oblique-2--1-floor",
+        "oblique-2--1-ceiling",
+        "oblique-2--1-wall",
+        "oblique-2-1-floor",
+        "oblique-2-1-ceiling",
+        "oblique-2-1-wall",
+        "route-1-2-0.2-floor",
+        "route-1-2-0.2-ceiling",
+        "route-1-2-0.4-floor",
+        "route-1-2-0.4-ceiling",
+        "route-1-2-0.5-floor",
+        "route-1-2-0.5-ceiling",
+        "route-1-2-0.6-floor",
+        "route-1-2-0.6-ceiling",
+        "route-1-2-0.8-floor",
+        "route-1-2-0.8-ceiling"
+      ],
+      "errors": []
+    },
+    "single/browser": {
+      "passed": true,
+      "views": [
+        "source-1-3",
+        "source-1-4",
+        "source-1-5",
+        "test-edge-1-2-0.47-3"
+      ],
+      "plyRequests": [
+        "http://127.0.0.1:7870/four-room/scenes/reconstruct-smoke-v3/single/final/fused.ply"
+      ],
+      "errors": []
+    },
+    "native/tour-browser": {
+      "passed": true,
+      "endpoints": [
+        {
+          "source": 0,
+          "face": 3,
+          "weights": [
+            1,
+            0
+          ]
+        },
+        {
+          "source": 0,
+          "face": 4,
+          "weights": [
+            1,
+            0
+          ]
+        },
+        {
+          "source": 0,
+          "face": 5,
+          "weights": [
+            1,
+            0
+          ]
+        },
+        {
+          "source": 1,
+          "face": 3,
+          "weights": [
+            0,
+            1
+          ]
+        },
+        {
+          "source": 1,
+          "face": 4,
+          "weights": [
+            0,
+            1
+          ]
+        },
+        {
+          "source": 1,
+          "face": 5,
+          "weights": [
+            0,
+            1
+          ]
+        }
+      ],
+      "transition": [
+        {
+          "t": 0.15,
+          "weights": [
+            1,
+            0
+          ]
+        },
+        {
+          "t": 0.3,
+          "weights": [
+            1,
+            0
+          ]
+        },
+        {
+          "t": 0.38,
+          "weights": [
+            1,
+            0
+          ]
+        },
+        {
+          "t": 0.44,
+          "weights": [
+            0.7500000000000002,
+            0.24999999999999983
+          ]
+        },
+        {
+          "t": 0.5,
+          "weights": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "t": 0.56,
+          "weights": [
+            0.25000000000000017,
+            0.7499999999999998
+          ]
+        },
+        {
+          "t": 0.62,
+          "weights": [
+            1.4976031247555137e-30,
+            1
+          ]
+        },
+        {
+          "t": 0.7,
+          "weights": [
+            0,
+            1
+          ]
+        },
+        {
+          "t": 0.85,
+          "weights": [
+            0,
+            1
+          ]
+        },
+        {
+          "t": 1,
+          "weights": [
+            0,
+            1
+          ]
+        }
+      ],
+      "actualTourArrival": 1,
+      "rotationEyeError": 0,
+      "errors": []
+    }
+  },
+  "warning": "Smoke run verifies execution, not production image quality. Synthetic two-camera room is not another real captured room."
+}

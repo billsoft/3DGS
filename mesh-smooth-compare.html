@@ -3,7 +3,7 @@
 <title>几何平滑 · 同视点对照</title>
 <style>body{margin:0;background:#14202b;color:#edf2f6;font:16px/1.6 system-ui}main{max-width:1600px;margin:auto;padding:24px}h1{font-size:25px}a{color:#9ddaff}select{font:inherit;padding:8px;border-radius:6px}section{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}article{background:#21313e;padding:15px;border-radius:10px}img{width:100%;height:auto}h2{font-size:19px}small{color:#c7d4de}p{max-width:1000px}@media(max-width:900px){section{grid-template-columns:1fr}}</style>
 <main><h1>几何平滑 · 同视点对照</h1>
-<p>原基线保留。新增两种取舍：自适应版本在照片边缘保留较密几何采样；平滑优先版本主动丢掉更多高频几何。大面更平顺，但灯、电视边缘和薄结构仍可能变形。这两版尚未被认定为全面超过原基线。</p>
+<p>原基线保留。新增两种取舍：自适应版本在照片边缘保留较密几何采样；平滑优先版本主动丢掉更多高频几何。大面更平顺，但灯、电视边缘和薄结构仍可能变形。这两版已获认可并固化为通用流程预设；仍不代表所有区域全面超过旧基线。</p>
 <label>检查方向 <select id="view"><option value="source-2-face-4">2 号机位 · 棚顶</option><option value="source-1-face-5">1 号机位 · 地面</option><option value="source-4-face-3">4 号机位 · 电视、门与桌面</option><option value="source-6-face-3">6 号机位 · 正前方</option></select></label>
 <section id="panels"></section>
 <p>新版本先焊接数值尺度重合顶点，再清理退化面。最终开放边为零仍不等于形状真实，也不代表所有位置没有误色或遮挡错误。纹理来自原始高清全景，精简的是几何。</p>

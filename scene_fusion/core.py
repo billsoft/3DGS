@@ -5,6 +5,12 @@ import numpy as np
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT));sys.path.append(str(ROOT/'fusion_next'))
+
+def scene_id(path):
+    path=Path(path).resolve()
+    for parent in path.parents:
+        if parent.name=='scenes':return path.relative_to(parent).as_posix()
+    return path.name
 def module(name,path):
     s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 prep=module('scene_prepare',ROOT/'four-prepare.py')
@@ -41,5 +47,9 @@ def viewmat(center,basis):
     v=np.eye(4);v[:3,:3]=basis.T;v[:3,3]=-basis.T@center;return v
 
 def look(center,target,up):
-    z=target-center;z=z/np.linalg.norm(z);x=np.cross(z,up);x/=np.linalg.norm(x)
+    z=target-center
+    if np.linalg.norm(z)<1e-10:raise ValueError('Camera look target equals center')
+    z=z/np.linalg.norm(z);x=np.cross(z,up)
+    if np.linalg.norm(x)<1e-8:x=np.cross(z,np.eye(3)[np.argmin(abs(z))])
+    x/=np.linalg.norm(x)
     return np.stack([x,np.cross(z,x),z],axis=1)

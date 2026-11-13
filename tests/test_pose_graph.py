@@ -43,6 +43,21 @@ class PoseGraphTests(unittest.TestCase):
         _,edges=self.scene(3)
         with self.assertRaisesRegex(ValueError,'Disconnected'):fit_graph({(0,1):edges[0,1]},3)
 
+    def test_sparse_nonring_with_permuted_capture_order(self):
+        truth,all_edges=self.scene(5)
+        pairs=[(0,2),(1,2),(2,3),(3,4)]
+        edges={e:all_edges[e] for e in pairs}
+        result,_=fit_graph(edges,5)
+        for a,b in zip(truth,result):np.testing.assert_allclose(a,b,atol=1e-7)
+        order=[4,1,3,0,2];inv=np.argsort(order);changed={}
+        for (i,j),e in edges.items():
+            a,b=int(inv[i]),int(inv[j]);row=dict(e)
+            if a>b:
+                a,b=b,a;row.update(m=np.linalg.inv(e['m']),x=e['y'],y=e['x'])
+            changed[a,b]=row
+        result,_=fit_graph(changed,5)
+        for k,m in enumerate(result):np.testing.assert_allclose(m,np.linalg.inv(truth[order[0]])@truth[order[k]],atol=1e-7)
+
     def test_heldout_gate_rejects_local_regression_and_failed_optimizer(self):
         before=[np.ones(20),np.ones(20)]
         self.assertTrue(bundle_gate(before,[np.ones(20)*.6]*2,True)['passed'])
