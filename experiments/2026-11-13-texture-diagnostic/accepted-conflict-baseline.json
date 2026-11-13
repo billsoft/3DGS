@@ -1,0 +1,823 @@
+{
+  "status": "user-accepted-default-texture-partition",
+  "scene": "mesh-conflict-photo-six-v1",
+  "previous_scene": "mesh-lowpass-photo-six-v4",
+  "recipe_version": 2,
+  "geometry_identical": true,
+  "vertices": 169175,
+  "triangles": 338390,
+  "ownership_changes": 2816,
+  "report": {
+    "method": "bounded connected projection-conflict regions with one visible photo",
+    "conflict_faces": 46452,
+    "reassigned_faces": 2816,
+    "regions": [
+      {
+        "faces": 2457,
+        "area": 3.5972250630004154,
+        "source": 4
+      },
+      {
+        "faces": 286,
+        "area": 0.4183645081411669,
+        "source": 5
+      },
+      {
+        "faces": 20,
+        "area": 0.030772644455282716,
+        "source": 3
+      },
+      {
+        "faces": 35,
+        "area": 0.05770415090955794,
+        "source": 5
+      },
+      {
+        "faces": 193,
+        "area": 0.3427893075784709,
+        "source": 2
+      },
+      {
+        "faces": 251,
+        "area": 0.4165988880725777,
+        "source": 4
+      },
+      {
+        "faces": 82,
+        "area": 0.1330403438764951,
+        "source": 3
+      },
+      {
+        "faces": 179,
+        "area": 0.289238654779183,
+        "source": 0
+      },
+      {
+        "faces": 120,
+        "area": 0.18250487773730129,
+        "source": 2
+      },
+      {
+        "faces": 30,
+        "area": 0.04298913238744717,
+        "source": 0
+      },
+      {
+        "faces": 17,
+        "area": 0.030060917895752937,
+        "source": 4
+      },
+      {
+        "faces": 476,
+        "area": 0.7144121133896641,
+        "source": 0
+      },
+      {
+        "faces": 106,
+        "area": 0.1395575523634669,
+        "source": 2
+      },
+      {
+        "faces": 65,
+        "area": 0.08165082731147777,
+        "source": 1
+      },
+      {
+        "faces": 52,
+        "area": 0.06245529071384226,
+        "source": 5
+      },
+      {
+        "faces": 103,
+        "area": 0.16883953824179798,
+        "source": 1
+      },
+      {
+        "faces": 19,
+        "area": 0.036625956883654,
+        "source": 3
+      },
+      {
+        "faces": 2651,
+        "area": 4.159013552110991,
+        "source": 0
+      },
+      {
+        "faces": 33,
+        "area": 0.053873391007073224,
+        "source": 1
+      },
+      {
+        "faces": 291,
+        "area": 0.4464023478811896,
+        "source": 0
+      },
+      {
+        "faces": 867,
+        "area": 1.4311478772126662,
+        "source": 5
+      },
+      {
+        "faces": 23,
+        "area": 0.029151489577088796,
+        "source": 2
+      },
+      {
+        "faces": 236,
+        "area": 0.3836168238145774,
+        "source": 0
+      },
+      {
+        "faces": 18,
+        "area": 0.028349571104627103,
+        "source": 0
+      },
+      {
+        "faces": 73,
+        "area": 0.1123864296641841,
+        "source": 4
+      },
+      {
+        "faces": 20,
+        "area": 0.026935362094036464,
+        "source": 0
+      },
+      {
+        "faces": 43,
+        "area": 0.06542787795427785,
+        "source": 4
+      },
+      {
+        "faces": 30,
+        "area": 0.0404792235141187,
+        "source": 5
+      },
+      {
+        "faces": 23,
+        "area": 0.03369848063448444,
+        "source": 0
+      },
+      {
+        "faces": 41,
+        "area": 0.06736854969220474,
+        "source": 5
+      },
+      {
+        "faces": 73,
+        "area": 0.10988648619607488,
+        "source": 0
+      },
+      {
+        "faces": 30,
+        "area": 0.05680561959161423,
+        "source": 1
+      },
+      {
+        "faces": 1123,
+        "area": 1.7300436994107384,
+        "source": 5
+      },
+      {
+        "faces": 19,
+        "area": 0.024781793508154237,
+        "source": 2
+      },
+      {
+        "faces": 424,
+        "area": 0.7769315683472087,
+        "source": 5
+      },
+      {
+        "faces": 71,
+        "area": 0.11813823578813754,
+        "source": 3
+      },
+      {
+        "faces": 164,
+        "area": 0.2545622254910995,
+        "source": 5
+      },
+      {
+        "faces": 19,
+        "area": 0.02927419266779907,
+        "source": 4
+      },
+      {
+        "faces": 20,
+        "area": 0.03158860784606077,
+        "source": 4
+      },
+      {
+        "faces": 20,
+        "area": 0.038032733369618654,
+        "source": 3
+      },
+      {
+        "faces": 209,
+        "area": 0.32089296577919413,
+        "source": 2
+      },
+      {
+        "faces": 52,
+        "area": 0.08121874553035013,
+        "source": 2
+      },
+      {
+        "faces": 72,
+        "area": 0.1034733672809125,
+        "source": 3
+      },
+      {
+        "faces": 18,
+        "area": 0.021500278580731447,
+        "source": 0
+      },
+      {
+        "faces": 18,
+        "area": 0.034177003311924636,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.029048114993202034,
+        "source": 3
+      },
+      {
+        "faces": 19,
+        "area": 0.03640300233382732,
+        "source": 2
+      },
+      {
+        "faces": 229,
+        "area": 0.3682793443531409,
+        "source": 2
+      },
+      {
+        "faces": 52,
+        "area": 0.07791313523193821,
+        "source": 2
+      },
+      {
+        "faces": 21,
+        "area": 0.03957341122440994,
+        "source": 0
+      },
+      {
+        "faces": 249,
+        "area": 0.37651054792144123,
+        "source": 3
+      },
+      {
+        "faces": 18,
+        "area": 0.03533517720643431,
+        "source": 5
+      },
+      {
+        "faces": 20,
+        "area": 0.033912321378011256,
+        "source": 4
+      },
+      {
+        "faces": 148,
+        "area": 0.2447126513215494,
+        "source": 0
+      },
+      {
+        "faces": 35,
+        "area": 0.05739091907162219,
+        "source": 1
+      },
+      {
+        "faces": 39,
+        "area": 0.0746897499775514,
+        "source": 5
+      },
+      {
+        "faces": 133,
+        "area": 0.22341068347304827,
+        "source": 3
+      },
+      {
+        "faces": 176,
+        "area": 0.2828735505473787,
+        "source": 5
+      },
+      {
+        "faces": 279,
+        "area": 0.46698897794613003,
+        "source": 0
+      },
+      {
+        "faces": 67,
+        "area": 0.11508943454828113,
+        "source": 4
+      },
+      {
+        "faces": 25,
+        "area": 0.04880175006110221,
+        "source": 4
+      },
+      {
+        "faces": 142,
+        "area": 0.23397631753164205,
+        "source": 0
+      },
+      {
+        "faces": 20,
+        "area": 0.02832480194774689,
+        "source": 5
+      },
+      {
+        "faces": 26,
+        "area": 0.02838785129279131,
+        "source": 3
+      },
+      {
+        "faces": 13,
+        "area": 0.014215739089195267,
+        "source": 2
+      },
+      {
+        "faces": 206,
+        "area": 0.30978040155230246,
+        "source": 0
+      },
+      {
+        "faces": 27,
+        "area": 0.023578703371498477,
+        "source": 0
+      },
+      {
+        "faces": 294,
+        "area": 0.4327755383643961,
+        "source": 0
+      },
+      {
+        "faces": 225,
+        "area": 0.3377845631086984,
+        "source": 1
+      },
+      {
+        "faces": 19,
+        "area": 0.03474834840744734,
+        "source": 2
+      },
+      {
+        "faces": 18,
+        "area": 0.035666214767843485,
+        "source": 2
+      },
+      {
+        "faces": 121,
+        "area": 0.17311730197070574,
+        "source": 0
+      },
+      {
+        "faces": 57,
+        "area": 0.08105316185901756,
+        "source": 0
+      },
+      {
+        "faces": 50,
+        "area": 0.06945250686840154,
+        "source": 0
+      },
+      {
+        "faces": 91,
+        "area": 0.1531812298380828,
+        "source": 4
+      },
+      {
+        "faces": 20,
+        "area": 0.03333856143581215,
+        "source": 0
+      },
+      {
+        "faces": 42,
+        "area": 0.06518014621542534,
+        "source": 0
+      },
+      {
+        "faces": 27,
+        "area": 0.040613976558233844,
+        "source": 0
+      },
+      {
+        "faces": 57,
+        "area": 0.08324804017320275,
+        "source": 3
+      },
+      {
+        "faces": 20,
+        "area": 0.030748522898647934,
+        "source": 3
+      },
+      {
+        "faces": 19,
+        "area": 0.03601747006177902,
+        "source": 5
+      },
+      {
+        "faces": 22,
+        "area": 0.03005716355983168,
+        "source": 5
+      },
+      {
+        "faces": 98,
+        "area": 0.1673461511768437,
+        "source": 3
+      },
+      {
+        "faces": 19,
+        "area": 0.023683852576141362,
+        "source": 2
+      },
+      {
+        "faces": 18,
+        "area": 0.02195224318529654,
+        "source": 0
+      },
+      {
+        "faces": 15,
+        "area": 0.015690790291955636,
+        "source": 1
+      },
+      {
+        "faces": 151,
+        "area": 0.2812228613724983,
+        "source": 1
+      },
+      {
+        "faces": 31,
+        "area": 0.05175882206458482,
+        "source": 5
+      },
+      {
+        "faces": 117,
+        "area": 0.20196824625963927,
+        "source": 5
+      },
+      {
+        "faces": 70,
+        "area": 0.11161491254733846,
+        "source": 5
+      },
+      {
+        "faces": 36,
+        "area": 0.0650189435473294,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.02968810440506786,
+        "source": 0
+      },
+      {
+        "faces": 17,
+        "area": 0.019781917983891617,
+        "source": 5
+      },
+      {
+        "faces": 19,
+        "area": 0.03316469874698669,
+        "source": 2
+      },
+      {
+        "faces": 40,
+        "area": 0.07507564191473648,
+        "source": 3
+      },
+      {
+        "faces": 29,
+        "area": 0.05627045687288046,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.023388592515175333,
+        "source": 0
+      },
+      {
+        "faces": 27,
+        "area": 0.05342454893980175,
+        "source": 0
+      },
+      {
+        "faces": 43,
+        "area": 0.07181985997067386,
+        "source": 0
+      },
+      {
+        "faces": 67,
+        "area": 0.10879830845806282,
+        "source": 3
+      },
+      {
+        "faces": 19,
+        "area": 0.03657680924516171,
+        "source": 1
+      },
+      {
+        "faces": 24,
+        "area": 0.032367689162811075,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.03444845578633249,
+        "source": 5
+      },
+      {
+        "faces": 60,
+        "area": 0.0797431103001145,
+        "source": 0
+      },
+      {
+        "faces": 29,
+        "area": 0.03324073163275898,
+        "source": 5
+      },
+      {
+        "faces": 51,
+        "area": 0.06893861212847696,
+        "source": 5
+      },
+      {
+        "faces": 19,
+        "area": 0.036529175587929785,
+        "source": 3
+      },
+      {
+        "faces": 46,
+        "area": 0.049816617971828236,
+        "source": 2
+      },
+      {
+        "faces": 20,
+        "area": 0.02137820481948438,
+        "source": 1
+      },
+      {
+        "faces": 76,
+        "area": 0.0914519565194496,
+        "source": 1
+      },
+      {
+        "faces": 17,
+        "area": 0.02542032365454361,
+        "source": 0
+      },
+      {
+        "faces": 16,
+        "area": 0.018972967824083753,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.02082598082779441,
+        "source": 0
+      },
+      {
+        "faces": 20,
+        "area": 0.03748772048857063,
+        "source": 4
+      },
+      {
+        "faces": 18,
+        "area": 0.035293020540848374,
+        "source": 5
+      },
+      {
+        "faces": 77,
+        "area": 0.12563791772117838,
+        "source": 2
+      },
+      {
+        "faces": 100,
+        "area": 0.1937298788689077,
+        "source": 2
+      },
+      {
+        "faces": 29,
+        "area": 0.05602167930919677,
+        "source": 5
+      },
+      {
+        "faces": 54,
+        "area": 0.10428084537852556,
+        "source": 3
+      },
+      {
+        "faces": 24,
+        "area": 0.046910142176784575,
+        "source": 4
+      },
+      {
+        "faces": 35,
+        "area": 0.06600463483482599,
+        "source": 3
+      },
+      {
+        "faces": 18,
+        "area": 0.027306323937409616,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.025714790791425912,
+        "source": 3
+      },
+      {
+        "faces": 20,
+        "area": 0.038472761400043964,
+        "source": 5
+      },
+      {
+        "faces": 20,
+        "area": 0.02667793710133992,
+        "source": 5
+      },
+      {
+        "faces": 39,
+        "area": 0.04930873941214031,
+        "source": 0
+      },
+      {
+        "faces": 20,
+        "area": 0.023874681344295823,
+        "source": 3
+      },
+      {
+        "faces": 23,
+        "area": 0.044664441724307835,
+        "source": 3
+      },
+      {
+        "faces": 58,
+        "area": 0.09225657094657436,
+        "source": 4
+      },
+      {
+        "faces": 19,
+        "area": 0.025783363516893587,
+        "source": 4
+      },
+      {
+        "faces": 28,
+        "area": 0.04397094569867477,
+        "source": 1
+      },
+      {
+        "faces": 20,
+        "area": 0.039050219929777086,
+        "source": 0
+      },
+      {
+        "faces": 19,
+        "area": 0.02333974077998846,
+        "source": 5
+      },
+      {
+        "faces": 25,
+        "area": 0.0347596308656648,
+        "source": 4
+      },
+      {
+        "faces": 17,
+        "area": 0.026698145898990333,
+        "source": 3
+      },
+      {
+        "faces": 21,
+        "area": 0.025275754582253285,
+        "source": 3
+      },
+      {
+        "faces": 17,
+        "area": 0.018255969169032937,
+        "source": 0
+      },
+      {
+        "faces": 20,
+        "area": 0.02357122072248785,
+        "source": 5
+      },
+      {
+        "faces": 25,
+        "area": 0.043165877112187445,
+        "source": 3
+      },
+      {
+        "faces": 19,
+        "area": 0.036195764667354524,
+        "source": 1
+      },
+      {
+        "faces": 19,
+        "area": 0.030108411505352706,
+        "source": 3
+      },
+      {
+        "faces": 36,
+        "area": 0.05073044347227551,
+        "source": 3
+      },
+      {
+        "faces": 29,
+        "area": 0.04621687461622059,
+        "source": 5
+      },
+      {
+        "faces": 59,
+        "area": 0.07745040507870726,
+        "source": 0
+      },
+      {
+        "faces": 18,
+        "area": 0.020218645386705703,
+        "source": 2
+      },
+      {
+        "faces": 17,
+        "area": 0.03445372625719756,
+        "source": 1
+      },
+      {
+        "faces": 21,
+        "area": 0.03331749196513556,
+        "source": 0
+      },
+      {
+        "faces": 17,
+        "area": 0.0326836594613269,
+        "source": 0
+      },
+      {
+        "faces": 17,
+        "area": 0.0332492837915197,
+        "source": 5
+      },
+      {
+        "faces": 17,
+        "area": 0.033032742445357144,
+        "source": 2
+      },
+      {
+        "faces": 20,
+        "area": 0.038883566041477025,
+        "source": 3
+      }
+    ],
+    "rings": 3,
+    "max_area_fraction": 0.02,
+    "visibility_expanded": false,
+    "geometry_changed": false
+  },
+  "limitations": [
+    "Lamp-edge projection artifacts remain",
+    "No geometric holes are filled by this stage",
+    "Wider normal filtering was not accepted"
+  ],
+  "artifacts": [
+    {
+      "path": "mesh-conflict-photo-six-v1/mesh.bin",
+      "sha256": "721c8682f98a743ec38ca1adf8dce304557c08ba55dfb9c2a1eee490bd2c23ed"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/mesh.json",
+      "sha256": "7b49a3b97eb443238230541a93893339471c2c5cd65b35872b1987f3b5e36dd6"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/surface-owned.npz",
+      "sha256": "39c94cbe28eaed3fe52b179e195472893c03e210cf21541d4b480d407ac68ca6"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/textured-room.zip",
+      "sha256": "d06799caa8552c3bd047f0cead2ffc74799910d6d6a5ddba7c20e1441fcc1fc4"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/texture-1.jpg",
+      "sha256": "3d04e0dad4f11974fe96d5122c87a5244a65d27a62aa7eec0c7aac7f509d5a65"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/texture-2.jpg",
+      "sha256": "cdd659269c8352dab96df17aa11bb5b2ba0c098b3c0e4cc0705d9b75ac821eba"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/texture-3.jpg",
+      "sha256": "1b0dd0cc5ac3c1ed94d0cbfc6c34a58c92ccd2ba1d3f995bea845eb8439d9b88"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/texture-4.jpg",
+      "sha256": "28c780693ddea1c9c7dc156baa6bb0f50ca57ea35973963d85329a4aef5a3901"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/texture-5.jpg",
+      "sha256": "e3d893650c458a70dd99e60075bf67cac24f68547773cb5631b2d4dfaf4a9267"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/texture-6.jpg",
+      "sha256": "8a2e0b77ae26567da3c2cda454f03988c6edea4624a241bdaa8c4336f42c444a"
+    }
+  ]
+}

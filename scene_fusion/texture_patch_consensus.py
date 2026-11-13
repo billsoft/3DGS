@@ -7,6 +7,40 @@ import numpy as np
 from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 
+
+def coherent_conflict_regions(owner,scores,colors,good,neighbors,area,rings=3,max_area_fraction=.02):
+    """Experimental single-photo ownership for bounded projection-conflict regions.
+
+    Grows on mesh topology only. It cannot fix geometry or infer a missing photo.
+    Candidate visibility must cover every face; large ambiguous regions stay put.
+    """
+    result=owner.copy();best=scores.max(1)
+    valid=(scores>np.maximum(best[:,None]*.10,1e-10))&good[:,None]
+    low=np.min(np.where(valid[:,:,None],colors,np.inf),axis=1)
+    high=np.max(np.where(valid[:,:,None],colors,-np.inf),axis=1)
+    conflict=good&(valid.sum(1)>=2)&(np.linalg.norm(high-low,axis=1)>.22)
+    region=conflict.copy()
+    for _ in range(rings):region|=good&region[neighbors].any(1)
+    a=np.repeat(np.arange(len(owner)),neighbors.shape[1]);b=neighbors.ravel()
+    use=region[a]&region[b]
+    graph=coo_matrix((np.ones(use.sum(),dtype=np.int8),(a[use],b[use])),shape=(len(owner),len(owner))).tocsr()
+    count,labels=connected_components(graph,directed=False)
+    sizes=np.bincount(labels);areas=np.bincount(labels,weights=area)
+    order=np.argsort(labels);offset=np.r_[0,np.cumsum(sizes)];accepted=[]
+    for label in np.flatnonzero((sizes>=8)&(areas<=area[good].sum()*max_area_fraction)):
+        ids=order[offset[label]:offset[label+1]]
+        if not region[ids].all() or not conflict[ids].any():continue
+        relative=scores[ids]/np.maximum(best[ids,None],1e-20)
+        supported=(relative>=.02).all(0)&(scores[ids]>1e-10).all(0)
+        if not supported.any():continue
+        costs=np.average(-np.log(np.maximum(relative,1e-20)),axis=0,weights=area[ids])
+        costs[~supported]=np.inf;target=int(costs.argmin())
+        result[ids]=target
+        accepted.append(dict(faces=len(ids),area=float(areas[label]),source=target))
+    return result,dict(method='bounded connected projection-conflict regions with one visible photo',
+        conflict_faces=int(conflict.sum()),reassigned_faces=int((result!=owner).sum()),regions=accepted,
+        rings=rings,max_area_fraction=max_area_fraction,visibility_expanded=False,geometry_changed=False)
+
 def reject_photo_outliers(scores,colors,coverage):
     """Reject gross projection colors only with a clear multi-photo consensus.
 

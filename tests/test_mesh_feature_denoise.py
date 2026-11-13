@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scene_fusion'))
 from mesh_feature_denoise import denoise
-from texture_patch_consensus import coherent_patches,reject_photo_outliers
+from texture_patch_consensus import coherent_patches,reject_photo_outliers,coherent_conflict_regions
 
 def grid(n=18):
     x,y=np.meshgrid(np.linspace(0,1,n),np.linspace(0,1,n));p=np.c_[x.ravel(),y.ravel(),np.zeros(n*n)]
@@ -11,6 +11,35 @@ def grid(n=18):
     return p,t
 
 class DenoiseTests(unittest.TestCase):
+    def test_conflict_region_never_uses_occluded_source(self):
+        n=12;ids=np.arange(n);neighbors=np.c_[np.maximum(ids-1,0),np.minimum(ids+1,n-1),ids]
+        scores=np.ones((n,2));scores[5,1]=0
+        colors=np.zeros((n,2,3));colors[:,1]=1
+        owner=ids%2;owner[5]=0
+        out,r=coherent_conflict_regions(owner,scores,colors,np.ones(n,bool),neighbors,np.ones(n),max_area_fraction=1)
+        np.testing.assert_array_equal(out,np.zeros(n,int))
+        self.assertFalse(r['visibility_expanded'])
+        unchanged,_=coherent_conflict_regions(owner,scores,colors,np.ones(n,bool),neighbors,np.ones(n))
+        np.testing.assert_array_equal(unchanged,owner) # Too large: no scene-wide forced source.
+    def test_agreeing_photos_do_not_trigger_conflict_regions(self):
+        n=12;ids=np.arange(n);neighbors=np.c_[np.maximum(ids-1,0),np.minimum(ids+1,n-1),ids]
+        owner=ids%2
+        out,_=coherent_conflict_regions(owner,np.ones((n,2)),np.ones((n,2,3)),np.ones(n,bool),neighbors,np.ones(n),max_area_fraction=1)
+        np.testing.assert_array_equal(out,owner)
+    def test_wide_filter_reduces_corrugation_without_face_flips(self):
+        p,t=grid(24);inside=(p[:,0]>0)&(p[:,0]<1)&(p[:,1]>0)&(p[:,1]<1)
+        p[inside,2]=.018*np.sin(p[inside,0]*90)*np.sin(p[inside,1]*80)
+        q,r=denoise(p,t,16,32,1.5,.35,0)
+        self.assertLess(np.std(q[inside,2]),np.std(p[inside,2])*.65)
+        before=np.cross(p[t[:,1]]-p[t[:,0]],p[t[:,2]]-p[t[:,0]])
+        after=np.cross(q[t[:,1]]-q[t[:,0]],q[t[:,2]]-q[t[:,0]])
+        self.assertTrue(np.all(np.sum(before*after,axis=1)>0))
+        np.testing.assert_allclose(q[~inside],p[~inside],atol=1e-7)
+        self.assertLessEqual(r['max_displacement'],r['displacement_cap']+1e-8)
+    def test_invalid_normal_parameters(self):
+        p,t=grid(4)
+        for kw in [dict(normal_bandwidth=0),dict(normal_bandwidth=float('nan')),dict(min_cosine=1.1)]:
+            with self.assertRaises(ValueError):denoise(p,t,**kw)
     def test_photo_outlier_requires_majority_and_three_visible_sources(self):
         scores=np.ones((3,6));colors=np.ones((3,6,3))*.6;coverage=np.ones_like(scores)
         colors[0,0]=0 # five agreeing observations reject a black wrong projection

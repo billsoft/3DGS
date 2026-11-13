@@ -1,0 +1,179 @@
+{
+  "status": "both-repair-candidates-rejected; accepted-presets-unchanged",
+  "verified_baseline_artifacts": [
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/mesh.bin",
+      "sha256": "5db7f48641124b4c7551f15327aa0c979c901adc4df868bc6ca4d1e95ebbd0ea"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/mesh.json",
+      "sha256": "73b780fea1090df7b516868b1097e7e0cd91927f0751b8d76aaf4afcea8b527d"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/room.obj",
+      "sha256": "bc7f53a9d7abe4168cc15e9f738b97bce60d1a37cbb52afa49aa6399574b9a5c"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/room.mtl",
+      "sha256": "43e459db6d8c5575505454d8579e7bdd808db5e25615e8094546699b76929f20"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/surface-owned.npz",
+      "sha256": "c40ee93aca56228893fa618baa1c9f687b0f5c518f8926faac15404206a56352"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/textured-room.zip",
+      "sha256": "4f4b1b652a3178cb43b62a804d5706d33e71a2787042c5148cbcb172798e215a"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-1.jpg",
+      "sha256": "94ee5599c90b2fb1bd766d47c474dc102a9e947ea0e3b5d98c683ad1ccd73966"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-2.jpg",
+      "sha256": "474c775bc3fb3cf7d5e8c785624106c5c002c867eb36d403cabfd2f7c063d1d5"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-3.jpg",
+      "sha256": "3e9fabdd01ed3b477111701b7da84158d454778a037e762e74c67c0fdfcd28da"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-4.jpg",
+      "sha256": "fe84c500e4a8d2196b6336fd02fa2f7a40e60d159d6cfa2940311b59fff71011"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-5.jpg",
+      "sha256": "7338fb6b505c49c12b6493ef0e25ed32e3368fa5ea41813d36324c07c327d752"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/texture-6.jpg",
+      "sha256": "2106294db4bff4e78c5e767abcb8d6386a291c55ab66f0bce06e7e83d8f3d8da"
+    },
+    {
+      "path": "geometry-smooth-guide-photo-six-v1/unobserved.jpg",
+      "sha256": "43ce58550923e2aa6c6f2981b3c78a39de6c51883fb97653615a50e91c8762c0"
+    },
+    {
+      "path": "geometry-smooth-guide-poisson-six-v1/geometry-guide.ply",
+      "sha256": "7e64ba027d27361968b4b835184d60341ec6ab4b512d28ae7ca174f091f31f51"
+    },
+    {
+      "path": "mesh-adaptive-photo-six-v2/mesh.bin",
+      "sha256": "3f7951f827effba9bcb7aa19c313745ccac75fa55adae07004412d66f58c52be"
+    },
+    {
+      "path": "mesh-adaptive-photo-six-v2/mesh.json",
+      "sha256": "ae67c38816daa70152e8038aead83d11537da8e7cd460bffdcc90a3d50acc928"
+    },
+    {
+      "path": "mesh-adaptive-photo-six-v2/textured-room.zip",
+      "sha256": "03f22ec3ecaa3d559c8a831395e773a68db3cf99595fac728d71177af0cab2e9"
+    },
+    {
+      "path": "mesh-adaptive-geometry-six-v2/surface.npz",
+      "sha256": "3e78c7e64a24453e0a77d271e15981b72a6ede7e87d8bea0fb8e47d75bce6aa3"
+    },
+    {
+      "path": "mesh-adaptive-geometry-six-v2/geometry-guide.ply",
+      "sha256": "c5aac7f1bd531e48e8f3cb43b856bdf49d2e431c4bcac3effbd0f3d851679a02"
+    },
+    {
+      "path": "mesh-lowpass-photo-six-v4/mesh.bin",
+      "sha256": "a7587f79dce6c6e0e7ce629ebab4eb8e95643dcad7e69414527ecec018fd0b35"
+    },
+    {
+      "path": "mesh-lowpass-photo-six-v4/mesh.json",
+      "sha256": "890531ef8e9da2e21f9d8a147e495183a9c53d387ff08e88a1239bb05450530d"
+    },
+    {
+      "path": "mesh-lowpass-photo-six-v4/textured-room.zip",
+      "sha256": "99ba5d6205195d7ccbfe526afbe1780fbda28a16134ca4a6cbb756987a00a045"
+    },
+    {
+      "path": "mesh-lowpass-geometry-six-v3/surface.npz",
+      "sha256": "bf68002d91db21b5a1184ab5d207b049e5ded90d282900305bbf1043c80f5759"
+    },
+    {
+      "path": "mesh-lowpass-geometry-six-v3/geometry-guide.ply",
+      "sha256": "aeabe9cc9b32db6afce465415b40391dab2bf343854ff054c30e6948fba53e17"
+    }
+  ],
+  "experiments": {
+    "compare-up4": {
+      "station": 3,
+      "records": [
+        {
+          "path": "four-room\\scenes\\mesh-lowpass-photo-six-v4\\diagnostics\\source-4-face-4-photo.png",
+          "mae": 0.015018325617283956,
+          "p95_channel_error": 0.050980392156862744,
+          "pixels_error_over_0_15": 13736
+        },
+        {
+          "path": "four-room\\scenes\\mesh-wide-normal-photo-six-v1\\diagnostics\\source-4-face-4-photo.png",
+          "mae": 0.01621785130718955,
+          "p95_channel_error": 0.054901960784313725,
+          "pixels_error_over_0_15": 17030
+        },
+        {
+          "path": "four-room\\scenes\\mesh-conflict-photo-six-v1\\diagnostics\\source-4-face-4-photo.png",
+          "mae": 0.015017968182643428,
+          "p95_channel_error": 0.050980392156862744,
+          "pixels_error_over_0_15": 13736
+        },
+        {
+          "path": "four-room\\scenes\\mesh-lowpass-photo-six-v4\\diagnostics\\source-4-face-4-single-photo-diagnostic.png",
+          "mae": 0.0017688373729121284,
+          "p95_channel_error": 0.00392156862745098,
+          "pixels_error_over_0_15": 1
+        }
+      ],
+      "warning": "Original-photo appearance discrepancy, including residual calibration and view-dependent appearance; not measured geometric accuracy."
+    },
+    "compare-up1": {
+      "station": 0,
+      "records": [
+        {
+          "path": "four-room\\scenes\\mesh-lowpass-photo-six-v4\\diagnostics\\source-1-face-4-photo.png",
+          "mae": 0.018713996686637615,
+          "p95_channel_error": 0.08235294117647059,
+          "pixels_error_over_0_15": 27557
+        },
+        {
+          "path": "four-room\\scenes\\mesh-lowpass-photo-six-v4\\diagnostics\\source-1-face-4-single-photo-diagnostic.png",
+          "mae": 0.0018987143700072628,
+          "p95_channel_error": 0.00784313725490196,
+          "pixels_error_over_0_15": 0
+        }
+      ],
+      "warning": "Original-photo appearance discrepancy, including residual calibration and view-dependent appearance; not measured geometric accuracy."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "mesh-wide-normal-photo-six-v1/mesh.bin",
+      "sha256": "c7548b80e3348408cd9cef06cb06224a468ddd4f93db81aaacb0ce34632866bd"
+    },
+    {
+      "path": "mesh-wide-normal-photo-six-v1/mesh.json",
+      "sha256": "039c7dc301deab44a2e853789be44100c38129b84ba512b34a41a52be2af1e8f"
+    },
+    {
+      "path": "mesh-wide-normal-photo-six-v1/textured-room.zip",
+      "sha256": "cdd84ec4370973a04f348eabf3db853a70cb836ccb580fa32829db1c169bc0b2"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/mesh.bin",
+      "sha256": "721c8682f98a743ec38ca1adf8dce304557c08ba55dfb9c2a1eee490bd2c23ed"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/mesh.json",
+      "sha256": "7b49a3b97eb443238230541a93893339471c2c5cd65b35872b1987f3b5e36dd6"
+    },
+    {
+      "path": "mesh-conflict-photo-six-v1/textured-room.zip",
+      "sha256": "d06799caa8552c3bd047f0cead2ffc74799910d6d6a5ddba7c20e1441fcc1fc4"
+    }
+  ],
+  "limitation": "Single-photo self-view projection is diagnostic only; it does not prove geometry or roaming quality.",
+  "next_target": "Local multi-view projection alignment before seam selection, not further global low-pass filtering"
+}

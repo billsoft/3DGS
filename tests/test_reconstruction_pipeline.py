@@ -54,6 +54,17 @@ class ReconstructionTests(unittest.TestCase):
         cache[0];self.assertEqual(loaded.count('teacher-0.npy'),2)
         with self.assertRaises(IndexError):cache[20]
 
+    def test_conflict_partition_is_default_with_explicit_legacy_comparison(self):
+        for mode in ('adaptive','smooth','both'):
+            default=make_plan('new-job',['a','b','c'],mode=mode)
+            legacy=make_plan('new-job',['a','b','c'],mode=mode,conflict_regions=False)
+            for current,old in zip(default,legacy):
+                if current['name'].endswith('-texture'):
+                    self.assertIn('--conflict-regions',current['args'])
+                    self.assertNotIn('--conflict-regions',old['args'])
+                    self.assertEqual([a for a in current['args'] if a!='--conflict-regions'],old['args'])
+                else:self.assertEqual(current,old)
+
     def test_directory_checkpoint_detects_nested_corruption(self):
         with tempfile.TemporaryDirectory() as name:
             root=Path(name);folder=root/'stage';calls=[]

@@ -1,0 +1,16 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>灯边锯齿：同视点诊断</title>
+<style>body{margin:0;background:#131b23;color:#e7eef3;font:17px/1.6 system-ui}main{max-width:1400px;margin:auto;padding:24px}a{color:#8ad9ff}button,select{padding:9px;font:inherit}section{display:grid;grid-template-columns:1fr 1fr;gap:18px}figure{margin:0}img{width:100%;display:block}figcaption{padding:10px;background:#24303c}p{max-width:1000px}.warning{color:#ffdc98}table{border-collapse:collapse}td,th{padding:8px 20px;border-bottom:1px solid #435363}@media(max-width:800px){section{grid-template-columns:1fr}}</style>
+<main><h1>灯边锯齿：几何与贴图分开检查</h1>
+<p>保持同一网格、同一机位、同一视向。右图仅临时把该机位的一张照片投影到整张网格，用来检查灰色锯齿的来源。</p>
+<p class="warning"><strong>右图是诊断，不是修复后的漫游模型。</strong>它忽略其他机位的遮挡约束，不能作为全场景贴图方案。旧模型文件保留。</p>
+<p><strong>后续用户评估：</strong>冲突分区版改善了其他区域，已采纳为默认贴图算法；此页记录的灯边问题仍未解决。<a href="/mesh-photo-room.html?scene=mesh-conflict-photo-six-v1">打开已采纳的冲突分区版</a></p>
+<p><label>检查机位 <select id="station"><option value="4">4 号机位抬头</option><option value="1">1 号机位抬头</option></select></label></p>
+<section><figure><img id="before" alt="基线多照片贴图"><figcaption>已认可的平滑版：多照片分区贴图</figcaption></figure><figure><img id="probe" alt="相同网格的单照片诊断"><figcaption>网格完全不变：临时单照片投影诊断</figcaption></figure></section>
+<h2>两项独立实验</h2><p>加重法线平滑没有消除灯边锯齿，未采纳；小范围投影冲突分区对本页灯边改善不足，但经用户整体检查，已采纳为默认贴图流程。</p>
+<section><figure><img src="/four-room/scenes/mesh-wide-normal-photo-six-v1/diagnostics/source-4-face-4-photo.png" alt="更强几何平滑实验"><figcaption>加重几何磨皮：未通过</figcaption></figure><figure><img src="/four-room/scenes/mesh-conflict-photo-six-v1/diagnostics/source-4-face-4-photo.png" alt="小范围投影冲突分区实验"><figcaption>小范围投影冲突分区：改善不足</figcaption></figure></section>
+<h2>同视点原片误差</h2><table><tr><th>4 号抬头</th><th>平均 RGB 误差（0–1）</th></tr><tr><td>已认可的平滑版</td><td>0.015018</td></tr><tr><td>更强几何平滑</td><td>0.016218</td></tr><tr><td>冲突分区实验</td><td>0.015018</td></tr><tr><td>单照片诊断</td><td>0.001769</td></tr></table>
+<p>误差统计包括整幅画面，不能证明三维几何精确，也不能代表移动后的效果。单照片诊断的低误差只说明：这些视点的大块灰色锯齿可以由贴图投影产生，不是只能通过磨平网格才能消除。</p>
+<p>下一项应验证的是多视图局部投影对齐：分开处理相机标定、网格深度误差和贴图接缝。避免用全局模糊掩盖跨物体串色。</p>
+<p><a href="/mesh-photo-room.html?scene=mesh-lowpass-photo-six-v4">打开已认可的平滑版</a> · <a href="/mesh-photo-room.html?scene=mesh-adaptive-photo-six-v2">打开已认可的自适应版</a></p></main>
+<script>const s=document.querySelector('#station');function update(){const b='/four-room/scenes/mesh-lowpass-photo-six-v4/diagnostics/source-'+s.value+'-face-4-';document.querySelector('#before').src=b+'photo.png';document.querySelector('#probe').src=b+'single-photo-diagnostic.png'}s.onchange=update;update();</script></html>

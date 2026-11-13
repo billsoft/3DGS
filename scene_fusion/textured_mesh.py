@@ -187,7 +187,7 @@ def blend_linear(base,other,weight):
     return np.where(color<=.0031308,color*12.92,1.055*np.maximum(color,0)**(1/2.4)-.055)
 
 
-def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False,visibility_cache=None,coherent=False,graphcut=False,photo_consensus=False):
+def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footprint=False,clean_fragments=False,visibility_cache=None,coherent=False,graphcut=False,photo_consensus=False,conflict_regions=False):
     if not 512<=texture_width<=8192 or texture_width%2 or not 0<=smoothing<=1:
         raise ValueError('Texture width must be even, 512–8192; smoothing must be 0–1')
     out.mkdir(parents=True,exist_ok=True); meta=load(source)
@@ -227,6 +227,13 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
         patch_area=np.linalg.norm(np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]]),axis=1)*.5
         owner,patch_report=coherent_patches(tri,owner,scores,colors,good,adjacency(tri),patch_area,spacing)
         write_json(out/'texture-patches.json',patch_report);print(patch_report,flush=True)
+    conflict_report=None
+    if conflict_regions:
+        from texture_patch_consensus import coherent_conflict_regions
+        face_area=np.linalg.norm(np.cross(p[tri[:,1]]-p[tri[:,0]],p[tri[:,2]]-p[tri[:,0]]),axis=1)*.5
+        owner,conflict_report=coherent_conflict_regions(owner,scores,colors,good,adjacency(tri),face_area)
+        write_json(out/'texture-conflicts.json',conflict_report)
+        print('Conflict regions',len(conflict_report['regions']),conflict_report['reassigned_faces'],flush=True)
     cleanup_report=None
     if clean_fragments:
         selected=np.flatnonzero(good|required)
@@ -305,6 +312,7 @@ def bake(source,out,geometry,texture_width=4096,smoothing=.6,warped=False,footpr
                 fragment_cleanup=None if cleanup_report is None else {k:v for k,v in cleanup_report.items() if k!='candidates'},
                 texture_size=[W,H],feather_pixels=blended,experimental=True)
     result['texture_patch_consensus']=patch_report
+    result['texture_conflict_regions']=conflict_report
     result['photo_outlier_rejection']=color_report
     capture_path=source/'capture.json'
     if capture_path.exists():
@@ -379,4 +387,5 @@ if __name__=='__main__':
     parser.add_argument('--coherent-patches',action='store_true')
     parser.add_argument('--graphcut',action='store_true',help='Optional PyMaxflow mesh photo assignment')
     parser.add_argument('--photo-consensus',action='store_true')
-    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments,a.visibility_cache,a.coherent_patches,a.graphcut,a.photo_consensus)
+    parser.add_argument('--conflict-regions',action='store_true',help='Experimental bounded single-photo conflict patches; defaults unchanged')
+    a=parser.parse_args(); bake(a.source,a.out,a.geometry,a.texture_width,a.smoothing,a.warped,a.footprint,a.clean_fragments,a.visibility_cache,a.coherent_patches,a.graphcut,a.photo_consensus,a.conflict_regions)

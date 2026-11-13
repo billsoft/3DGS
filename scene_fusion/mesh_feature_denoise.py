@@ -10,9 +10,11 @@ import numpy as np
 from scipy.sparse import coo_matrix
 
 
-def denoise(p,tri,iterations=5,fit_iterations=12,cap_ratio=.8):
+def denoise(p,tri,iterations=5,fit_iterations=12,cap_ratio=.8,normal_bandwidth=.09,min_cosine=.5):
     p=np.asarray(p,dtype=np.float64);tri=np.asarray(tri,dtype=np.int32)
     if iterations<0 or fit_iterations<0 or cap_ratio<0 or not np.isfinite(p).all():raise ValueError('Invalid denoise input')
+    if not np.isfinite(normal_bandwidth) or normal_bandwidth<=0 or not -1<=min_cosine<=1:
+        raise ValueError('Invalid normal filtering bandwidth or cutoff')
     original=p.copy();xyz=p[tri];center=xyz.mean(1)
     cross=np.cross(xyz[:,1]-xyz[:,0],xyz[:,2]-xyz[:,0]);area=np.linalg.norm(cross,axis=1)
     if np.any(area<1e-12):raise ValueError('Degenerate input triangles')
@@ -26,8 +28,8 @@ def denoise(p,tri,iterations=5,fit_iterations=12,cap_ratio=.8):
     spatial=np.exp(-np.sum((center[a]-center[b])**2,axis=1)/(2*(2*spacing)**2))*area[b]
     for _ in range(iterations):
         cosine=np.sum(normals[a]*normals[b],axis=1)
-        weight=spatial*np.exp(-(1-np.clip(cosine,-1,1))/.09)
-        weight[cosine<.5]=0
+        weight=spatial*np.exp(-(1-np.clip(cosine,-1,1))/normal_bandwidth)
+        weight[cosine<min_cosine]=0
         W=coo_matrix((weight,(a,b)),shape=(len(tri),len(tri))).tocsr()
         out=W@normals;normals=out/np.maximum(np.linalg.norm(out,axis=1)[:,None],1e-12)
     # Fit to filtered tangent planes without tangential Laplacian shrinkage.
@@ -51,12 +53,13 @@ def denoise(p,tri,iterations=5,fit_iterations=12,cap_ratio=.8):
     if bad.any():p=original.copy();rolled[:]=True
     return p.astype('f'),dict(method='topology-local bilateral face normals and bounded tangent-plane fitting',
         iterations=iterations,fit_iterations=fit_iterations,spacing=spacing,displacement_cap=cap_ratio*spacing,
+        normal_bandwidth=normal_bandwidth,min_cosine=min_cosine,
         max_displacement=float(np.linalg.norm(p-original,axis=1).max()),locked_vertices=int(fixed.sum()),
         rollback_vertices=int(rolled.sum()),topology_unchanged=True)
 
 
 def run(a):
-    z=np.load(a.mesh);p,report=denoise(z['p'],z['tri'],a.iterations,a.fit_iterations,a.cap_ratio)
+    z=np.load(a.mesh);p,report=denoise(z['p'],z['tri'],a.iterations,a.fit_iterations,a.cap_ratio,a.normal_bandwidth,a.min_cosine)
     a.out.mkdir(parents=True,exist_ok=True);surface=a.out/'surface.npz'
     np.savez_compressed(surface,p=p,tri=z['tri'],geometry_required=np.ones(len(z['tri']),bool))
     report['input_sha256']=hashlib.sha256(a.mesh.read_bytes()).hexdigest()
@@ -71,4 +74,7 @@ def run(a):
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--mesh',type=Path,required=True);ap.add_argument('--cameras',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
-    ap.add_argument('--iterations',type=int,default=5);ap.add_argument('--fit-iterations',type=int,default=12);ap.add_argument('--cap-ratio',type=float,default=.8);run(ap.parse_args())
+    ap.add_argument('--iterations',type=int,default=5);ap.add_argument('--fit-iterations',type=int,default=12);ap.add_argument('--cap-ratio',type=float,default=.8)
+    ap.add_argument('--normal-bandwidth',type=float,default=.09,help='Larger values sacrifice sharp features; experimental, defaults unchanged')
+    ap.add_argument('--min-cosine',type=float,default=.5,help='Exclude opposing face normals from the topology-local filter')
+    run(ap.parse_args())

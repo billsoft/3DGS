@@ -4,7 +4,7 @@ param(
     [Parameter(Mandatory=$true)][string]$OutputDirectory,
     [ValidateSet('both','adaptive','smooth')][string]$Mode='both',
     [ValidateSet('standard','smoke')][string]$Profile='standard',
-    [switch]$Resume,[switch]$Check,[switch]$Plan,
+    [switch]$Resume,[switch]$Check,[switch]$Plan,[switch]$LegacyTexturePartition,
     [string]$SettingsPath="$PSScriptRoot/scene_fusion/settings.local.json"
 )
 $ErrorActionPreference='Stop'
@@ -13,6 +13,7 @@ $arguments=@('scene_fusion/reconstruct.py','--inputs',$Inputs,'--out',$OutputDir
 if($Resume){$arguments+='--resume'}
 if($Check){$arguments+='--check'}
 if($Plan){$arguments+='--plan'}
+if($LegacyTexturePartition){$arguments+='--legacy-texture-partition'}
 $env:OPENBLAS_NUM_THREADS='1'
 Push-Location $PSScriptRoot
 try { & $settings.cpu_python @arguments; $result=$LASTEXITCODE }

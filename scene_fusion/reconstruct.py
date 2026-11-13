@@ -13,7 +13,7 @@ from pipeline import ps_quote
 PRESETS={'adaptive':dict(depth=9,iterations=3,relative_voxel=.004),
          'smooth':dict(depth=8,iterations=12,relative_voxel=.004)}
 
-def make_plan(root,ids,profile='standard',mode='both'):
+def make_plan(root,ids,profile='standard',mode='both',conflict_regions=True):
     r=Path(root);c=r/'calibration';native=r/'native';base=r/'distill';single=r/'single'
     raw=r/'depth-raw';depth=r/'depth-smooth';tsdf=r/'tsdf';repair=r/'repair';guide=r/'guide'
     smoke=profile=='smoke';size=128 if smoke else 512;steps=12 if smoke else 1800
@@ -51,7 +51,8 @@ def make_plan(root,ids,profile='standard',mode='both'):
             '--relative-voxel',opt['relative_voxel'],'--depth',6 if smoke else opt['depth'],'--iterations',opt['iterations'],*extra],[coarse],'mesh',[coarse])
         add(name+'-weld','mesh_numeric_weld',['--mesh',coarse/'surface.npz','--cameras',depth,'--out',geom],[geom],'mesh',[geom])
         add(name+'-texture','textured_mesh',['--source',depth,'--geometry',geom/'surface.npz','--out',photo,'--warped','--footprint',
-            '--texture-width',1024 if smoke else 7680,'--smoothing',0,'--visibility-cache',geom/'visibility.npz','--coherent-patches'],[photo],'cpu',[photo])
+            '--texture-width',1024 if smoke else 7680,'--smoothing',0,'--visibility-cache',geom/'visibility.npz','--coherent-patches',
+            *(['--conflict-regions'] if conflict_regions else [])],[photo],'cpu',[photo])
     add('inspection-views','oblique_views',['--source',depth,'--out',r/'inspection-views.json'],[r/'inspection-views.json'])
     add('mesh-audit','mesh_stage_audit',['--cameras',depth,'--mesh',*[r/n/'surface-owned.npz' for n in modes],
         '--out',r/'audit','--views',r/'inspection-views.json','--size',96 if smoke else 384],[r/'audit'],'mesh',[r/'audit'])
@@ -82,6 +83,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--inputs',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--settings',type=Path,default=ROOT/'scene_fusion/settings.local.json');p.add_argument('--mode',choices=['both',*PRESETS],default='both')
     p.add_argument('--profile',choices=['standard','smoke'],default='standard');p.add_argument('--resume',action='store_true')
+    p.add_argument('--legacy-texture-partition',action='store_true',help='Compare against the earlier texture partition without conflict-region consolidation')
     p.add_argument('--check',action='store_true');p.add_argument('--plan',action='store_true');a=p.parse_args()
     a.out=a.out.resolve();a.inputs=a.inputs.resolve()
     if a.out==a.inputs or a.inputs in a.out.parents or a.out in a.inputs.parents:raise ValueError('Output must be separate from input')
@@ -89,9 +91,10 @@ def main():
     settings=json.loads(a.settings.read_text('utf8'));envs={k:Path(settings[k+'_python']) for k in ('cpu','gpu','mesh')}
     if not all(v.is_file() for v in envs.values()):raise ValueError('Configure CPU, GPU and Open3D mesh Python environments')
     scene=initialize(a.inputs,a.out/'calibration');ids=[s['id'] for s in scene['stations']]
-    stages=make_plan(a.out,ids,a.profile,a.mode)
+    stages=make_plan(a.out,ids,a.profile,a.mode,not a.legacy_texture_partition)
     for stage in stages:stage['args']=[str(a.inputs) if x=='@INPUTS@' else x for x in stage['args']]
-    recipe=dict(version=1,input_scene=scene,profile=a.profile,mode=a.mode,presets=PRESETS,stages=stages)
+    recipe=dict(version=2,input_scene=scene,profile=a.profile,mode=a.mode,presets=PRESETS,
+        texture_conflict_regions=not a.legacy_texture_partition,stages=stages)
     if a.plan:print(json.dumps(recipe,ensure_ascii=False,indent=2));return
     from preflight import run as preflight
     if a.check:preflight(a.inputs,a.out/'calibration');print('INPUT CHECK PASSED');return
